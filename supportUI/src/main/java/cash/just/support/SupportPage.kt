@@ -1,0 +1,33 @@
+package cash.just.support
+
+enum class SupportPage(val title: String, val description: String) {
+    SEND("How do I send bitcoin?","To send money to someone you need to enter their bitcoin address. There are three different ways to enter this information depending on how you received it:\n" +
+            "\n" +
+            "If you are presented with a QR code, press the \"scan\" button and scan the QR code.\n" +
+            "If you receive an address through email or text, copy the address to your device's clipboard and press the \"paste\" button.\n" +
+            "If you receive the address another way, tap the \"To\" label and use the keyboard to enter the address.\n" +
+            "Once you have entered the payment address, tap the \"Amount\" label and enter the amount you wish to send. The button to the right will allow you to toggle the view between the amount of bitcoin to be sent or another currency.\n" +
+            "\n" +
+            "If you would like to save a note about this transaction, tap the \"Memo\" label. This note will only be visible to you, and will not be sent together with the transaction.\n" +
+            "\n" +
+            "Important: If bitcoin is sent to the wrong address, it can not be refunded. When sending bitcoin, always check to make sure the address you are sending to is the same as the one that was given to you (comparing the first 5 or 6 digits is usually sufficient to make sure you are using the correct address)."),
+    RECEIVE("How do I receive bitcoin?","If you would like to receive bitcoin from someone, you will need to give them your bitcoin address. There are a few ways to do this:\n" +
+            "\n" +
+            "Show them the \"Receive Money\" screen in your BRD app, and let them scan your QR code.\n" +
+            "Press the \"Share\" button under the QR code to send them your address via email or text message.\n" +
+            "Tap the QR code to copy your address to your device's memory. You can now paste your address into a website or other app.\n" +
+            "The bitcoin address shown on your receive address will change every time you receive money, but old addresses will continue to work.\n" +
+            "\n" +
+            "Important: If bitcoin is sent to the wrong address, it can not be refunded. When sharing your address, always check to make sure the address you give out is the same as the one shown under your QR code (comparing the first 5 or 6 digits is usually sufficient to make sure you are using the correct address)."),
+    IMPORT_WALLET("How do I import a bitcoin paper wallet?","If you receive a QR code labeled as a \"paper wallet\" or \"private key\", you can import it into your Coinsquare app's Bitcoin wallet by following these steps:\n\n" +
+            "\t\t 1. On the main screen, tap on Menu.\n" +
+            "\t\t 2. Under Preferences, tap on Bitcoin Settings.\n" +
+            "\t\t 3. Select Redeem Private Key.\n" +
+            "\t\t 4. Tap on Scan Private Key and scan the QR code on your paper wallet.\n" +
+            "\t\t 5. Any funds stored on the paper wallet/private key will be sent into your Coinsquare app's Bitcoin wallet, and will not remain on the paper wallet/private key.\n" +
+            "\n\n" +
+            "NOTE:  If you are importing a bitcoin paper wallet created before the August 1, 2017 fork, and would like to get the bitcoin cash credit, follow the steps here.\n" +
+            "\n\n" +
+            "If you want to import a wallet created with the Coinsquare Wallet App, use the Unlink from this device function instead."),
+    PIN("Why do I need a PIN?","The Coinsquare Wallet app requires you to set a PIN to secure your wallet, separate from your device passcode. You will be required to enter this PIN to view your balance or send money, which keeps your wallet private even if you let someone use your phone or if your phone is stolen by someone who knows your device passcode.\\nDo not forget your wallet PIN! It can only be reset by using your Recovery Key. If you forget your PIN and lose your Recovery Key, your wallet will be lost.")
+}
