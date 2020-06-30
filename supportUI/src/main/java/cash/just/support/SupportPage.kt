@@ -13,7 +13,7 @@ enum class SupportPage(val title: String, val description: String) {
             "Important: If bitcoin is sent to the wrong address, it can not be refunded. When sending bitcoin, always check to make sure the address you are sending to is the same as the one that was given to you (comparing the first 5 or 6 digits is usually sufficient to make sure you are using the correct address)."),
     RECEIVE("How do I receive bitcoin?","If you would like to receive bitcoin from someone, you will need to give them your bitcoin address. There are a few ways to do this:\n" +
             "\n" +
-            "Show them the \"Receive Money\" screen in your BRD app, and let them scan your QR code.\n" +
+            "Show them the \"Receive Money\" screen in your Coinsquare Wallet App, and let them scan your QR code.\n" +
             "Press the \"Share\" button under the QR code to send them your address via email or text message.\n" +
             "Tap the QR code to copy your address to your device's memory. You can now paste your address into a website or other app.\n" +
             "The bitcoin address shown on your receive address will change every time you receive money, but old addresses will continue to work.\n" +
