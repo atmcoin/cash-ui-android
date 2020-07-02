@@ -4,12 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:background="@drawable/dialog_background"
     android:layout_height="wrap_content">
 
     <TextView
         android:textColor="#000000"
         android:textStyle="bold"
-        android:paddingTop="10dp"
+        android:paddingTop="20dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:gravity="center"
@@ -51,20 +52,35 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent">
 
-        <TextView
+        <LinearLayout
             android:gravity="center"
-            android:text="Privacy Policy   |   support@just.cash"
-            android:textColor="#FFFFFF"
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content">
 
+            <TextView
+                android:id="@+id/privacyLink"
+                android:text="Privacy Policy     |"
+                android:textColor="#FFFFFF"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:textColorLink="#FFFFFF"
+                android:autoLink="email"
+                android:gravity="center"
+                android:text="     atm@just.cash"
+                android:textColor="#FFFFFF"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
         <TextView
-            android:id="@+id/versionNumber"
-            android:layout_marginTop="40dp"
-            android:gravity="center"
-            tools:text="5.10.6"
-            android:textColor="#FFFFFF"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            tools:text="5.10.6"
+            android:id="@+id/versionNumber"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:textColor="#FFFFFF" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

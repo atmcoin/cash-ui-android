@@ -6,6 +6,5 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/rootView"
-    tools:context=".MainActivity">
-
-</LinearLayout>
+    android:padding="10dp"
+    tools:context=".MainActivity"/>

@@ -22,6 +22,11 @@ class BottomSheetSupportDialogFragment : BottomSheetDialogFragment() {
         }
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setStyle(STYLE_NORMAL, R.style. AppBottomSheetDialogTheme);
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val view = inflater.inflate(R.layout.fragment_support_page, container, false)
 
@@ -29,20 +34,30 @@ class BottomSheetSupportDialogFragment : BottomSheetDialogFragment() {
             val title = it.getString(ARG_TITLE)
             val description = it.getString(ARG_DESCRIPTION)
             if (title != null && description != null) {
-                view.findViewById<TextView>(R.id.supportPageTitle).text = title
-                view.findViewById<TextView>(R.id.supportPageDescription).text = description
+                textView(view, R.id.supportPageTitle).text = title
+                textView(view, R.id.supportPageDescription).text = description
             } else {
                 missingArguments()
             }
         } ?:run {
             missingArguments()
         }
+
         val version = "${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})"
-        view.findViewById<TextView>(R.id.versionNumber).text = version
+        textView(view, R.id.versionNumber).text = version
+
+        textView(view, R.id.privacyLink).setOnClickListener {
+            launchWebsite("https://coinsquareatm.com/privacy-policy.html")
+        }
+
         return view
     }
 
     private fun missingArguments(){
         throw IllegalStateException("One or more arguments $ARG_TITLE, $ARG_DESCRIPTION not found, did you call #newInstance()")
+    }
+
+    private fun textView(view:View, id:Int): TextView{
+        return view.findViewById(id)
     }
 }
