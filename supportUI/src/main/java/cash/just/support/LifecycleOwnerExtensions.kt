@@ -2,6 +2,7 @@ package cash.just.support
 
 import android.content.ComponentName
 import android.content.Context
+import android.content.ContextWrapper
 import android.net.Uri
 import androidx.browser.customtabs.CustomTabsClient
 import androidx.browser.customtabs.CustomTabsIntent
@@ -30,3 +31,11 @@ fun LifecycleOwner.launchWebsite(url: String) {
 
 val LifecycleOwner.context : Context
     get() = (this as? Fragment)?.requireContext() ?: this as Context
+
+fun Context.lifeCycleOwner() : LifecycleOwner {
+    lateinit var context: Context
+    while (this !is LifecycleOwner) {
+        context = (this as ContextWrapper).baseContext;
+    }
+    return context as LifecycleOwner
+}
