@@ -1,6 +1,12 @@
 package cash.just.support
 
 enum class SupportPage(val title: String, val description: String) {
+    GET_STARTED("How do I get started?",
+            "Welcome to the Coinsquare Wallet!\n\nThe Coinsquare Wallet app connects directly to the bitcoin network. There are no accounts or usernames with the Coinsquare Wallet app. Instead, you will have a \"wallet\" where you will store your money. It's just like the physical wallet you put your cash in, except that it exists only on the internet and holds digital money.\n" +
+            "\n" +
+            "If this is your first time using the BRD app, simply choose \"Get Started\" to start.\n" +
+            "\n" +
+            "If you have used the Coinsquare Wallet app before and would like to use the same wallet, choose \"Restore Wallet\" and prepare to enter the Recovery Key for the wallet you would like to restore."),
     SEND("How do I send bitcoin?","To send money to someone you need to enter their bitcoin address. There are three different ways to enter this information depending on how you received it:\n" +
             "\n" +
             "\t\t - If you are presented with a QR code, press the \"scan\" button and scan the QR code.\n" +
@@ -29,5 +35,6 @@ enum class SupportPage(val title: String, val description: String) {
             "NOTE:  If you are importing a bitcoin paper wallet created before the August 1, 2017 fork, and would like to get the bitcoin cash credit, follow the steps here.\n" +
             "\n\n" +
             "If you want to import a wallet created with the Coinsquare Wallet App, use the Unlink from this device function instead."),
-    PIN("Why do I need a PIN?","\t\tThe Coinsquare Wallet app requires you to set a PIN to secure your wallet, separate from your device passcode.\n\t\tYou will be required to enter this PIN to view your balance or send money, which keeps your wallet private even if you let someone use your phone or if your phone is stolen by someone who knows your device passcode.\n\t\tDo not forget your wallet PIN! It can only be reset by using your Recovery Key. If you forget your PIN and lose your Recovery Key, your wallet will be lost.")
+    PIN("Why do I need a PIN?","\t\tThe Coinsquare Wallet app requires you to set a PIN to secure your wallet, separate from your device passcode.\n\t\tYou will be required to enter this PIN to view your balance or send money, which keeps your wallet private even if you let someone use your phone or if your phone is stolen by someone who knows your device passcode.\n\t\tDo not forget your wallet PIN! It can only be reset by using your Recovery Key. If you forget your PIN and lose your Recovery Key, your wallet will be lost."),
+    RECOVERY_KEY("What is a recovery key?","A recovery key consists of 12 randomly generated words. The app creates the recovery key for you automatically when you start a new wallet. The recovery key is critically important and should be written down and stored in a safe location. In the event of phone theft, destruction, or loss, the recovery key can be used to load your wallet onto a new phone. The key is also required when upgrading your current phone to a new one.")
 }

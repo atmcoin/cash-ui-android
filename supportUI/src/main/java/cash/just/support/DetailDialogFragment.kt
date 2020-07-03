@@ -7,13 +7,13 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-class BottomSheetSupportDialogFragment : BottomSheetDialogFragment() {
+class DetailDialogFragment : BottomSheetDialogFragment() {
     companion object {
         private const val ARG_TITLE : String = "ARG_TITLE"
         private const val ARG_DESCRIPTION : String = "ARG_DESCRIPTION"
 
         fun newInstance(page:SupportPage) : BottomSheetDialogFragment {
-            val fragment = BottomSheetSupportDialogFragment()
+            val fragment = DetailDialogFragment()
             val bundle = Bundle()
             bundle.putString(ARG_TITLE, page.title)
             bundle.putString(ARG_DESCRIPTION, page.description)
@@ -43,17 +43,12 @@ class BottomSheetSupportDialogFragment : BottomSheetDialogFragment() {
             missingArguments()
         }
 
-        val version = "${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})"
-        textView(view, R.id.versionNumber).text = version
-
-        textView(view, R.id.privacyLink).setOnClickListener {
-            launchWebsite("https://coinsquareatm.com/privacy-policy.html")
-        }
+        SupportFooterHelper.populate(view)
 
         return view
     }
 
-    private fun missingArguments(){
+    private fun missingArguments() {
         throw IllegalStateException("One or more arguments $ARG_TITLE, $ARG_DESCRIPTION not found, did you call #newInstance()")
     }
 
