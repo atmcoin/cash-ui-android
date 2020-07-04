@@ -1,5 +1,6 @@
 package cash.just.support
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -22,6 +23,8 @@ class IndexDialogFragment : BottomSheetDialogFragment() {
             val textView = TextView(context)
             textView.text = page.title
             textView.textSize = 20f
+            textView.setTextColor(Color.parseColor("A9A9A9"))
+
             val params = LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
