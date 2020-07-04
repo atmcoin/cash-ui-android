@@ -23,7 +23,7 @@ class IndexDialogFragment : BottomSheetDialogFragment() {
             val textView = TextView(context)
             textView.text = page.title
             textView.textSize = 20f
-            textView.setTextColor(Color.parseColor("A9A9A9"))
+            textView.setTextColor(Color.parseColor("#A9A9A9"))
 
             val params = LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
