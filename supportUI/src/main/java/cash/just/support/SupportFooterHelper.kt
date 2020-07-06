@@ -7,11 +7,10 @@ import timber.log.Timber
 
 object SupportFooterHelper {
     fun populate(view:View, lifecycleOwner: LifecycleOwner) {
-        val version = "${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})"
-        textView(view, R.id.versionNumber).text = version
+        textView(view, R.id.versionNumber).text = BuildConfig.VERSION_NAME
 
         textView(view, R.id.privacyLink).setOnClickListener {
-            Timber.d("Click on privayLink")
+            Timber.d("Click on privacyLink")
             lifecycleOwner.launchWebsite("https://coinsquareatm.com/privacy-policy.html")
         }
     }

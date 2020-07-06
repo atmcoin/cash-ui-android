@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import cash.just.support.pages.AtmPage
 import cash.just.support.pages.GeneralSupportPage
 import cash.just.support.pages.SecurityPage
 import cash.just.support.pages.SettingPage
@@ -25,6 +26,7 @@ class IndexDialogFragment : BottomSheetDialogFragment() {
         createViews(GeneralSupportPage.pages(), group)
         createViews(SettingPage.pages(), group)
         createViews(SecurityPage.pages(), group)
+        createViews(AtmPage.pages(), group)
 
         SupportFooterHelper.populate(view, this)
 

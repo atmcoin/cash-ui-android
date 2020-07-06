@@ -21,18 +21,20 @@
         android:layout_height="wrap_content">
 
         <TextView
+            android:gravity="center"
             android:textColor="#000000"
             android:textStyle="bold"
             android:id="@+id/supportPageTitle"
             android:textSize="30sp"
             android:layout_weight="1"
-            tools:text="This a title! it can be super long too"
+            tools:text="This a title! it cab supera long too"
             android:layout_width="0dp"
             android:layout_height="wrap_content"/>
 
         <ImageView
+            android:layout_marginStart="8dp"
             android:id="@+id/faqImage"
-            android:gravity="end|top"
+            android:layout_gravity="center_horizontal"
             android:src="@drawable/ic_frequently_asked_questions"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
