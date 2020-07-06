@@ -3,8 +3,7 @@ package cash.just.ui
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
-import cash.just.support.CashSupport
-import cash.just.support.SupportPage
+import cash.just.support.*
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -18,8 +17,14 @@ class MainActivity : AppCompatActivity() {
             fragment.show(supportFragmentManager, "tag")
         }
 
-        SupportPage.values().forEach { page ->
-            addButtonWithText(page.title).setOnClickListener {
+        createButtons(GeneralSupportPage.pages())
+        createButtons(SettingPage.pages())
+        createButtons(SecurityPage.pages())
+    }
+
+    private fun createButtons(pages:Array<BaseSupportPage>){
+        pages.forEach { page ->
+            addButtonWithText(page.title()).setOnClickListener {
                 val fragment = CashSupport.Builder().detail(page).build().createDialogFragment()
                 fragment.show(supportFragmentManager, "tag")
             }

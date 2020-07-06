@@ -1,15 +1,24 @@
 package cash.just.support
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import timber.log.Timber
+import timber.log.Timber.DebugTree
+
 
 class CashSupport private constructor(
     private val pageType: PageType,
-    private val supportPage: SupportPage?) {
+    private val supportPage: BaseSupportPage?) {
+
+    init {
+        if (Timber.treeCount() == 0) {
+            Timber.plant(DebugTree())
+        }
+    }
 
     data class Builder(private var pageType: PageType = PageType.INDEX) {
-        private var supportPage: SupportPage? = null
+        private var supportPage: BaseSupportPage? = null
 
-        fun detail(supportPage: SupportPage) = apply {
+        fun detail(supportPage: BaseSupportPage) = apply {
             this.pageType = PageType.DETAIL
             this.supportPage = supportPage
         }

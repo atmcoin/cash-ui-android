@@ -7,22 +7,36 @@
     android:background="@drawable/dialog_background"
     android:layout_height="wrap_content">
 
-    <TextView
-        android:textColor="#000000"
-        android:textStyle="bold"
+    <LinearLayout
         android:paddingTop="20dp"
         android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginEnd="25dp"
         android:gravity="center"
+        android:layout_marginBottom="20dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/supportPageDescription"
-        android:layout_marginBottom="20dp"
-        android:id="@+id/supportPageTitle"
-        android:textSize="30sp"
-        tools:text="This a title! it can be super long too"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:textColor="#000000"
+            android:textStyle="bold"
+            android:id="@+id/supportPageTitle"
+            android:textSize="30sp"
+            android:layout_weight="1"
+            tools:text="This a title! it can be super long too"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+
+        <ImageView
+            android:id="@+id/faqImage"
+            android:gravity="end|top"
+            android:src="@drawable/ic_frequently_asked_questions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
 
     <TextView
         android:textColor="#000000"

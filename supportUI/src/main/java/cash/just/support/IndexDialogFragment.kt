@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.core.view.marginBottom
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class IndexDialogFragment : BottomSheetDialogFragment() {
@@ -19,26 +18,34 @@ class IndexDialogFragment : BottomSheetDialogFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val view = inflater.inflate(R.layout.fragment_support_index, container, false)
         val group = view.findViewById<LinearLayout>(R.id.indexGroup)
-        SupportPage.values().forEach { page ->
+
+        createViews(GeneralSupportPage.pages(), group)
+        createViews(SettingPage.pages(), group)
+        createViews(SecurityPage.pages(), group)
+
+        SupportFooterHelper.populate(view, this)
+
+        return view
+    }
+
+    private fun createViews(pages:Array<BaseSupportPage>, rootView:LinearLayout){
+        pages.forEach { page ->
             val textView = TextView(context)
-            textView.text = page.title
+            textView.text = page.title()
             textView.textSize = 20f
-            textView.setTextColor(Color.parseColor("#A9A9A9"))
+            textView.setTextColor(Color.parseColor("#000000"))
 
             val params = LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
             )
             params.bottomMargin = 50
-            group.addView(textView, params)
+            rootView.addView(textView, params)
 
             textView.setOnClickListener {
                 val fragment = CashSupport.Builder().detail(page).build().createDialogFragment()
                 fragment.show(activity!!.supportFragmentManager, "tag")
             }
         }
-        SupportFooterHelper.populate(view)
-
-        return view
     }
 }

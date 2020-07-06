@@ -4,19 +4,21 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+
 
 class DetailDialogFragment : BottomSheetDialogFragment() {
     companion object {
         private const val ARG_TITLE : String = "ARG_TITLE"
         private const val ARG_DESCRIPTION : String = "ARG_DESCRIPTION"
 
-        fun newInstance(page:SupportPage) : BottomSheetDialogFragment {
+        fun newInstance(page:BaseSupportPage) : BottomSheetDialogFragment {
             val fragment = DetailDialogFragment()
             val bundle = Bundle()
-            bundle.putString(ARG_TITLE, page.title)
-            bundle.putString(ARG_DESCRIPTION, page.description)
+            bundle.putString(ARG_TITLE, page.title())
+            bundle.putString(ARG_DESCRIPTION, page.description())
             fragment.arguments = bundle
             return fragment
         }
@@ -29,12 +31,12 @@ class DetailDialogFragment : BottomSheetDialogFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val view = inflater.inflate(R.layout.fragment_support_page, container, false)
-
+        val supportTitle = textView(view, R.id.supportPageTitle)
         arguments?.let {
             val title = it.getString(ARG_TITLE)
             val description = it.getString(ARG_DESCRIPTION)
             if (title != null && description != null) {
-                textView(view, R.id.supportPageTitle).text = title
+                supportTitle.text = title
                 textView(view, R.id.supportPageDescription).text = description
             } else {
                 missingArguments()
@@ -43,7 +45,12 @@ class DetailDialogFragment : BottomSheetDialogFragment() {
             missingArguments()
         }
 
-        SupportFooterHelper.populate(view)
+        view.findViewById<ImageView>(R.id.faqImage).setOnClickListener {
+            openIndexSupport()
+            dialog?.dismiss()
+        }
+
+        SupportFooterHelper.populate(view, this)
 
         return view
     }
@@ -52,7 +59,12 @@ class DetailDialogFragment : BottomSheetDialogFragment() {
         throw IllegalStateException("One or more arguments $ARG_TITLE, $ARG_DESCRIPTION not found, did you call #newInstance()")
     }
 
-    private fun textView(view:View, id:Int): TextView{
+    private fun openIndexSupport() {
+        val fragment = CashSupport.Builder().build().createDialogFragment()
+        fragment.show(activity!!.supportFragmentManager, "tag")
+    }
+
+    private fun textView(view:View, id:Int): TextView {
         return view.findViewById(id)
     }
 }
