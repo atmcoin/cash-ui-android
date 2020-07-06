@@ -8,17 +8,18 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-
 class DetailDialogFragment : BottomSheetDialogFragment() {
     companion object {
         private const val ARG_TITLE : String = "ARG_TITLE"
         private const val ARG_DESCRIPTION : String = "ARG_DESCRIPTION"
+        private const val ARG_FROM_INDEX : String = "ARG_FROM_INDEX"
 
-        fun newInstance(page:BaseSupportPage) : BottomSheetDialogFragment {
+        fun newInstance(page:BaseSupportPage, fromIndex:Boolean = false) : BottomSheetDialogFragment {
             val fragment = DetailDialogFragment()
             val bundle = Bundle()
             bundle.putString(ARG_TITLE, page.title())
             bundle.putString(ARG_DESCRIPTION, page.description())
+            bundle.putBoolean(ARG_FROM_INDEX, fromIndex)
             fragment.arguments = bundle
             return fragment
         }
@@ -46,7 +47,11 @@ class DetailDialogFragment : BottomSheetDialogFragment() {
         }
 
         view.findViewById<ImageView>(R.id.faqImage).setOnClickListener {
-            openIndexSupport()
+            arguments?.let {
+                if (!it.getBoolean(ARG_FROM_INDEX)) {
+                    openIndexSupport()
+                }
+            }
             dialog?.dismiss()
         }
 

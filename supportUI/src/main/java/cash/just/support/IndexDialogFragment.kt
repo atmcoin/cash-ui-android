@@ -1,5 +1,6 @@
 package cash.just.support
 
+import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,6 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import cash.just.support.pages.AtmPage
+import cash.just.support.pages.GeneralSupportPage
+import cash.just.support.pages.SecurityPage
+import cash.just.support.pages.SettingPage
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class IndexDialogFragment : BottomSheetDialogFragment() {
@@ -22,6 +27,7 @@ class IndexDialogFragment : BottomSheetDialogFragment() {
         createViews(GeneralSupportPage.pages(), group)
         createViews(SettingPage.pages(), group)
         createViews(SecurityPage.pages(), group)
+        createViews(AtmPage.pages(), group)
 
         SupportFooterHelper.populate(view, this)
 
@@ -30,22 +36,35 @@ class IndexDialogFragment : BottomSheetDialogFragment() {
 
     private fun createViews(pages:Array<BaseSupportPage>, rootView:LinearLayout){
         pages.forEach { page ->
-            val textView = TextView(context)
-            textView.text = page.title()
-            textView.textSize = 20f
-            textView.setTextColor(Color.parseColor("#000000"))
-
-            val params = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-            )
-            params.bottomMargin = 50
-            rootView.addView(textView, params)
-
-            textView.setOnClickListener {
-                val fragment = CashSupport.Builder().detail(page).build().createDialogFragment()
-                fragment.show(activity!!.supportFragmentManager, "tag")
+            val view = createTextView(requireContext(), page.title())
+            rootView.addView(view, getParams())
+            view.setOnClickListener {
+                showDetailDialog(page)
             }
         }
+    }
+
+    private fun showDetailDialog(page:BaseSupportPage) {
+        activity?.let {
+            val fragment = CashSupport.Builder().detail(page, true).build().createDialogFragment()
+            fragment.show(it.supportFragmentManager, "tag")
+        }
+    }
+
+    private fun getParams() : LinearLayout.LayoutParams {
+        val params = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT
+        )
+        params.bottomMargin = 50
+        return params
+    }
+
+    private fun createTextView(context: Context, title:String):TextView {
+        val textView = TextView(context)
+        textView.text = title
+        textView.textSize = 20f
+        textView.setTextColor(Color.BLACK)
+        return textView
     }
 }
