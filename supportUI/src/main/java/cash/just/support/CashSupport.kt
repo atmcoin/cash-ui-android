@@ -7,7 +7,8 @@ import timber.log.Timber.DebugTree
 
 class CashSupport private constructor(
     private val pageType: PageType,
-    private val supportPage: BaseSupportPage?) {
+    private val supportPage: BaseSupportPage?,
+    private val fromIndex:Boolean = false) {
 
     init {
         if (Timber.treeCount() == 0) {
@@ -17,13 +18,15 @@ class CashSupport private constructor(
 
     data class Builder(private var pageType: PageType = PageType.INDEX) {
         private var supportPage: BaseSupportPage? = null
+        private var fromIndex:Boolean = false
 
-        fun detail(supportPage: BaseSupportPage) = apply {
+        fun detail(supportPage: BaseSupportPage, fromIndex:Boolean = false) = apply {
             this.pageType = PageType.DETAIL
             this.supportPage = supportPage
+            this.fromIndex = fromIndex
         }
 
-        fun build() = CashSupport(pageType, supportPage)
+        fun build() = CashSupport(pageType, supportPage, fromIndex)
     }
 
     fun createDialogFragment(): BottomSheetDialogFragment = run {
@@ -32,7 +35,7 @@ class CashSupport private constructor(
                 IndexDialogFragment()
             }
             PageType.DETAIL -> {
-                DetailDialogFragment.newInstance(supportPage!!)
+                DetailDialogFragment.newInstance(supportPage!!, fromIndex)
             }
         }
     }

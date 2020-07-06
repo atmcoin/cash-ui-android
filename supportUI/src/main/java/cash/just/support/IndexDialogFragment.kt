@@ -1,5 +1,6 @@
 package cash.just.support
 
+import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -35,22 +36,35 @@ class IndexDialogFragment : BottomSheetDialogFragment() {
 
     private fun createViews(pages:Array<BaseSupportPage>, rootView:LinearLayout){
         pages.forEach { page ->
-            val textView = TextView(context)
-            textView.text = page.title()
-            textView.textSize = 20f
-            textView.setTextColor(Color.parseColor("#000000"))
-
-            val params = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-            )
-            params.bottomMargin = 50
-            rootView.addView(textView, params)
-
-            textView.setOnClickListener {
-                val fragment = CashSupport.Builder().detail(page).build().createDialogFragment()
-                fragment.show(activity!!.supportFragmentManager, "tag")
+            val view = createTextView(requireContext(), page.title())
+            rootView.addView(view, getParams())
+            view.setOnClickListener {
+                showDetailDialog(page)
             }
         }
+    }
+
+    private fun showDetailDialog(page:BaseSupportPage) {
+        activity?.let {
+            val fragment = CashSupport.Builder().detail(page, true).build().createDialogFragment()
+            fragment.show(it.supportFragmentManager, "tag")
+        }
+    }
+
+    private fun getParams() : LinearLayout.LayoutParams {
+        val params = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT
+        )
+        params.bottomMargin = 50
+        return params
+    }
+
+    private fun createTextView(context: Context, title:String):TextView {
+        val textView = TextView(context)
+        textView.text = title
+        textView.textSize = 20f
+        textView.setTextColor(Color.BLACK)
+        return textView
     }
 }
