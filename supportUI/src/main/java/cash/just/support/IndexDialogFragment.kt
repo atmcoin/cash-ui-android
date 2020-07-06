@@ -7,6 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import cash.just.support.pages.GeneralSupportPage
+import cash.just.support.pages.SecurityPage
+import cash.just.support.pages.SettingPage
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class IndexDialogFragment : BottomSheetDialogFragment() {

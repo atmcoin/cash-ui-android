@@ -4,6 +4,9 @@ import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import cash.just.support.*
+import cash.just.support.pages.GeneralSupportPage
+import cash.just.support.pages.SecurityPage
+import cash.just.support.pages.SettingPage
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
