@@ -24,8 +24,8 @@ allprojects {
     }
 
     project.ext {
-        versionName = "1.5"
-        versionCode = 3
+        versionName = "1.5.1"
+        versionCode = 4
     }
 }
 
