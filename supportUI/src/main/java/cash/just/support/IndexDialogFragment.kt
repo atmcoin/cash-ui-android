@@ -8,10 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
-import cash.just.support.pages.AtmPage
-import cash.just.support.pages.GeneralSupportPage
-import cash.just.support.pages.SecurityPage
-import cash.just.support.pages.SettingPage
+import cash.just.support.pages.*
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class IndexDialogFragment : BottomSheetDialogFragment() {
@@ -24,10 +21,7 @@ class IndexDialogFragment : BottomSheetDialogFragment() {
         val view = inflater.inflate(R.layout.fragment_support_index, container, false)
         val group = view.findViewById<LinearLayout>(R.id.indexGroup)
 
-        createViews(GeneralSupportPage.pages(), group)
-        createViews(SettingPage.pages(), group)
-        createViews(SecurityPage.pages(), group)
-        createViews(AtmPage.pages(), group)
+        createViews(BaseSupportPage.allPages(), group)
 
         SupportFooterHelper.populate(view, this)
 
