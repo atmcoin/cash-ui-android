@@ -4,10 +4,7 @@ import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import cash.just.support.*
-import cash.just.support.pages.AtmPage
-import cash.just.support.pages.GeneralSupportPage
-import cash.just.support.pages.SecurityPage
-import cash.just.support.pages.SettingPage
+import cash.just.support.pages.*
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -21,10 +18,7 @@ class MainActivity : AppCompatActivity() {
             fragment.show(supportFragmentManager, "tag")
         }
 
-        createButtons(GeneralSupportPage.pages())
-        createButtons(SettingPage.pages())
-        createButtons(SecurityPage.pages())
-        createButtons(AtmPage.pages())
+        createButtons(BaseSupportPage.allPages())
     }
 
     private fun createButtons(pages:Array<BaseSupportPage>){
