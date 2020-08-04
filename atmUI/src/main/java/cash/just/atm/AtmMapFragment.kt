@@ -72,21 +72,7 @@ class AtmMapFragment : Fragment() {
         loadingView.visibility = View.VISIBLE
         atmRecyclerList.visibility = View.GONE
 
-        if (!CashSDK.isSessionCreated()) {
-            Timber.d("Creating session")
-            CashSDK.createSession(BitcoinServer.getServer(), object: Cash.SessionCallback {
-                override fun onSessionCreated(sessionKey: String) {
-                    viewModel.getAtms()
-                }
-
-                override fun onError(errorMessage: String?) {
-                    Toast.makeText(appContext, errorMessage, Toast.LENGTH_SHORT).show()
-                }
-            })
-        } else {
-            Timber.d("Session already created.")
-            viewModel.getAtms()
-        }
+        viewModel.getAtms()
 
         fastAdapter.itemFilter.filterPredicate = { item: AtmItem, constraint: CharSequence? ->
             item.atmMachine.addressDesc.contains(constraint.toString(), ignoreCase = true)
