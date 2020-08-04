@@ -11,5 +11,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/rootView"
-        android:padding="10dp" />
+        android:padding="10dp">
+
+        <Button
+            android:id="@+id/openMaps"
+            android:text="Open Maps"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
 </ScrollView>

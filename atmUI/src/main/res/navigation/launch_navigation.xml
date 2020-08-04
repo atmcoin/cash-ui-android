@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/employee_list">
+
+    <fragment
+        android:id="@+id/employee_list"
+        android:name="cash.just.atm.AtmMapFragment"
+        android:label="Employee List"
+        tools:layout="@layout/fragment_map">
+    </fragment>
+</navigation>

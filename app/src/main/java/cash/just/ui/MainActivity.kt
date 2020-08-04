@@ -1,10 +1,12 @@
 package cash.just.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
-import cash.just.support.*
-import cash.just.support.pages.*
+import cash.just.atm.LaunchActivity
+import cash.just.support.BaseSupportPage
+import cash.just.support.CashSupport
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -19,6 +21,10 @@ class MainActivity : AppCompatActivity() {
         }
 
         createButtons(BaseSupportPage.allPages())
+
+        openMaps.setOnClickListener {
+            startActivity(Intent(it.context, LaunchActivity::class.java))
+        }
     }
 
     private fun createButtons(pages:Array<BaseSupportPage>){
