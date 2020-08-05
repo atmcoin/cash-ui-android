@@ -9,4 +9,26 @@
         <item name="android:background">@drawable/dialog_background</item>
     </style>
 
+    <declare-styleable name="DropAnimationView">
+        <!-- Animation rate, use px/s as a unit -->
+        <attr name="rate" format="integer" />
+
+        <!-- Minimum size of the falling view -->
+        <attr name="minSize" format="dimension" />
+
+        <!-- Maximum size of the falling view -->
+        <attr name="maxSize" format="dimension" />
+
+        <!-- The bigger view should be falling fast -->
+        <attr name="largePercent" format="fraction" />
+
+        <!-- Whether enable horizontal translation, default false -->
+        <attr name="xAnimate" format="boolean" />
+
+        <!-- Whether enable vertical translation, default true  -->
+        <attr name="yAnimate" format="boolean" />
+
+        <!-- Whether enable rotation, default false -->
+        <attr name="rotationAnimate" format="boolean" />
+    </declare-styleable>
 </resources>

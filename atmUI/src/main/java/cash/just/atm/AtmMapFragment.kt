@@ -8,13 +8,13 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import cash.just.atm.base.RequestState
 import cash.just.atm.model.AtmClusterRenderer
 import cash.just.atm.model.AtmMarker
 import cash.just.atm.model.AtmMarkerInfo
 import cash.just.atm.model.ClusteredAtm
-import cash.just.sdk.Cash
-import cash.just.sdk.CashSDK
 import cash.just.sdk.model.AtmMachine
 import cash.just.support.R
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -23,7 +23,6 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.maps.android.clustering.ClusterManager
 import com.mikepenz.fastadapter.adapters.FastItemAdapter
-import cash.just.atm.base.RequestState
 import com.square.project.base.singleStateObserve
 import kotlinx.android.synthetic.main.fragment_map.*
 import okhttp3.internal.filterList
@@ -277,7 +276,6 @@ class AtmMapFragment : Fragment() {
     }
 
     private fun moveToVerification(atm:AtmMachine) {
-
+        findNavController().navigate(AtmMapFragmentDirections.mapToRequest(atm))
     }
-
 }

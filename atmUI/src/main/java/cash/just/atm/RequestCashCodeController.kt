@@ -9,7 +9,9 @@
 //import android.widget.EditText
 //import android.widget.Toast
 //import androidx.core.os.bundleOf
+//import androidx.fragment.app.FragmentManager
 //import cash.just.atm.AtmMapHelper
+//import cash.just.atm.model.AtmMarker
 //import cash.just.sdk.CashSDK
 //import cash.just.sdk.model.AtmMachine
 //import cash.just.sdk.model.CashCodeResponse
@@ -18,6 +20,7 @@
 //import cash.just.sdk.model.SendVerificationCodeResponse
 //import cash.just.sdk.model.isValidAmount
 //import cash.just.sdk.model.parseError
+//import cash.just.support.R
 //import com.bluelinelabs.conductor.RouterTransaction
 //import com.breadwallet.R
 //import com.breadwallet.legacy.presenter.entities.CryptoRequest
@@ -311,22 +314,21 @@
 //    }
 //
 //    private fun goToSend(btc: String, address: String) {
-//        val builder = CryptoRequest.Builder()
-//        builder.address = address
-//        builder.amount = btc.toFloat().toBigDecimal()
-//        builder.currencyCode = WalletBitcoinManager.BITCOIN_CURRENCY_CODE
-//        val request = builder.build()
-//        router.replaceTopController(
-//            RouterTransaction.with(
-//                SendSheetController(
-//                    request //make it default
-//                )
-//            )
-//        )
+////        val builder = CryptoRequest.Builder()
+////        builder.address = address
+////        builder.amount = btc.toFloat().toBigDecimal()
+////        builder.currencyCode = WalletBitcoinManager.BITCOIN_CURRENCY_CODE
+////        val request = builder.build()
+////        router.replaceTopController(
+////            RouterTransaction.with(
+////                SendSheetController(
+////                    request //make it default
+////                )
+////            )
+////        )
 //    }
 //
-//    private fun showMap(context: Context) {
-//        val fragmentManager = AtmMapHelper.getActivityFromContext(context)!!.supportFragmentManager
+//    private fun showMap(fragmentManager: FragmentManager) {
 //        val fragment = fragmentManager.findFragmentByTag(MAP_FRAGMENT_TAG)
 //        fragment?.let {
 //            fragmentManager.beginTransaction()
@@ -335,9 +337,8 @@
 //        }
 //    }
 //
-//    private fun createAndHideMap(context: Context): SupportMapFragment {
-//        val fragment = AtmMapHelper.addMapFragment(context, R.id.smallMapFragment, MAP_FRAGMENT_TAG)
-//        val fragmentManager = AtmMapHelper.getActivityFromContext(context)!!.supportFragmentManager
+//    private fun createAndHideMap(fragmentManager: FragmentManager): SupportMapFragment {
+//        val fragment = AtmMapHelper.addMapFragment(fragmentManager, R.id.smallMapFragment, MAP_FRAGMENT_TAG)
 //        fragmentManager.beginTransaction()
 //            .hide(fragment)
 //            .commit()
@@ -401,13 +402,6 @@
 //            email.visibility = View.GONE
 //            // noPhoneButton.text = "No Phone?"
 //            currentVerificationMode = VerificationState.PHONE
-//        }
-//    }
-//
-//    private fun handlePlatformMessages() = PlatformTransactionBus.requests().onEach {
-//        withContext(Dispatchers.Main) {
-//            val transaction = RouterTransaction.with(PlatformConfirmTransactionController(it))
-//            router.pushController(transaction)
 //        }
 //    }
 //}

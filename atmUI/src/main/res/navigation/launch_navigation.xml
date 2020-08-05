@@ -3,12 +3,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/employee_list">
+    app:startDestination="@+id/atmMapFragment">
 
     <fragment
-        android:id="@+id/employee_list"
+        android:id="@+id/atmMapFragment"
         android:name="cash.just.atm.AtmMapFragment"
-        android:label="Employee List"
+        android:label="Atm Map"
         tools:layout="@layout/fragment_map">
+        <action android:id="@+id/map_to_request" app:destination="@+id/request">
+            <argument android:name="atm_machine" app:nullable="false" app:argType="cash.just.sdk.model.AtmMachine"/>
+        </action>
     </fragment>
+
+    <fragment
+        android:id="@+id/request"
+        android:name="cash.just.atm.AtmRequestFragment"
+        android:label="Atm Request"
+        tools:layout="@layout/fragment_request_cash_code">
+        <argument android:name="atm_machine" app:nullable="false" app:argType="cash.just.sdk.model.AtmMachine"/>
+    </fragment>
+
+
 </navigation>
