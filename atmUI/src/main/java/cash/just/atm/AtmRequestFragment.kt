@@ -1,6 +1,8 @@
 package cash.just.atm
 
+import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -167,19 +169,15 @@ class AtmRequestFragment : Fragment() {
     }
 
     private fun showDialog(context: Context, secureCode: String, cashStatus: CashStatus) {
-
-//        BRDialog.cancellableShowCustomDialog(
-//            context, "Withdrawal requested",
-//            "Please send the amount of ${cashStatus.btc_amount} BTC to the ATM",
-//            "Send", "Details", { dialog ->
-//                dialog.dismissWithAnimation()
+        AlertDialog.Builder(context).setTitle("Withdrawal requested")
+            .setMessage("Please send the amount of ${cashStatus.btc_amount} BTC to the ATM")
+            .setPositiveButton("Send", DialogInterface.OnClickListener { dialog,_ ->
+                dialog.dismiss()
 //                goToSend(cashStatus.btc_amount, cashStatus.address)
-//            },
-//            { dialog ->
-//                dialog.dismissWithAnimation()
+            }).setNegativeButton("Details",  DialogInterface.OnClickListener { dialog,_ ->
+                dialog.dismiss()
 //                goToDetails(secureCode, cashStatus)
-//            }, null, false
-//        )
+            }).create().show()
     }
 
     private fun requestVerificationCode(context: Context) {
@@ -245,7 +243,7 @@ class AtmRequestFragment : Fragment() {
                 googleMap.setOnMapLoadedCallback(GoogleMap.OnMapLoadedCallback {
                     addMarkerAndMoveCamera(context, googleMap, atm)
                     coinCount = 0
-//                    dropView.stopAnimation()
+                    dropView.stopAnimation()
                 })
 
                 googleMap.setOnInfoWindowClickListener {
