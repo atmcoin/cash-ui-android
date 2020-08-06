@@ -1,8 +1,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="cash.just.support">
+    package="cash.just.atm">
 
     <application>
-        <activity android:name="cash.just.atm.LaunchActivity" />
+        <activity android:name="cash.just.atm.AtmActivity" />
+        <activity android:name="cash.just.atm.StatusActivity" />
 
         <meta-data android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_map_key"/>

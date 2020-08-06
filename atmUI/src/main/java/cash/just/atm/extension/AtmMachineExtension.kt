@@ -1,4 +1,4 @@
-package cash.just.atm.utils
+package cash.just.atm.extension
 
 import cash.just.sdk.model.AtmMachine
 

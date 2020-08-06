@@ -1,4 +1,4 @@
-package cash.just.atm
+package cash.just.atm.fragment
 
 import android.app.AlertDialog
 import android.content.Context
@@ -13,34 +13,36 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import androidx.navigation.fragment.findNavController
+import cash.just.atm.AtmMapHelper
+import cash.just.atm.base.RequestState
+import cash.just.atm.base.showError
 import cash.just.atm.model.AtmMarker
+import cash.just.atm.model.VerificationType
+import cash.just.atm.viewmodel.AtmViewModel
+import cash.just.atm.viewmodel.VerificationSent
 import cash.just.sdk.CashSDK
-import cash.just.sdk.model.*
-import cash.just.support.R
+import cash.just.sdk.model.AtmMachine
+import cash.just.sdk.model.CashCode
+import cash.just.sdk.model.CashStatus
+import cash.just.sdk.model.isValidAmount
+import cash.just.atm.R
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.CameraPosition
+import com.square.project.base.singleStateObserve
 import kotlinx.android.synthetic.main.fragment_request_cash_code.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-
-private enum class VerificationState {
-    PHONE,
-    EMAIL
-}
 
 class AtmRequestFragment : Fragment() {
     private val viewModel = AtmViewModel()
-    private lateinit var appContext:Context
+    private lateinit var appContext: Context
 
     companion object {
         private const val INITIAL_ZOOM = 15f
-        private const val HTTP_OK_CODE = 200
         private const val CLICKS_TO_START_ANIMATION = 3
         private const val MAP_FRAGMENT_TAG = "MAP_FRAGMENT_TAG"
     }
 
-    private var currentVerificationMode = VerificationState.PHONE
+    private var currentVerificationMode = VerificationType.PHONE
     private var coinCount = 0
 
     override fun onCreateView(
@@ -55,7 +57,9 @@ class AtmRequestFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         appContext = view.context.applicationContext
 
-        val atm = AtmRequestFragmentArgs.fromBundle(requireArguments()).atmMachine
+        val atm = AtmRequestFragmentArgs.fromBundle(
+            requireArguments()
+        ).atmMachine
 
         verificationGroup.visibility = View.VISIBLE
         confirmGroup.visibility = View.GONE
@@ -67,12 +71,6 @@ class AtmRequestFragment : Fragment() {
             "Min $${atm.min} max $${atm.max}, multiple of $${atm.bills.toFloat().toInt()} bills"
 
         getAtmCode.setOnClickListener {
-
-            if (!CashSDK.isSessionCreated()) {
-                Toast.makeText(view.context, "Invalid session", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-
             if (checkFields()) {
                 Toast.makeText(view.context, "Complete the fields", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
@@ -104,7 +102,7 @@ class AtmRequestFragment : Fragment() {
                 return@setOnClickListener
             }
 
-            requestVerificationCode(view.context)
+            viewModel.sendVerificationCode(getName()!!, getSurname()!!, getPhone(), getEmail())
         }
 
         confirmAction.setOnClickListener {
@@ -120,106 +118,46 @@ class AtmRequestFragment : Fragment() {
             }
 
             hideKeyboard(view.context, code.editText!!)
-            createCashCode(view.context, atm)
+            viewModel.createCashCode(atm, getAmount()!!, getCode()!!)
         }
 
         dropView.setDrawables(R.drawable.bitcoin, R.drawable.bitcoin)
 
     }
 
-    private fun createCashCode(context: Context, atm: AtmMachine) {
-
-        CashSDK.createCashCode(atm.atmId, getAmount()!!, getCode()!!)
-            .enqueue(object : Callback<CashCodeResponse> {
-                override fun onResponse(call: Call<CashCodeResponse>, response: Response<CashCodeResponse>) {
-                    if (response.code() == HTTP_OK_CODE) {
-                        val secureCode = response.body()!!.data.items[0].secureCode
-                        proceedWithCashCode(context, secureCode)
-                    } else {
-                        val errorBody = response.errorBody()
-                        errorBody?.let {
-                            it.parseError().error.server_message.let { message ->
-                                Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
-                                return
-                            }
-                        }
-                        Toast.makeText(context, "error " + response.code(), Toast.LENGTH_SHORT).show()
-                    }
-                }
-
-                override fun onFailure(call: Call<CashCodeResponse>, t: Throwable) {
-                    Toast.makeText(context, t.message, Toast.LENGTH_SHORT).show()
-                }
-            })
-    }
-
-    private fun proceedWithCashCode(context: Context, secureCode: String) {
-        AtmSharedPreferencesManager.setWithdrawalRequest(context, secureCode)
-
-        CashSDK.checkCashCodeStatus(secureCode).enqueue(object : Callback<CashCodeStatusResponse> {
-            override fun onResponse(call: Call<CashCodeStatusResponse>, response: Response<CashCodeStatusResponse>) {
-                val cashStatus = response.body()!!.data!!.items[0]
-                showDialog(context, secureCode, cashStatus)
-            }
-
-            override fun onFailure(call: Call<CashCodeStatusResponse>, t: Throwable) {
-                Toast.makeText(context, t.message, Toast.LENGTH_SHORT).show()
-            }
-        })
-    }
-
     private fun showDialog(context: Context, secureCode: String, cashStatus: CashStatus) {
         AlertDialog.Builder(context).setTitle("Withdrawal requested")
             .setMessage("Please send the amount of ${cashStatus.btc_amount} BTC to the ATM")
-            .setPositiveButton("Send", DialogInterface.OnClickListener { dialog,_ ->
+            .setPositiveButton("Send", DialogInterface.OnClickListener { dialog, _ ->
                 dialog.dismiss()
+                Toast.makeText(context,"GO TO SEND NOW", Toast.LENGTH_SHORT).show()
 //                goToSend(cashStatus.btc_amount, cashStatus.address)
-            }).setNegativeButton("Details",  DialogInterface.OnClickListener { dialog,_ ->
+                findNavController().popBackStack()
+            }).setNegativeButton("Details", DialogInterface.OnClickListener { dialog, _ ->
+                Toast.makeText(context,"GO TO DETAILS NOW $secureCode", Toast.LENGTH_SHORT).show()
                 dialog.dismiss()
 //                goToDetails(secureCode, cashStatus)
+                findNavController().popBackStack()
             }).create().show()
     }
 
-    private fun requestVerificationCode(context: Context) {
-        CashSDK.sendVerificationCode(
-            getName()!!,
-            getSurname()!!,
-            getPhone(),
-            getEmail()
-        ).enqueue(object : Callback<SendVerificationCodeResponse> {
-            override fun onResponse(
-                call: Call<SendVerificationCodeResponse>,
-                response: Response<SendVerificationCodeResponse>
-            ) {
-                if (response.code() == HTTP_OK_CODE) {
-                    Toast.makeText(
-                        context,
-                        response.body()!!.data.items[0].result,
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    if (getEmail() != null && getEmail()!!.isNotEmpty()) {
-                        confirmationMessage.text = "We've sent a confirmation code to your email."
-                        code.helperText =
-                            "Check your email for the confirmation code we sent you." +
-                                    " It may take a couple of minutes."
-                    } else {
-                        confirmationMessage.text =
-                            "We've sent a confirmation code to your phone by SMS."
-                        code.helperText =
-                            "Check your SMS inbox for the confirmation code we sent you." +
-                                    " It may take a couple of minutes."
-                    }
-                    verificationGroup.visibility = View.GONE
-                    confirmGroup.visibility = View.VISIBLE
-                } else {
-                    Toast.makeText(context, "error" + response.code(), Toast.LENGTH_SHORT).show()
-                }
+    private fun populateVerification(verification: VerificationSent) {
+        when(verification.type) {
+            VerificationType.EMAIL -> {
+                confirmationMessage.text = "We've sent a confirmation code to your email."
+                code.helperText =
+                    "Check your email for the confirmation code we sent you." +
+                            " It may take a couple of minutes."
             }
-
-            override fun onFailure(call: Call<SendVerificationCodeResponse>, t: Throwable) {
-                Toast.makeText(context, t.message, Toast.LENGTH_SHORT).show()
+            VerificationType.PHONE -> {
+                confirmationMessage.text = "We've sent a confirmation code to your phone by SMS."
+                code.helperText =
+                    "Check your SMS inbox for the confirmation code we sent you." +
+                            " It may take a couple of minutes."
             }
-        })
+        }
+        verificationGroup.visibility = View.GONE
+        confirmGroup.visibility = View.VISIBLE
     }
 
     private fun hideKeyboard(context: Context, editText: EditText) {
@@ -280,7 +218,8 @@ class AtmRequestFragment : Fragment() {
     }
 
     private fun createAndHideMap(fragmentManager: FragmentManager): SupportMapFragment {
-        val fragment = AtmMapHelper.addMapFragment(fragmentManager, R.id.smallMapFragment,
+        val fragment = AtmMapHelper.addMapFragment(
+            fragmentManager, R.id.smallMapFragment,
             MAP_FRAGMENT_TAG
         )
         fragmentManager.beginTransaction()
@@ -335,18 +274,44 @@ class AtmRequestFragment : Fragment() {
         return email.editText?.text.toString()
     }
 
+    // use this to activate the Email verification
     private fun toggleVerification() {
-        if (currentVerificationMode == VerificationState.PHONE) {
+        if (currentVerificationMode == VerificationType.PHONE) {
             phoneNumber.visibility = View.GONE
             email.visibility = View.VISIBLE
             // noPhoneButton.text = "Phone Number"
-            currentVerificationMode = VerificationState.EMAIL
+            currentVerificationMode = VerificationType.EMAIL
         } else {
             phoneNumber.visibility = View.VISIBLE
             email.visibility = View.GONE
             // noPhoneButton.text = "No Phone?"
-            currentVerificationMode = VerificationState.PHONE
+            currentVerificationMode = VerificationType.PHONE
         }
     }
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        viewModel.state.singleStateObserve(this) { state ->
+            when (state) {
+                is RequestState.Success -> {
+                    when(state.result) {
+                        is VerificationSent -> {
+                            populateVerification(state.result)
+                        }
+                        is AtmViewModel.CashCodeStatusResult -> {
+                            showDialog(requireContext(), state.result.secureCode, state.result.cashCodeStatus)
+                        }
+                        is CashCode -> {
+                            viewModel.checkCashCodeStatus(requireContext(), state.result.secureCode)
+                        }
+                    }
+                }
+
+                is RequestState.Error -> {
+                    showError(this, state.throwable)
+                }
+            }
+        }
+    }
 }

@@ -1,4 +1,4 @@
-package cash.just.atm.model
+package cash.just.atm.extension
 
 import cash.just.sdk.model.AtmMachine
 fun getAtmMachineMock() : AtmMachine {

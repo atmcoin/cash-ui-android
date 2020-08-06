@@ -1,6 +1,6 @@
 package cash.just.atm.model
 
-import cash.just.atm.utils.getFullAddress
+import cash.just.atm.extension.getFullAddress
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.clustering.ClusterItem
 

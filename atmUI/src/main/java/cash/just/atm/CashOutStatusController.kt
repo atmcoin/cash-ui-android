@@ -13,6 +13,7 @@
 //import cash.just.sdk.model.CashCodeStatusResponse
 //import cash.just.sdk.model.CashStatus
 //import cash.just.sdk.model.CodeStatus
+//import cash.just.support.R
 //import com.bluelinelabs.conductor.RouterTransaction
 //import com.breadwallet.R
 //import com.breadwallet.legacy.presenter.entities.CryptoRequest

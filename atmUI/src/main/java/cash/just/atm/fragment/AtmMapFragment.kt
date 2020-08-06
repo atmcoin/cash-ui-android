@@ -1,4 +1,4 @@
-package cash.just.atm
+package cash.just.atm.fragment
 
 import android.content.Context
 import android.os.Bundle
@@ -10,13 +10,17 @@ import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import cash.just.atm.AtmItem
+import cash.just.atm.AtmMapHelper
+import cash.just.atm.R
 import cash.just.atm.base.RequestState
+import cash.just.atm.base.showError
 import cash.just.atm.model.AtmClusterRenderer
 import cash.just.atm.model.AtmMarker
 import cash.just.atm.model.AtmMarkerInfo
 import cash.just.atm.model.ClusteredAtm
+import cash.just.atm.viewmodel.AtmViewModel
 import cash.just.sdk.model.AtmMachine
-import cash.just.support.R
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
@@ -28,12 +32,12 @@ import kotlinx.android.synthetic.main.fragment_map.*
 import okhttp3.internal.filterList
 import timber.log.Timber
 
-enum class ATMViewMode {
+private enum class ViewMode {
     MAP,
     LIST
 }
 
-enum class ATMMode {
+private enum class MachineMode {
     ALL,
     REDEMPTION
 }
@@ -41,8 +45,10 @@ enum class ATMMode {
 class AtmMapFragment : Fragment() {
     private val viewModel = AtmViewModel()
 
-    private var viewMode:ATMViewMode = ATMViewMode.MAP
-    private var atmMode:ATMMode = ATMMode.ALL
+    private var viewMode: ViewMode =
+        ViewMode.MAP
+    private var atmMode: MachineMode =
+        MachineMode.ALL
 
     private var map: GoogleMap? = null
     private var atmList: List<AtmMachine> = ArrayList()
@@ -83,7 +89,7 @@ class AtmMapFragment : Fragment() {
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                switchToMode(ATMViewMode.LIST)
+                switchToMode(ViewMode.LIST)
                 fastAdapter.filter(newText)
                 return false
             }
@@ -109,13 +115,13 @@ class AtmMapFragment : Fragment() {
 
         listMapButton.setOnClickListener {
             viewMode = when (viewMode) {
-                ATMViewMode.MAP -> {
-                    switchToMode(ATMViewMode.MAP)
-                    ATMViewMode.LIST
+                ViewMode.MAP -> {
+                    switchToMode(ViewMode.MAP)
+                    ViewMode.LIST
                 }
-                ATMViewMode.LIST -> {
-                    switchToMode(ATMViewMode.LIST)
-                    ATMViewMode.MAP
+                ViewMode.LIST -> {
+                    switchToMode(ViewMode.LIST)
+                    ViewMode.MAP
                 }
             }
         }
@@ -128,11 +134,11 @@ class AtmMapFragment : Fragment() {
                 if (isAllAtms) {
                     buttonRedeemOnly.text = "Show All"
                     isAllAtms = false
-                    atmMode = ATMMode.REDEMPTION
+                    atmMode = MachineMode.REDEMPTION
                 } else {
                     buttonRedeemOnly.text = "Show Redeem Only"
                     isAllAtms = true
-                    atmMode = ATMMode.ALL
+                    atmMode = MachineMode.ALL
                 }
 
                 proceedToAddMarkers(it.context, map!!, atmList, atmMode)
@@ -141,10 +147,10 @@ class AtmMapFragment : Fragment() {
         }
     }
 
-    private fun populateList(list:List<AtmMachine>, mode:ATMMode){
+    private fun populateList(list:List<AtmMachine>, mode: MachineMode){
         fastAdapter.clear()
         list.forEach {
-            if (mode == ATMMode.REDEMPTION) {
+            if (mode == MachineMode.REDEMPTION) {
                 if (it.redemption == 1) {
                     fastAdapter.add(AtmItem(it))
                 }
@@ -154,9 +160,9 @@ class AtmMapFragment : Fragment() {
         }
     }
 
-    private fun proceedToAddMarkers(context:Context, map:GoogleMap, atmList:List<AtmMachine>, atmMode:ATMMode) {
+    private fun proceedToAddMarkers(context:Context, map:GoogleMap, atmList:List<AtmMachine>, atmMode: MachineMode) {
         var filteredList = atmList
-        if (atmMode == ATMMode.REDEMPTION) {
+        if (atmMode == MachineMode.REDEMPTION) {
             filteredList = atmList.filterList {
                 this.redemption == 1
             }
@@ -199,14 +205,14 @@ class AtmMapFragment : Fragment() {
         }
     }
 
-    private fun switchToMode(mode: ATMViewMode){
+    private fun switchToMode(mode: ViewMode){
         when (mode) {
-            ATMViewMode.MAP -> {
+            ViewMode.MAP -> {
                 listMapButton.setImageResource(R.drawable.ic_view_list)
                 atmRecyclerList.visibility = View.GONE
                 mapFragment.visibility = View.VISIBLE
             }
-            ATMViewMode.LIST -> {
+            ViewMode.LIST -> {
                 listMapButton.setImageResource(R.drawable.ic_map_marker)
                 atmRecyclerList.visibility = View.VISIBLE
                 mapFragment.visibility = View.GONE
@@ -224,6 +230,7 @@ class AtmMapFragment : Fragment() {
 
             when (state) {
                 is RequestState.Success -> {
+                    @Suppress("UNCHECKED_CAST")
                     atmList = state.result as List<AtmMachine>
                     map?.let { mapObject ->
                         proceedToAddMarkers(appContext, mapObject, atmList, atmMode)
@@ -234,14 +241,18 @@ class AtmMapFragment : Fragment() {
                 }
 
                 is RequestState.Error -> {
-
+                    showError(this, state.throwable)
                 }
             }
         }
     }
 
     private fun prepareMap(context : Context) {
-        AtmMapHelper.addMapFragment(parentFragmentManager, R.id.mapFragment, "ATMS_MAP")
+        AtmMapHelper.addMapFragment(
+            parentFragmentManager,
+            R.id.mapFragment,
+            "ATMS_MAP"
+        )
             .getMapAsync { googleMap ->
                 googleMap?.let {
                     Timber.d("Map prepared")
@@ -276,6 +287,10 @@ class AtmMapFragment : Fragment() {
     }
 
     private fun moveToVerification(atm:AtmMachine) {
-        findNavController().navigate(AtmMapFragmentDirections.mapToRequest(atm))
+        findNavController().navigate(
+            AtmMapFragmentDirections.mapToRequest(
+                atm
+            )
+        )
     }
 }

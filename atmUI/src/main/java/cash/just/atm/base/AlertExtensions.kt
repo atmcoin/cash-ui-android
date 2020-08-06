@@ -14,8 +14,8 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.LifecycleOwner
-import cash.just.support.BuildConfig
-import cash.just.support.R
+import cash.just.atm.BuildConfig
+import cash.just.atm.R
 import com.google.android.material.snackbar.Snackbar
 import com.square.project.base.context
 import com.square.project.base.getThemeResource

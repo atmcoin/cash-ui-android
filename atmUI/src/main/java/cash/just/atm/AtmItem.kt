@@ -4,7 +4,6 @@ import android.graphics.Color
 import android.view.View
 import android.widget.TextView
 import cash.just.sdk.model.AtmMachine
-import cash.just.support.R
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.items.AbstractItem
 

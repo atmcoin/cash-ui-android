@@ -6,9 +6,9 @@ import android.graphics.Canvas
 import android.graphics.drawable.Drawable
 import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat
-import cash.just.atm.utils.getFullAddress
+import cash.just.atm.R
+import cash.just.atm.extension.getFullAddress
 import cash.just.sdk.model.AtmMachine
-import cash.just.support.R
 import com.google.android.gms.maps.model.BitmapDescriptor
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng

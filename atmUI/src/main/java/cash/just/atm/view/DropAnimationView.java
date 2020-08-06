@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import cash.just.support.R;
+import cash.just.atm.R;
 
 /**
  * @author Wayne
