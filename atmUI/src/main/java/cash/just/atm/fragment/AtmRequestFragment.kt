@@ -132,12 +132,12 @@ class AtmRequestFragment : Fragment() {
                 dialog.dismiss()
                 Toast.makeText(context,"GO TO SEND NOW", Toast.LENGTH_SHORT).show()
 //                goToSend(cashStatus.btc_amount, cashStatus.address)
-                findNavController().popBackStack()
+                requireActivity().finish()
             }).setNegativeButton("Details", DialogInterface.OnClickListener { dialog, _ ->
                 Toast.makeText(context,"GO TO DETAILS NOW $secureCode", Toast.LENGTH_SHORT).show()
                 dialog.dismiss()
 //                goToDetails(secureCode, cashStatus)
-                findNavController().popBackStack()
+                requireActivity().finish()
             }).create().show()
     }
 
