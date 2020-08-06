@@ -13,8 +13,8 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import androidx.navigation.fragment.findNavController
 import cash.just.atm.AtmMapHelper
+import cash.just.atm.R
 import cash.just.atm.base.RequestState
 import cash.just.atm.base.showError
 import cash.just.atm.model.AtmMarker
@@ -26,7 +26,6 @@ import cash.just.sdk.model.AtmMachine
 import cash.just.sdk.model.CashCode
 import cash.just.sdk.model.CashStatus
 import cash.just.sdk.model.isValidAmount
-import cash.just.atm.R
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.CameraPosition
 import com.square.project.base.singleStateObserve
