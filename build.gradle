@@ -28,7 +28,8 @@ allprojects {
         versionCode = 4
         compileSdkVersion = 29
         buildToolsVersion = "29.0.3"
-        minSdkVersion = 21
+        //TODO review minsdk, before was 21 but qrcode library has min 24
+        minSdkVersion = 24
         targetSdkVersion = 29
     }
 }

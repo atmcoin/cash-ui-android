@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import cash.just.atm.R
@@ -16,6 +17,8 @@ import cash.just.atm.base.showError
 import cash.just.atm.viewmodel.StatusViewModel
 import cash.just.sdk.model.CashStatus
 import cash.just.sdk.model.CodeStatus
+import com.google.zxing.BarcodeFormat
+import com.journeyapps.barcodescanner.BarcodeEncoder
 import com.square.project.base.singleStateObserve
 import kotlinx.android.synthetic.main.fragment_status.*
 import kotlinx.android.synthetic.main.request_status_awaiting.*
@@ -50,6 +53,12 @@ class StatusFragment : Fragment() {
         val cashCode = StatusFragmentArgs.fromBundle(requireArguments()).cashCode
         changeUiState(ViewState.LOADING)
         viewModel.checkCashCodeStatus(cashCode)
+    }
+
+    private fun generateQRCode(data: String, imageView: ImageView) {
+        val barcodeEncoder = BarcodeEncoder()
+        val bitmap = barcodeEncoder.encodeBitmap(data, BarcodeFormat.QR_CODE, 300, 300)
+        imageView.setImageBitmap(bitmap)
     }
 
     private fun refreshCodeStatus(code: String, context: Context) {
@@ -111,10 +120,8 @@ class StatusFragment : Fragment() {
             copyToClipboard(context, cashStatus.address)
         }
 
-        //TODO
-//        if (!QRUtils.generateQR(activity, uri.toString(), qr_image)) {
-//            error("failed to generate qr image for address")
-//        }
+        //TODO add amount to qr code
+        generateQRCode(cashStatus.address, qr_image)
     }
 
     private fun goToSend(btc: String, address: String) {

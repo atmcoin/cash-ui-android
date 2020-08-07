@@ -53,8 +53,8 @@
         android:orientation="horizontal">
 
         <ImageView
+            android:scaleType="fitCenter"
             android:id="@+id/qr_image"
-            android:padding="7dp"
             tools:src="@drawable/sample_qr"
             android:layout_marginEnd="7dp"
             android:layout_width="150dp"
