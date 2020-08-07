@@ -12,14 +12,15 @@ object AtmMapHelper {
             fragmentManager
                 .beginTransaction()
                 .remove(fragment)
-                .commit()
-            fragmentManager.executePendingTransactions()
+                .commitNow()
         }
 
         fragmentManager
             .beginTransaction()
             .add(containerViewId, fragment, tag)
-            .commit()
+            .commitNow()
+
+        fragmentManager.executePendingTransactions()
 
         return fragment as SupportMapFragment
     }

@@ -43,22 +43,23 @@ private enum class MachineMode {
 }
 
 class AtmMapFragment : Fragment() {
+    companion object {
+        private val texas = LatLng(31.000000, -100.000000)
+        private const val MAP_FRAGMENT_TAG = "AtmMapFragment"
+        private const val initialZoom = 5f
+        private const val enableMapClusters = false
+        private const val clustersThreshold = 100
+    }
+
+    private lateinit var appContext:Context
     private val viewModel = AtmViewModel()
 
-    private var viewMode: ViewMode =
-        ViewMode.MAP
-    private var atmMode: MachineMode =
-        MachineMode.ALL
+    private var viewMode: ViewMode = ViewMode.MAP
+    private var atmMode: MachineMode = MachineMode.ALL
 
     private var map: GoogleMap? = null
     private var atmList: List<AtmMachine> = ArrayList()
-
-    private var texas = LatLng(31.000000, -100.000000)
-    private var initialZoom = 5f
-    private lateinit var appContext:Context
-    private val enableMapClusters = false
-    private val clustersThreshold = 100
-    private var isAllAtms = true
+    private var isAllMachines = true
     private val fastAdapter = FastItemAdapter<AtmItem>()
 
     override fun onCreateView(
@@ -131,13 +132,13 @@ class AtmMapFragment : Fragment() {
                 loadingView.visibility = View.VISIBLE
 
                 buttonRedeemOnly.isEnabled = false
-                if (isAllAtms) {
+                if (isAllMachines) {
                     buttonRedeemOnly.text = "Show All"
-                    isAllAtms = false
+                    isAllMachines = false
                     atmMode = MachineMode.REDEMPTION
                 } else {
                     buttonRedeemOnly.text = "Show Redeem Only"
-                    isAllAtms = true
+                    isAllMachines = true
                     atmMode = MachineMode.ALL
                 }
 
@@ -248,11 +249,7 @@ class AtmMapFragment : Fragment() {
     }
 
     private fun prepareMap(context : Context) {
-        AtmMapHelper.addMapFragment(
-            parentFragmentManager,
-            R.id.mapFragment,
-            "ATMS_MAP"
-        )
+        AtmMapHelper.addMapFragment(childFragmentManager, R.id.mapFragment, MAP_FRAGMENT_TAG)
             .getMapAsync { googleMap ->
                 googleMap?.let {
                     Timber.d("Map prepared")
@@ -287,10 +284,6 @@ class AtmMapFragment : Fragment() {
     }
 
     private fun moveToVerification(atm:AtmMachine) {
-        findNavController().navigate(
-            AtmMapFragmentDirections.mapToRequest(
-                atm
-            )
-        )
+        findNavController().navigate(AtmMapFragmentDirections.mapToRequest(atm))
     }
 }

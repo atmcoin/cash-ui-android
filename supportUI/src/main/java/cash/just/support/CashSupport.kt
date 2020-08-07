@@ -4,7 +4,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import timber.log.Timber
 import timber.log.Timber.DebugTree
 
-
 class CashSupport private constructor(
     private val pageType: PageType,
     private val supportPage: BaseSupportPage?,

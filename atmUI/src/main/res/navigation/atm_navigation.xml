@@ -10,13 +10,13 @@
         android:name="cash.just.atm.fragment.AtmMapFragment"
         android:label="Atm Map"
         tools:layout="@layout/fragment_map">
-        <action android:id="@+id/map_to_request" app:destination="@+id/request">
+        <action android:id="@+id/map_to_request" app:destination="@+id/atmRequestFragment">
             <argument android:name="atm_machine" app:nullable="false" app:argType="cash.just.sdk.model.AtmMachine"/>
         </action>
     </fragment>
 
     <fragment
-        android:id="@+id/request"
+        android:id="@+id/atmRequestFragment"
         android:name="cash.just.atm.fragment.AtmRequestFragment"
         android:label="Atm Request"
         tools:layout="@layout/fragment_request_cash_code">

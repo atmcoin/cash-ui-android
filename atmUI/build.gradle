@@ -4,12 +4,12 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'androidx.navigation.safeargs.kotlin'
 
 android {
-    compileSdkVersion 29
-    buildToolsVersion "29.0.3"
+    compileSdkVersion project.ext.compileSdkVersion
+    buildToolsVersion "${project.ext.buildToolsVersion}"
 
     defaultConfig {
-        minSdkVersion 23
-        targetSdkVersion 29
+        minSdkVersion project.ext.minSdkVersion
+        targetSdkVersion project.ext.targetSdkVersion
         versionName "${project.ext.versionName}"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"

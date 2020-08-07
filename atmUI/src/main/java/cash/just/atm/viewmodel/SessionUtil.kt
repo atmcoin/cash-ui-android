@@ -15,7 +15,7 @@ class SessionUtil{
             }
         }
 
-        fun createSession(): Boolean {
+        private fun createSession(): Boolean {
             val countDownLatch = CountDownLatch(1)
 
             CashSDK.createSession(BitcoinServer.getServer(), object : Cash.SessionCallback {

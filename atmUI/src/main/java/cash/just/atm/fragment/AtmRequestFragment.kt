@@ -13,7 +13,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import cash.just.atm.AtmMapHelper
+import cash.just.atm.AtmFlow
 import cash.just.atm.R
 import cash.just.atm.base.RequestState
 import cash.just.atm.base.showError
@@ -30,6 +30,8 @@ import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.CameraPosition
 import com.square.project.base.singleStateObserve
 import kotlinx.android.synthetic.main.fragment_request_cash_code.*
+import timber.log.Timber
+import java.lang.IllegalStateException
 
 class AtmRequestFragment : Fragment() {
     private val viewModel = AtmViewModel()
@@ -38,7 +40,7 @@ class AtmRequestFragment : Fragment() {
     companion object {
         private const val INITIAL_ZOOM = 15f
         private const val CLICKS_TO_START_ANIMATION = 3
-        private const val MAP_FRAGMENT_TAG = "MAP_FRAGMENT_TAG"
+        private const val MAP_FRAGMENT_TAG = "AtmRequestFragment"
     }
 
     private var currentVerificationMode = VerificationType.PHONE
@@ -121,7 +123,17 @@ class AtmRequestFragment : Fragment() {
         }
 
         dropView.setDrawables(R.drawable.bitcoin, R.drawable.bitcoin)
+    }
 
+    private fun getAtmFlow():AtmFlow? {
+        activity?.let {
+            if (it is AtmFlow) {
+                return it
+            }
+            throw IllegalStateException("Parent activity must implement " + AtmFlow::class.java.name)
+        }?:run {
+            return null
+        }
     }
 
     private fun showDialog(context: Context, secureCode: String, cashStatus: CashStatus) {
@@ -129,14 +141,10 @@ class AtmRequestFragment : Fragment() {
             .setMessage("Please send the amount of ${cashStatus.btc_amount} BTC to the ATM")
             .setPositiveButton("Send", DialogInterface.OnClickListener { dialog, _ ->
                 dialog.dismiss()
-                Toast.makeText(context,"GO TO SEND NOW", Toast.LENGTH_SHORT).show()
-//                goToSend(cashStatus.btc_amount, cashStatus.address)
-                requireActivity().finish()
+                getAtmFlow()?.onSend(cashStatus.btc_amount, cashStatus.address)
             }).setNegativeButton("Details", DialogInterface.OnClickListener { dialog, _ ->
-                Toast.makeText(context,"GO TO DETAILS NOW $secureCode", Toast.LENGTH_SHORT).show()
                 dialog.dismiss()
-//                goToDetails(secureCode, cashStatus)
-                requireActivity().finish()
+                getAtmFlow()?.onDetails(secureCode, cashStatus)
             }).create().show()
     }
 
@@ -166,9 +174,12 @@ class AtmRequestFragment : Fragment() {
     }
 
     private fun prepareMap(context: Context, atm: AtmMachine) {
-        val fragment = createAndHideMap(parentFragmentManager)
+        val fragment = addMap()
         fragment.getMapAsync(object : OnMapReadyCallback {
             override fun onMapReady(googleMap: GoogleMap?) {
+                fragment.view?.let {
+                    it.visibility = View.GONE
+                }
                 googleMap ?: return
 
                 googleMap.uiSettings.isMapToolbarEnabled = false
@@ -176,11 +187,14 @@ class AtmRequestFragment : Fragment() {
                 googleMap.uiSettings.isScrollGesturesEnabled = false
                 googleMap.uiSettings.isZoomGesturesEnabled = false
                 googleMap.uiSettings.isScrollGesturesEnabledDuringRotateOrZoom = false
-                showMap(parentFragmentManager)
                 googleMap.setOnMapLoadedCallback(GoogleMap.OnMapLoadedCallback {
                     addMarkerAndMoveCamera(context, googleMap, atm)
                     coinCount = 0
                     dropView.stopAnimation()
+
+                    fragment.view?.let {
+                        it.visibility = View.VISIBLE
+                    }
                 })
 
                 googleMap.setOnInfoWindowClickListener {
@@ -207,24 +221,17 @@ class AtmRequestFragment : Fragment() {
         }
     }
 
-    private fun showMap(fragmentManager: FragmentManager) {
-        val fragment = fragmentManager.findFragmentByTag(MAP_FRAGMENT_TAG)
-        fragment?.let {
-            fragmentManager.beginTransaction()
-                .show(fragment)
-                .commit()
+    private fun addMap():SupportMapFragment {
+        val fragmentManager = childFragmentManager
+        val transition = fragmentManager.beginTransaction()
+        var fragment = fragmentManager.findFragmentById(R.id.smallMapFragment)
+        if (fragment == null) {
+            fragment = SupportMapFragment()
+            transition.add(R.id.smallMapFragment, fragment, MAP_FRAGMENT_TAG)
         }
-    }
-
-    private fun createAndHideMap(fragmentManager: FragmentManager): SupportMapFragment {
-        val fragment = AtmMapHelper.addMapFragment(
-            fragmentManager, R.id.smallMapFragment,
-            MAP_FRAGMENT_TAG
-        )
-        fragmentManager.beginTransaction()
-            .hide(fragment)
-            .commit()
-        return fragment
+        transition.commit()
+        fragmentManager.executePendingTransactions()
+        return fragment as SupportMapFragment
     }
 
     private fun addMarkerAndMoveCamera(context: Context, googleMap: GoogleMap, atm: AtmMachine) {
@@ -238,8 +245,7 @@ class AtmRequestFragment : Fragment() {
             .zoom(INITIAL_ZOOM)
             .build()
 
-        val cameraUpdate: CameraUpdate = CameraUpdateFactory
-            .newCameraPosition(cameraPosition)
+        val cameraUpdate: CameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition)
         googleMap.moveCamera(cameraUpdate)
     }
 
@@ -294,7 +300,7 @@ class AtmRequestFragment : Fragment() {
         viewModel.state.singleStateObserve(this) { state ->
             when (state) {
                 is RequestState.Success -> {
-                    when(state.result) {
+                    when (state.result) {
                         is VerificationSent -> {
                             populateVerification(state.result)
                         }
