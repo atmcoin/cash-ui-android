@@ -20,7 +20,6 @@ class MainActivity : AppCompatActivity() {
             fragment.show(supportFragmentManager, "tag")
         }
 
-
         BitcoinServer.setServer(Cash.BtcNetwork.TEST_NET)
         CashUI.init(Cash.BtcNetwork.TEST_NET)
         serverToggleButton.setOnCheckedChangeListener { _, isChecked ->
@@ -40,6 +39,10 @@ class MainActivity : AppCompatActivity() {
 
         openActivity.setOnClickListener {
             CashUI.showStatusList(this@MainActivity)
+        }
+
+        openStatus.setOnClickListener {
+            CashUI.showStatus(this@MainActivity, cashCode.text.toString())
         }
     }
 

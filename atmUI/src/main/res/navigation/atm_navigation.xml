@@ -22,6 +22,4 @@
         tools:layout="@layout/fragment_request_cash_code">
         <argument android:name="atm_machine" app:nullable="false" app:argType="cash.just.sdk.model.AtmMachine"/>
     </fragment>
-
-
 </navigation>

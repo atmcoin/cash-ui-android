@@ -30,6 +30,11 @@ class CashUserInterfaceImpl : CashUIProtocol {
     context.startActivity(Intent(context, StatusActivity::class.java))
   }
 
+  override fun showStatus(context: Context, code: String) {
+    val intent = StatusActivity.newCashStatusIntent(context,code)
+    context.startActivity(intent)
+  }
+
   override fun getResult(intent:Intent): AtmResult? {
     return AtmActivity.getResult(intent)
   }

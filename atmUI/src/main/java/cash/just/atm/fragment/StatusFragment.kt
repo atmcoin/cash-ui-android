@@ -40,12 +40,16 @@ class StatusFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_request_cash_code, container, false)
+        return inflater.inflate(R.layout.fragment_status, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         appContext = view.context.applicationContext
+
+        val cashCode = StatusFragmentArgs.fromBundle(requireArguments()).cashCode
+        changeUiState(ViewState.LOADING)
+        viewModel.checkCashCodeStatus(cashCode)
     }
 
     private fun refreshCodeStatus(code: String, context: Context) {

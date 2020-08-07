@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import cash.just.atm.R
 import cash.just.atm.base.RequestState
 import cash.just.atm.base.showError
@@ -75,7 +76,7 @@ class StatusListFragment : Fragment() {
         viewModel.state.singleStateObserve(this) { state ->
             when (state) {
                 is RequestState.Success -> {
-                   var list = state.result as ArrayList<CashStatusResult>
+                   val list = state.result as ArrayList<CashStatusResult>
                    createStatusRows(list)
                 }
 
@@ -138,6 +139,7 @@ class StatusListFragment : Fragment() {
                     cashStatus
                 )
 //            router.pushController(RouterTransaction.with(CashOutStatusController(retryableCashStatus)))
+            findNavController().navigate(StatusListFragmentDirections.listToStatus(secureCode))
         }
     }
 

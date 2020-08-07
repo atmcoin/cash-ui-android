@@ -12,7 +12,6 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import cash.just.atm.AtmFlow
 import cash.just.atm.R
 import cash.just.atm.base.RequestState

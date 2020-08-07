@@ -13,15 +13,30 @@
         android:id="@+id/rootView"
         android:padding="10dp">
 
-        <TextView
-            android:textSize="25dp"
-            android:text="atmUI"
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:textSize="25dp"
+                android:text="atmUI"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"/>
+
+            <ToggleButton
+                android:id="@+id/serverToggleButton"
+                android:checked="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textOff="MAINNET"
+                android:textOn="TESTNET"/>
+        </LinearLayout>
 
         <LinearLayout
             android:layout_marginTop="10dp"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -37,13 +52,23 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
-            <ToggleButton
-                android:id="@+id/serverToggleButton"
-                android:checked="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textOff="MAINNET"
-                android:textOn="TESTNET"/>
+            <LinearLayout
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/cashCode"
+                    android:hint="cashCode"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"/>
+
+                <Button
+                    android:id="@+id/openStatus"
+                    android:text="Open Status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
         </LinearLayout>
 
         <TextView

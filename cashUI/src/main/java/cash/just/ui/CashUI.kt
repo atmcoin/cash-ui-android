@@ -30,6 +30,11 @@ object CashUI : CashUIProtocol {
     cashUI.showStatusList(context)
   }
 
+  override fun showStatus(context: Context, code: String) {
+    checkInit()
+    cashUI.showStatus(context, code)
+  }
+
   override fun getResult(intent:Intent): AtmResult? {
     checkInit()
     return cashUI.getResult(intent)

@@ -14,6 +14,7 @@ interface CashUIProtocol {
   fun init(network: Cash.BtcNetwork)
   fun startCashOutActivityForResult(activity: Activity, requestCode:Int)
   fun showStatusList(context: Context)
+  fun showStatus(context: Context, code:String)
   fun getResult(intent:Intent): AtmResult?
   fun getSendData(intent:Intent): SendDataResult?
   fun getDetailsData(intent:Intent): DetailsDataResult?
