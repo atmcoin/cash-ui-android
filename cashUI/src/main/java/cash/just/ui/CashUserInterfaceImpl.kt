@@ -1,9 +1,10 @@
-package cash.just.atm
+package cash.just.ui
 
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import androidx.fragment.app.FragmentManager
+import cash.just.atm.*
 import cash.just.sdk.Cash
 import cash.just.sdk.CashSDK
 import cash.just.support.CashSupport
@@ -30,7 +31,7 @@ class CashUserInterfaceImpl : CashUIProtocol {
   }
 
   override fun showStatus(context: Context, code: String) {
-    val intent = StatusActivity.newCashStatusIntent(context,code)
+    val intent = StatusActivity.newCashStatusIntent(context, code)
     context.startActivity(intent)
   }
 

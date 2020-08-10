@@ -12,6 +12,7 @@ import cash.just.sdk.Cash
 import cash.just.support.BaseSupportPage
 import cash.just.support.CashSupport
 import cash.just.support.context
+import cash.just.ui.CashUI
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -102,7 +103,6 @@ class MainActivity : AppCompatActivity() {
                             }
                         }
                     }
-
                 }
             }
         }

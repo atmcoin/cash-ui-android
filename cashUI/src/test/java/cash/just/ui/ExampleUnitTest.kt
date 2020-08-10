@@ -1,4 +1,4 @@
-package cash.just.atm
+package cash.just.ui
 
 import org.junit.Assert.assertEquals
 import org.junit.Test
