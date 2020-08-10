@@ -3,4 +3,7 @@
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
+
+    <color name="total_assets_usd_color">#546875</color>
+    <color name="settings_chevron_right">#b3c0c8</color>
 </resources>

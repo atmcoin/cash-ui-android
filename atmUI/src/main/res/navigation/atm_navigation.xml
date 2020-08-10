@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/atmMapFragment">
+
+    <fragment
+        android:id="@+id/atmMapFragment"
+        android:name="cash.just.atm.fragment.AtmMapFragment"
+        android:label="Atm Map"
+        tools:layout="@layout/fragment_map">
+        <action android:id="@+id/map_to_request" app:destination="@+id/atmRequestFragment">
+            <argument android:name="atm_machine" app:nullable="false" app:argType="cash.just.sdk.model.AtmMachine"/>
+        </action>
+    </fragment>
+
+    <fragment
+        android:id="@+id/atmRequestFragment"
+        android:name="cash.just.atm.fragment.AtmRequestFragment"
+        android:label="Atm Request"
+        tools:layout="@layout/fragment_request_cash_code">
+        <argument android:name="atm_machine" app:nullable="false" app:argType="cash.just.sdk.model.AtmMachine"/>
+    </fragment>
+</navigation>

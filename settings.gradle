@@ -1,2 +1,4 @@
 include ':app'
 include ':supportUI'
+include ':atmUI'
+include ':cashUI'

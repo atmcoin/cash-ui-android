@@ -3,8 +3,10 @@ package cash.just.ui
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
-import cash.just.support.*
-import cash.just.support.pages.*
+import cash.just.atm.model.BitcoinServer
+import cash.just.sdk.Cash
+import cash.just.support.BaseSupportPage
+import cash.just.support.CashSupport
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -18,14 +20,36 @@ class MainActivity : AppCompatActivity() {
             fragment.show(supportFragmentManager, "tag")
         }
 
+        BitcoinServer.setServer(Cash.BtcNetwork.TEST_NET)
+        CashUI.init(Cash.BtcNetwork.TEST_NET)
+        serverToggleButton.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                CashUI.init(Cash.BtcNetwork.TEST_NET)
+                BitcoinServer.setServer(Cash.BtcNetwork.TEST_NET)
+            } else {
+                CashUI.init(Cash.BtcNetwork.MAIN_NET)
+                BitcoinServer.setServer(Cash.BtcNetwork.MAIN_NET)
+            }
+        }
         createButtons(BaseSupportPage.allPages())
+
+        openMaps.setOnClickListener {
+            CashUI.startCashOutActivityForResult(this@MainActivity, 0)
+        }
+
+        openActivity.setOnClickListener {
+            CashUI.showStatusList(this@MainActivity)
+        }
+
+        openStatus.setOnClickListener {
+            CashUI.showStatus(this@MainActivity, cashCode.text.toString())
+        }
     }
 
     private fun createButtons(pages:Array<BaseSupportPage>){
         pages.forEach { page ->
             addButtonWithText(page.title()).setOnClickListener {
-                val fragment = CashSupport.Builder().detail(page).build().createDialogFragment()
-                fragment.show(supportFragmentManager, "tag")
+                CashUI.showSupportPage(CashSupport.Builder().detail(page), supportFragmentManager)
             }
         }
     }
