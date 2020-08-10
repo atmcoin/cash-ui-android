@@ -8,12 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import cash.just.support.R
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class IndexDialogFragment : BottomSheetDialogFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setStyle(STYLE_NORMAL, R.style. AppBottomSheetDialogTheme);
+        setStyle(STYLE_NORMAL, R.style.AppBottomSheetDialogTheme);
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -37,7 +38,7 @@ class IndexDialogFragment : BottomSheetDialogFragment() {
         }
     }
 
-    private fun showDetailDialog(page:BaseSupportPage) {
+    private fun showDetailDialog(page: BaseSupportPage) {
         activity?.let {
             val fragment = CashSupport.Builder().detail(page, true).build().createDialogFragment()
             fragment.show(it.supportFragmentManager, "tag")

@@ -10,7 +10,6 @@ import androidx.browser.customtabs.CustomTabsServiceConnection
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
 
-
 fun LifecycleOwner.launchWebsite(url: String) {
     val customTabsServiceConnection = object : CustomTabsServiceConnection() {
         override fun onServiceDisconnected(name: ComponentName?) {}

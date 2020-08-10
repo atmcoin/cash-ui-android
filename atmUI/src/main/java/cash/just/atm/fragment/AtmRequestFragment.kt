@@ -139,10 +139,8 @@ class AtmRequestFragment : Fragment() {
         AlertDialog.Builder(context).setTitle("Withdrawal requested")
             .setMessage("Please send the amount of ${cashStatus.btc_amount} BTC to the ATM")
             .setPositiveButton("Send", DialogInterface.OnClickListener { dialog, _ ->
-                dialog.dismiss()
                 getAtmFlow()?.onSend(cashStatus.btc_amount, cashStatus.address)
             }).setNegativeButton("Details", DialogInterface.OnClickListener { dialog, _ ->
-                dialog.dismiss()
                 getAtmFlow()?.onDetails(secureCode, cashStatus)
             }).create().show()
     }

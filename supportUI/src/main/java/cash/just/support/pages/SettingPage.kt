@@ -3,7 +3,8 @@ package cash.just.support.pages
 
 import cash.just.support.BaseSupportPage
 
-enum class SettingPage(private val title: String, private val description: String) : BaseSupportPage {
+enum class SettingPage(private val title: String, private val description: String) :
+        BaseSupportPage {
         HOW_WIPE_WALLET(
                 "How do I wipe my wallet?",
                 "The Coinsquare Wallet App can only have one wallet active at a time. If you choose to start a new wallet or recover an existing wallet, the currently active wallet must be erased first.\n" +

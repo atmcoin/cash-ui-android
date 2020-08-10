@@ -1,10 +1,9 @@
-package cash.just.ui
+package cash.just.atm
 
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import androidx.fragment.app.FragmentManager
-import cash.just.atm.*
 import cash.just.sdk.Cash
 import cash.just.sdk.CashSDK
 import cash.just.support.CashSupport

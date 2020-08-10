@@ -5,4 +5,7 @@
     <item name="gray" type="color">#ff787878</item>
     <item name="black" type="color">#ff000000</item>
     <item name="green_text" type="color">#00BF00</item>
+
+    <color name="total_assets_usd_color">#546875</color>
+    <color name="settings_chevron_right">#b3c0c8</color>
 </resources>

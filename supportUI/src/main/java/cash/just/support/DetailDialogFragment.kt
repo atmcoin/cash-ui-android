@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import cash.just.support.R
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class DetailDialogFragment : BottomSheetDialogFragment() {
@@ -14,7 +15,7 @@ class DetailDialogFragment : BottomSheetDialogFragment() {
         private const val ARG_DESCRIPTION : String = "ARG_DESCRIPTION"
         private const val ARG_FROM_INDEX : String = "ARG_FROM_INDEX"
 
-        fun newInstance(page:BaseSupportPage, fromIndex:Boolean = false) : BottomSheetDialogFragment {
+        fun newInstance(page: BaseSupportPage, fromIndex:Boolean = false) : BottomSheetDialogFragment {
             val fragment = DetailDialogFragment()
             val bundle = Bundle()
             bundle.putString(ARG_TITLE, page.title())
@@ -27,7 +28,7 @@ class DetailDialogFragment : BottomSheetDialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setStyle(STYLE_NORMAL, R.style. AppBottomSheetDialogTheme);
+        setStyle(STYLE_NORMAL, R.style.AppBottomSheetDialogTheme);
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {

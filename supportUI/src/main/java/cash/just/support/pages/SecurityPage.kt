@@ -1,5 +1,5 @@
 @file:Suppress("UNCHECKED_CAST", "UNUSED")
-package cash.just.support.pages;
+package cash.just.support.pages
 
 import cash.just.support.BaseSupportPage
 

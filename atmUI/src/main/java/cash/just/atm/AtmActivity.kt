@@ -24,7 +24,7 @@ class AtmActivity : AppCompatActivity(), AtmFlow {
         const val ARGS_RESULT = "ARGS_RESULT"
         const val ARGS_DATA_RESULT = "ARGS_DATA_RESULT"
         fun getResult(intent:Intent):AtmResult? {
-            if (intent.hasExtra(ARGS_RESULT)) {
+            if (intent != null && intent.hasExtra(ARGS_RESULT)) {
                 return intent.getSerializableExtra(ARGS_RESULT) as AtmResult
             }
             return null
@@ -43,26 +43,26 @@ class AtmActivity : AppCompatActivity(), AtmFlow {
             }
             return null
         }
+
+        fun buildIntent(result:DetailsDataResult) : Intent {
+            val intent = Intent()
+            intent.putExtra(ARGS_RESULT, AtmResult.DETAILS)
+            intent.putExtra(ARGS_DATA_RESULT, result)
+            return intent
+        }
+
+        fun buildIntent(result:SendDataResult) : Intent {
+            val intent = Intent()
+            intent.putExtra(ARGS_RESULT, AtmResult.SEND)
+            intent.putExtra(ARGS_DATA_RESULT, result)
+            return intent
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_atm)
         supportActionBar?.hide()
-    }
-
-    private fun buildIntent(result:SendDataResult) : Intent {
-        val intent = Intent()
-        intent.putExtra(ARGS_RESULT, AtmResult.SEND)
-        intent.putExtra(ARGS_DATA_RESULT, result)
-        return intent
-    }
-
-    private fun buildIntent(result:DetailsDataResult) : Intent {
-        val intent = Intent()
-        intent.putExtra(ARGS_RESULT, AtmResult.DETAILS)
-        intent.putExtra(ARGS_DATA_RESULT, result)
-        return intent
     }
 
     override fun onSend(btcAmount: String, address: String) {
