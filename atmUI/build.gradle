@@ -51,10 +51,10 @@ dependencies {
     implementation 'com.jakewharton.timber:timber:4.7.1'
 
     // Fastadapter
-    implementation "com.mikepenz:fastadapter:5.2.2"
-    implementation "com.mikepenz:fastadapter-extensions-diff:5.2.2"
-    implementation "com.mikepenz:fastadapter-extensions-drag:5.2.2"
-    implementation "com.mikepenz:fastadapter-extensions-utils:5.2.2"
+    implementation "com.mikepenz:fastadapter:4.1.2"
+    implementation "com.mikepenz:fastadapter-extensions-diff:4.1.2"
+    implementation "com.mikepenz:fastadapter-extensions-drag:4.1.2"
+    implementation "com.mikepenz:fastadapter-extensions-utils:4.1.2"
 
     implementation 'androidx.navigation:navigation-fragment:2.3.0'
     implementation 'androidx.navigation:navigation-ui:2.3.0'
