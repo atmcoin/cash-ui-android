@@ -90,8 +90,11 @@ class AtmMapFragment : Fragment() {
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                switchToMode(ViewMode.LIST)
-                fastAdapter.filter(newText)
+                //when fragment gets recreated it receives empty string
+                if (newText != null && newText.isNotEmpty()) {
+                    switchToMode(ViewMode.LIST)
+                    fastAdapter.filter(newText)
+                }
                 return false
             }
         })
