@@ -10,6 +10,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import cash.just.atm.AtmFlow
 import cash.just.atm.AtmItem
 import cash.just.atm.AtmMapHelper
 import cash.just.atm.R
@@ -21,6 +22,8 @@ import cash.just.atm.model.AtmMarkerInfo
 import cash.just.atm.model.ClusteredAtm
 import cash.just.atm.viewmodel.AtmViewModel
 import cash.just.sdk.model.AtmMachine
+import cash.just.sdk.model.CashCode
+import cash.just.sdk.model.CashStatus
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng

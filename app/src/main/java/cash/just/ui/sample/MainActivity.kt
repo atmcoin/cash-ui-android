@@ -14,6 +14,7 @@ import cash.just.support.CashSupport
 import cash.just.support.context
 import cash.just.ui.CashUI
 import kotlinx.android.synthetic.main.activity_main.*
+import timber.log.Timber
 
 class MainActivity : AppCompatActivity() {
     companion object {
@@ -43,10 +44,7 @@ class MainActivity : AppCompatActivity() {
         createButtons(BaseSupportPage.allPages())
 
         openMaps.setOnClickListener {
-            CashUI.startCashOutActivityForResult(
-                this@MainActivity,
-                REQUEST_CODE
-            )
+            CashUI.startCashOutActivityForResult(this@MainActivity, REQUEST_CODE)
         }
 
         openActivity.setOnClickListener {
@@ -61,7 +59,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun createButtons(pages:Array<BaseSupportPage>){
+    private fun createButtons(pages: Array<BaseSupportPage>) {
         pages.forEach { page ->
             addButtonWithText(page.title()).setOnClickListener {
                 CashUI.showSupportPage(
@@ -72,7 +70,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun addButtonWithText(title:String) : Button {
+    private fun addButtonWithText(title: String): Button {
         val button = Button(this)
         button.text = title
         rootView.addView(button)
@@ -82,24 +80,24 @@ class MainActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_CODE) {
-            when(resultCode) {
+            when (resultCode) {
                 Activity.RESULT_CANCELED -> {
                     Toast.makeText(context, "Result Cancelled", Toast.LENGTH_SHORT).show()
                     consoleLog.setText("Result Cancelled")
                 }
                 Activity.RESULT_OK -> {
                     Toast.makeText(context, "Result Ok", Toast.LENGTH_SHORT).show()
-                    CashUI.getResult(intent)?.let {
-                        when(it) {
-                            AtmResult.SEND -> {
-                                val send =
-                                    CashUI.getSendData(intent)
-                                consoleLog.setText("Result OK \n" + send.toString())
-                            }
-                            AtmResult.DETAILS -> {
-                                val details =
-                                    CashUI.getSendData(intent)
-                                consoleLog.setText("Result OK \n" + details.toString())
+                    data?.let {
+                        CashUI.getResult(it)?.let { result ->
+                            when (result) {
+                                AtmResult.SEND -> {
+                                    val send = CashUI.getSendData(it)
+                                    consoleLog.setText("Result OK \n" + send.toString())
+                                }
+                                AtmResult.DETAILS -> {
+                                    val details = CashUI.getDetailsData(it)
+                                    consoleLog.setText("Result OK \n" + details.toString())
+                                }
                             }
                         }
                     }

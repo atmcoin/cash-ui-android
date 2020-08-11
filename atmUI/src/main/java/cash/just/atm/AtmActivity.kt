@@ -3,10 +3,10 @@ package cash.just.atm
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import cash.just.sdk.model.CashStatus
 import kotlinx.android.synthetic.main.activity_atm.*
+import timber.log.Timber
 import java.io.Serializable
 
 interface AtmFlow {
@@ -16,30 +16,30 @@ interface AtmFlow {
 
 enum class AtmResult { SEND, DETAILS }
 
-class SendDataResult(val btcAmount:String, val address:String):Serializable
-class DetailsDataResult(val secureCode:String, val cashCodeStatus: CashStatus):Serializable
+data class SendDataResult(val btcAmount:String, val address:String):Serializable
+data class DetailsDataResult(val secureCode:String, val cashCodeStatus: CashStatus):Serializable
 
 class AtmActivity : AppCompatActivity(), AtmFlow {
     companion object {
-        const val ARGS_RESULT = "ARGS_RESULT"
-        const val ARGS_DATA_RESULT = "ARGS_DATA_RESULT"
-        fun getResult(intent:Intent):AtmResult? {
-            if (intent != null && intent.hasExtra(ARGS_RESULT)) {
-                return intent.getSerializableExtra(ARGS_RESULT) as AtmResult
+        private const val ARGS_RESULT = "ARGS_RESULT"
+        private const val ARGS_DATA_RESULT = "ARGS_DATA_RESULT"
+        fun getResult(resultIntent:Intent):AtmResult? {
+            if (resultIntent.hasExtra(ARGS_RESULT)) {
+                return resultIntent.getSerializableExtra(ARGS_RESULT) as AtmResult
             }
             return null
         }
 
-        fun getSendData(intent:Intent):SendDataResult? {
-            if (intent.hasExtra(ARGS_RESULT)) {
-                return intent.getSerializableExtra(ARGS_DATA_RESULT) as SendDataResult
+        fun getSendData(dataIntent:Intent):SendDataResult? {
+            if (dataIntent.hasExtra(ARGS_DATA_RESULT)) {
+                return dataIntent.getSerializableExtra(ARGS_DATA_RESULT) as SendDataResult
             }
             return null
         }
 
-        fun getDetailsData(intent:Intent):DetailsDataResult? {
-            if (intent.hasExtra(ARGS_RESULT)) {
-                return intent.getSerializableExtra(ARGS_DATA_RESULT) as DetailsDataResult
+        fun getDetailsData(detailsIntent:Intent):DetailsDataResult? {
+            if (detailsIntent.hasExtra(ARGS_DATA_RESULT)) {
+                return detailsIntent.getSerializableExtra(ARGS_DATA_RESULT) as DetailsDataResult
             }
             return null
         }
@@ -66,12 +66,16 @@ class AtmActivity : AppCompatActivity(), AtmFlow {
     }
 
     override fun onSend(btcAmount: String, address: String) {
-        setResult(RESULT_OK, buildIntent(SendDataResult(btcAmount, address)))
+        val intent2 = buildIntent(SendDataResult(btcAmount, address))
+        Timber.d("david onSend $intent2")
+        setResult(RESULT_OK, intent2)
         finish()
     }
 
     override fun onDetails(secureCode: String, cashCodeStatus: CashStatus) {
-        setResult(RESULT_OK, buildIntent(DetailsDataResult(secureCode, cashCodeStatus)))
+        val intent2 = buildIntent(DetailsDataResult(secureCode, cashCodeStatus))
+        Timber.d("david onSend $intent2")
+        setResult(RESULT_OK, intent2)
         finish()
     }
 

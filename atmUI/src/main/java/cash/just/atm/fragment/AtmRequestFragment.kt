@@ -2,7 +2,6 @@ package cash.just.atm.fragment
 
 import android.app.AlertDialog
 import android.content.Context
-import android.content.DialogInterface
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -29,8 +28,6 @@ import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.CameraPosition
 import com.square.project.base.singleStateObserve
 import kotlinx.android.synthetic.main.fragment_request_cash_code.*
-import timber.log.Timber
-import java.lang.IllegalStateException
 
 class AtmRequestFragment : Fragment() {
     private val viewModel = AtmViewModel()
@@ -138,11 +135,11 @@ class AtmRequestFragment : Fragment() {
     private fun showDialog(context: Context, secureCode: String, cashStatus: CashStatus) {
         AlertDialog.Builder(context).setTitle("Withdrawal requested")
             .setMessage("Please send the amount of ${cashStatus.btc_amount} BTC to the ATM")
-            .setPositiveButton("Send", DialogInterface.OnClickListener { dialog, _ ->
+            .setPositiveButton("Send") { _, _ ->
                 getAtmFlow()?.onSend(cashStatus.btc_amount, cashStatus.address)
-            }).setNegativeButton("Details", DialogInterface.OnClickListener { dialog, _ ->
+            }.setNegativeButton("Details") { _, _ ->
                 getAtmFlow()?.onDetails(secureCode, cashStatus)
-            }).create().show()
+            }.create().show()
     }
 
     private fun populateVerification(verification: VerificationSent) {
