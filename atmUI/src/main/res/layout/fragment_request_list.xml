@@ -54,6 +54,7 @@
                 android:layout_height="wrap_content"/>
 
             <ProgressBar
+                android:visibility="gone"
                 android:id="@+id/loadingView"
                 android:padding="15dp"
                 android:gravity="center_horizontal"

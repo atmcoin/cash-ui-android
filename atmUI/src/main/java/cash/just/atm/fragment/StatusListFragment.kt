@@ -25,11 +25,18 @@ import kotlinx.android.synthetic.main.fragment_request_list.*
 class StatusListFragment : Fragment() {
     private val viewModel = StatusViewModel()
     private lateinit var appContext: Context
-    private var size = 0
+    private lateinit var state:ViewState
+
     companion object {
         const val SEVER_TIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ss'Z'"
         const val DISPLAY_TIME_FORMAT = "dd MMM, hh:mm"
         const val REFRESH_UI_DELAY_MS = 400L
+    }
+
+    enum class ViewState {
+        LOADING,
+        EMPTY,
+        LIST
     }
 
     override fun onCreateView(
@@ -44,21 +51,32 @@ class StatusListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         appContext = view.context.applicationContext
 
-        prepareEmptyView()
-
-        size = 0
-        loadingView.visibility = View.VISIBLE
-        text_no_request.visibility = View.GONE
-
+        setState(ViewState.LOADING)
         proceed()
     }
 
-
+    private fun setState(viewState:ViewState){
+        when(viewState) {
+            ViewState.LOADING -> {
+                loadingView.visibility = View.VISIBLE
+                emptyStateGroup.visibility = View.GONE
+            }
+            ViewState.EMPTY -> {
+                loadingView.visibility = View.GONE
+                emptyStateGroup.visibility = View.VISIBLE
+            }
+            ViewState.LIST -> {
+                loadingView.visibility = View.GONE
+                emptyStateGroup.visibility = View.GONE
+            }
+        }
+        state = viewState
+    }
     private fun proceed() {
         refreshListAction.visibility = View.VISIBLE
 
         refreshListAction.setOnClickListener {
-            loadingView.visibility = View.VISIBLE
+            setState(ViewState.LOADING)
             requestGroup.removeAllViews()
             refreshListAction.postDelayed({
                 if (refreshListAction != null) {
@@ -77,7 +95,12 @@ class StatusListFragment : Fragment() {
             when (state) {
                 is RequestState.Success -> {
                    val list = state.result as ArrayList<CashStatusResult>
-                   createStatusRows(list)
+                   if (list.isEmpty()) {
+                       setState(ViewState.EMPTY)
+                   } else {
+                       createStatusRows(list)
+                       setState(ViewState.LIST)
+                   }
                 }
 
                 is RequestState.Error -> {
@@ -94,7 +117,6 @@ class StatusListFragment : Fragment() {
 
         list.forEach {
             if (requestGroup != null) {
-                loadingView.visibility = View.GONE
                 val view = View.inflate(context, R.layout.item_list_cash_out_request, null)
                 populateCashCodeStatus(view, it.cashCode, it.status)
                 requestGroup.addView(view)
@@ -141,16 +163,5 @@ class StatusListFragment : Fragment() {
 //            router.pushController(RouterTransaction.with(CashOutStatusController(retryableCashStatus)))
             findNavController().navigate(StatusListFragmentDirections.listToStatus(secureCode))
         }
-    }
-
-    private fun prepareEmptyView() {
-        emptyStateGroup.visibility = View.GONE
-//        requestAction.setOnClickListener {
-//            router.pushController(
-//                RouterTransaction.with(MapController(Bundle.EMPTY))
-//                    .pushChangeHandler(HorizontalChangeHandler())
-//                    .popChangeHandler(HorizontalChangeHandler())
-//            )
-//        }
     }
 }
