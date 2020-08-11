@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import cash.just.atm.*
 import cash.just.atm.model.BitcoinServer
 import cash.just.sdk.Cash
@@ -14,7 +15,6 @@ import cash.just.support.CashSupport
 import cash.just.support.context
 import cash.just.ui.CashUI
 import kotlinx.android.synthetic.main.activity_main.*
-import timber.log.Timber
 
 class MainActivity : AppCompatActivity() {
     companion object {
@@ -24,7 +24,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         addButtonWithText("INDEX").setOnClickListener {
             val fragment = CashSupport.Builder().build().createDialogFragment()
             fragment.show(supportFragmentManager, "tag")

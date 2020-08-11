@@ -3,7 +3,10 @@ package cash.just.atm
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO
 import androidx.navigation.fragment.findNavController
+import cash.just.atm.base.BaseActivity
 import cash.just.sdk.model.CashStatus
 import kotlinx.android.synthetic.main.activity_atm.*
 import timber.log.Timber
@@ -19,7 +22,7 @@ enum class AtmResult { SEND, DETAILS }
 data class SendDataResult(val btcAmount:String, val address:String):Serializable
 data class DetailsDataResult(val secureCode:String, val cashCodeStatus: CashStatus):Serializable
 
-class AtmActivity : AppCompatActivity(), AtmFlow {
+class AtmActivity : BaseActivity(), AtmFlow {
     companion object {
         private const val ARGS_RESULT = "ARGS_RESULT"
         private const val ARGS_DATA_RESULT = "ARGS_DATA_RESULT"
