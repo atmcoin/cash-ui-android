@@ -7,14 +7,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
-import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import cash.just.atm.AtmFlow
 import cash.just.atm.R
 import cash.just.atm.base.RequestState
 import cash.just.atm.base.showError
+import cash.just.atm.extension.hideKeyboard
 import cash.just.atm.model.AtmMarker
 import cash.just.atm.model.VerificationType
 import cash.just.atm.viewmodel.AtmViewModel
@@ -39,14 +38,9 @@ class AtmRequestFragment : Fragment() {
         private const val MAP_FRAGMENT_TAG = "AtmRequestFragment"
     }
 
-    private var currentVerificationMode = VerificationType.PHONE
     private var coinCount = 0
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_request_cash_code, container, false)
     }
 
@@ -91,11 +85,7 @@ class AtmRequestFragment : Fragment() {
             val amount = getAmount()!!.toFloat().toInt()
             val bills = atm.bills.toFloat().toInt()
             if (amount.rem(bills) != 0) {
-                Toast.makeText(
-                    view.context,
-                    "Amount must be multiple of ${atm.bills}$",
-                    Toast.LENGTH_SHORT
-                ).show()
+                Toast.makeText(view.context, "Amount must be multiple of ${atm.bills}$", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
@@ -103,18 +93,18 @@ class AtmRequestFragment : Fragment() {
         }
 
         confirmAction.setOnClickListener {
-
+            val context = view.context
             if (!CashSDK.isSessionCreated()) {
-                Toast.makeText(view.context, "invalid session", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "invalid session", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
             if (getCode().isNullOrEmpty()) {
-                Toast.makeText(view.context, "Token is empty", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Token is empty", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
-            hideKeyboard(view.context, code.editText!!)
+            context.hideKeyboard(code.editText)
             viewModel.createCashCode(atm, getAmount()!!, getCode()!!)
         }
 
@@ -159,12 +149,6 @@ class AtmRequestFragment : Fragment() {
         }
         verificationGroup.visibility = View.GONE
         confirmGroup.visibility = View.VISIBLE
-    }
-
-    private fun hideKeyboard(context: Context, editText: EditText) {
-        val imm: InputMethodManager? =
-            context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
-        imm?.hideSoftInputFromWindow(editText.windowToken, 0)
     }
 
     private fun prepareMap(context: Context, atm: AtmMachine) {
@@ -271,21 +255,6 @@ class AtmRequestFragment : Fragment() {
 
     private fun getEmail(): String? {
         return email.editText?.text.toString()
-    }
-
-    // use this to activate the Email verification
-    private fun toggleVerification() {
-        if (currentVerificationMode == VerificationType.PHONE) {
-            phoneNumber.visibility = View.GONE
-            email.visibility = View.VISIBLE
-            // noPhoneButton.text = "Phone Number"
-            currentVerificationMode = VerificationType.EMAIL
-        } else {
-            phoneNumber.visibility = View.VISIBLE
-            email.visibility = View.GONE
-            // noPhoneButton.text = "No Phone?"
-            currentVerificationMode = VerificationType.PHONE
-        }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

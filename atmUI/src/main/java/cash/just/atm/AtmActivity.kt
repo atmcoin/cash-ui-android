@@ -1,6 +1,7 @@
 package cash.just.atm
 
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -64,8 +65,15 @@ class AtmActivity : BaseActivity(), AtmFlow {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // Calling defaultNightMode will change the theme of the host app
+        delegate.localNightMode = MODE_NIGHT_NO
+        delegate.applyDayNight()
         setContentView(R.layout.activity_atm)
-        supportActionBar?.hide()
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        Timber.d("onConfigurationChanged")
     }
 
     override fun onSend(btcAmount: String, address: String) {
