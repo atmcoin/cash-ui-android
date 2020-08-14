@@ -32,16 +32,6 @@ import kotlinx.android.synthetic.main.fragment_map.*
 import okhttp3.internal.filterList
 import timber.log.Timber
 
-private enum class ViewMode {
-    MAP,
-    LIST
-}
-
-private enum class MachineMode {
-    ALL,
-    REDEMPTION
-}
-
 class AtmMapFragment : Fragment() {
     companion object {
         private val texas = LatLng(31.000000, -100.000000)
