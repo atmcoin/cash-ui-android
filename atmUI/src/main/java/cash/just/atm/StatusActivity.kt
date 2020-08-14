@@ -3,6 +3,7 @@ package cash.just.atm
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.PersistableBundle
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import cash.just.atm.base.BaseActivity
@@ -24,11 +25,11 @@ class StatusActivity : BaseActivity() {
         setContentView(R.layout.activity_status)
         getCodeFromIntent()?.let {
             findNavController(R.id.nav_host_fragment)
-                .navigate(StatusListFragmentDirections.listToStatus(it))
+                .navigate(MobileNavigationDirections.startToStatus(it))
         }
     }
 
-    private fun getCodeFromIntent():String? {
+     private fun getCodeFromIntent():String? {
         intent?.let {
             if (it.hasExtra(ARGS_CODE)) {
                 return it.getStringExtra(ARGS_CODE)

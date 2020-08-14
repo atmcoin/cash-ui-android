@@ -26,5 +26,28 @@
         <include android:id="@+id/fundedCard" layout="@layout/request_status_funded"/>
 
         <include android:id="@+id/awaitingCard" layout="@layout/request_status_awaiting"/>
+
+        <LinearLayout
+            android:paddingBottom="100dp"
+            android:layout_marginTop="15dp"
+            android:orientation="vertical"
+            android:id="@+id/requestNotFound"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/sad_atm"
+                android:layout_width="wrap_content"
+                android:layout_height="150dp"/>
+
+            <TextView
+                android:layout_marginTop="20dp"
+                android:textSize="20dp"
+                android:layout_gravity="center|center_vertical"
+                android:text="Request not found"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
     </androidx.cardview.widget.CardView>
 </ScrollView>

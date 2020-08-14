@@ -17,7 +17,10 @@ class StatusViewModel : ViewModel() {
     fun checkCashCodeStatus(cashCode:String) {
         execute(_state) {
             SessionUtil.checkSession()
-            return@execute CashSDK.checkCashCodeStatus(cashCode).execute().body()!!.data!!.items[0]
+            //TODO deal with errorBody
+            val body = CashSDK.checkCashCodeStatus(cashCode).execute().body()
+            if (body == null || body.data != null || body.data!!.items.isEmpty()) throw CashCodeNotFoundException()
+            return@execute body.data!!.items[0]
         }
     }
 

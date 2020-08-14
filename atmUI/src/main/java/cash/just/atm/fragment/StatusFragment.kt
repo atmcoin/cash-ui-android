@@ -11,9 +11,12 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import cash.just.atm.R
 import cash.just.atm.base.RequestState
 import cash.just.atm.base.showError
+import cash.just.atm.base.showToast
+import cash.just.atm.viewmodel.CashCodeNotFoundException
 import cash.just.atm.viewmodel.StatusViewModel
 import cash.just.sdk.model.CashStatus
 import cash.just.sdk.model.CodeStatus
@@ -23,6 +26,7 @@ import com.square.project.base.singleStateObserve
 import kotlinx.android.synthetic.main.fragment_status.*
 import kotlinx.android.synthetic.main.request_status_awaiting.*
 import kotlinx.android.synthetic.main.request_status_funded.*
+import timber.log.Timber
 import java.util.*
 
 class StatusFragment : Fragment() {
@@ -32,7 +36,8 @@ class StatusFragment : Fragment() {
     enum class ViewState {
         LOADING,
         AWAITING,
-        FUNDED
+        FUNDED,
+        NOT_FOUND
     }
 
     private lateinit var clipboard: android.content.ClipboardManager
@@ -61,7 +66,7 @@ class StatusFragment : Fragment() {
         imageView.setImageBitmap(bitmap)
     }
 
-    private fun refreshCodeStatus(code: String, context: Context) {
+    private fun refreshCodeStatus(code: String) {
         viewModel.checkCashCodeStatus(code)
     }
 
@@ -71,16 +76,25 @@ class StatusFragment : Fragment() {
                 loadingView.visibility = View.VISIBLE
                 fundedCard.visibility = View.GONE
                 awaitingCard.visibility = View.GONE
+                requestNotFound.visibility = View.GONE
             }
             ViewState.AWAITING -> {
                 loadingView.visibility = View.GONE
                 fundedCard.visibility = View.GONE
                 awaitingCard.visibility = View.VISIBLE
+                requestNotFound.visibility = View.GONE
             }
             ViewState.FUNDED -> {
                 loadingView.visibility = View.GONE
                 fundedCard.visibility = View.VISIBLE
                 awaitingCard.visibility = View.GONE
+                requestNotFound.visibility = View.GONE
+            }
+            ViewState.NOT_FOUND -> {
+                loadingView.visibility = View.GONE
+                fundedCard.visibility = View.GONE
+                awaitingCard.visibility = View.GONE
+                requestNotFound.visibility = View.VISIBLE
             }
         }
     }
@@ -95,7 +109,7 @@ class StatusFragment : Fragment() {
 
         refreshAction.setOnClickListener {
             changeUiState(ViewState.LOADING)
-            refreshCodeStatus(safeCode, it.context)
+            refreshCodeStatus(safeCode)
         }
 
         awaitingAddress.text = cashStatus.address
@@ -187,7 +201,9 @@ class StatusFragment : Fragment() {
                 }
 
                 is RequestState.Error -> {
-                    showError(this, state.throwable)
+                    if (state.throwable is CashCodeNotFoundException) {
+                        changeUiState(ViewState.NOT_FOUND)
+                    } else showError(this, state.throwable)
                 }
             }
         }

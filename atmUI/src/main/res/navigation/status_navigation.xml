@@ -5,6 +5,9 @@
     android:id="@+id/mobile_navigation"
     app:startDestination="@+id/statusListFragment">
 
+    <action android:id="@+id/start_to_status" app:destination="@+id/statusFragment">
+        <argument android:name="cash_code" app:nullable="false" app:argType="string"/>
+    </action>
 
     <fragment
         android:id="@+id/statusListFragment"
@@ -19,7 +22,7 @@
     <fragment
         android:id="@+id/statusFragment"
         android:name="cash.just.atm.fragment.StatusFragment"
-        android:label="Atm Map"
+        android:label="Status"
         tools:layout="@layout/fragment_status">
         <argument android:name="cash_code" app:nullable="false" app:argType="string"/>
     </fragment>

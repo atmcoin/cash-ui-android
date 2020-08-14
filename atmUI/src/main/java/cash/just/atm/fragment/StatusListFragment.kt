@@ -21,6 +21,7 @@ import cash.just.sdk.model.CashStatus
 import cash.just.sdk.model.CodeStatus
 import com.square.project.base.singleStateObserve
 import kotlinx.android.synthetic.main.fragment_request_list.*
+import timber.log.Timber
 
 class StatusListFragment : Fragment() {
     private val viewModel = StatusViewModel()
@@ -53,6 +54,8 @@ class StatusListFragment : Fragment() {
 
         setState(ViewState.LOADING)
         proceed()
+
+        Timber.d("david StatusListFragment")
     }
 
     private fun setState(viewState:ViewState){

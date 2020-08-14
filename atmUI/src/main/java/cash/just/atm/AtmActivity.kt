@@ -3,9 +3,6 @@ package cash.just.atm
 import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
-import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO
 import androidx.navigation.fragment.findNavController
 import cash.just.atm.base.BaseActivity
 import cash.just.sdk.model.CashStatus
@@ -65,9 +62,6 @@ class AtmActivity : BaseActivity(), AtmFlow {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // Calling defaultNightMode will change the theme of the host app
-        delegate.localNightMode = MODE_NIGHT_NO
-        delegate.applyDayNight()
         setContentView(R.layout.activity_atm)
     }
 
@@ -77,16 +71,16 @@ class AtmActivity : BaseActivity(), AtmFlow {
     }
 
     override fun onSend(btcAmount: String, address: String) {
-        val intent2 = buildIntent(SendDataResult(btcAmount, address))
-        Timber.d("david onSend $intent2")
-        setResult(RESULT_OK, intent2)
+        val intent = buildIntent(SendDataResult(btcAmount, address))
+        Timber.d("david onSend $intent")
+        setResult(RESULT_OK, intent)
         finish()
     }
 
     override fun onDetails(secureCode: String, cashCodeStatus: CashStatus) {
-        val intent2 = buildIntent(DetailsDataResult(secureCode, cashCodeStatus))
-        Timber.d("david onSend $intent2")
-        setResult(RESULT_OK, intent2)
+        val intent = buildIntent(DetailsDataResult(secureCode, cashCodeStatus))
+        Timber.d("david onSend $intent")
+        setResult(RESULT_OK, intent)
         finish()
     }
 
