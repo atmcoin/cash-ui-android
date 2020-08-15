@@ -9,8 +9,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import cash.just.atm.AtmFlow
 import cash.just.atm.R
+import cash.just.atm.base.AtmFlow
 import cash.just.atm.base.RequestState
 import cash.just.atm.base.showError
 import cash.just.atm.extension.hideKeyboard
@@ -111,7 +111,7 @@ class AtmRequestFragment : Fragment() {
         dropView.setDrawables(R.drawable.bitcoin, R.drawable.bitcoin)
     }
 
-    private fun getAtmFlow():AtmFlow? {
+    private fun getAtmFlow(): AtmFlow? {
         activity?.let {
             if (it is AtmFlow) {
                 return it

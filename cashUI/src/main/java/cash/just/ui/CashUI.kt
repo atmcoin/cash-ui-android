@@ -1,13 +1,13 @@
 package cash.just.ui
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import androidx.fragment.app.FragmentManager
-import cash.just.atm.*
+import cash.just.atm.base.AtmResult
+import cash.just.atm.base.DetailsDataResult
+import cash.just.atm.base.SendDataResult
 import cash.just.sdk.Cash
 import cash.just.support.CashSupport
-import java.lang.IllegalStateException
 
 object CashUI : CashUIProtocol {
   private val cashUI = CashUserInterfaceImpl()
@@ -23,14 +23,14 @@ object CashUI : CashUIProtocol {
     cashUI.startCashOutActivityForResult(activity, requestCode)
   }
 
-  override fun showStatusList(context: Context) {
+  override fun showStatusList(activity: Activity, requestCode:Int) {
     checkInit()
-    cashUI.showStatusList(context)
+    cashUI.showStatusList(activity, requestCode)
   }
 
-  override fun showStatus(context: Context, code: String) {
+  override fun showStatus(activity: Activity, code: String, requestCode:Int) {
     checkInit()
-    cashUI.showStatus(context, code)
+    cashUI.showStatus(activity, code, requestCode)
   }
 
   override fun getResult(intent:Intent): AtmResult? {

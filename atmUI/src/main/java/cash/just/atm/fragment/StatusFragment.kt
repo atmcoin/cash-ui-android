@@ -11,11 +11,10 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import cash.just.atm.R
+import cash.just.atm.base.AtmFlow
 import cash.just.atm.base.RequestState
 import cash.just.atm.base.showError
-import cash.just.atm.base.showToast
 import cash.just.atm.viewmodel.CashCodeNotFoundException
 import cash.just.atm.viewmodel.StatusViewModel
 import cash.just.sdk.model.CashStatus
@@ -26,7 +25,6 @@ import com.square.project.base.singleStateObserve
 import kotlinx.android.synthetic.main.fragment_status.*
 import kotlinx.android.synthetic.main.request_status_awaiting.*
 import kotlinx.android.synthetic.main.request_status_funded.*
-import timber.log.Timber
 import java.util.*
 
 class StatusFragment : Fragment() {
@@ -41,7 +39,7 @@ class StatusFragment : Fragment() {
     }
 
     private lateinit var clipboard: android.content.ClipboardManager
-    private lateinit var safeCode: String
+    private lateinit var cashCodeArg: String
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -55,9 +53,9 @@ class StatusFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         appContext = view.context.applicationContext
 
-        val cashCode = StatusFragmentArgs.fromBundle(requireArguments()).cashCode
+        cashCodeArg = StatusFragmentArgs.fromBundle(requireArguments()).cashCode
         changeUiState(ViewState.LOADING)
-        viewModel.checkCashCodeStatus(cashCode)
+        viewModel.checkCashCodeStatus(cashCodeArg)
     }
 
     private fun generateQRCode(data: String, imageView: ImageView) {
@@ -109,7 +107,7 @@ class StatusFragment : Fragment() {
 
         refreshAction.setOnClickListener {
             changeUiState(ViewState.LOADING)
-            refreshCodeStatus(safeCode)
+            refreshCodeStatus(cashCodeArg)
         }
 
         awaitingAddress.text = cashStatus.address
@@ -139,12 +137,18 @@ class StatusFragment : Fragment() {
     }
 
     private fun goToSend(btc: String, address: String) {
-//        val builder = CryptoRequest.Builder()
-//        builder.address = address
-//        builder.amount = btc.toFloat().toBigDecimal()
-//        builder.currencyCode = WalletBitcoinManager.BITCOIN_CURRENCY_CODE
-//        val request = builder.build()
-//        router.pushController(RouterTransaction.with(SendSheetController(request)))
+        getAtmFlow()?.onSend(btc, address)
+    }
+
+    private fun getAtmFlow(): AtmFlow? {
+        activity?.let {
+            if (it is AtmFlow) {
+                return it
+            }
+            throw IllegalStateException("Parent activity must implement " + AtmFlow::class.java.name)
+        }?:run {
+            return null
+        }
     }
 
     private fun populateFundedView(context: Context, cashStatus: CashStatus) {

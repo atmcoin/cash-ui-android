@@ -3,14 +3,12 @@ package cash.just.atm
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.os.PersistableBundle
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
-import cash.just.atm.base.BaseActivity
-import cash.just.atm.fragment.StatusListFragmentDirections
+import cash.just.atm.base.AtmFlowActivity
 import kotlinx.android.synthetic.main.activity_atm.*
 
-class StatusActivity : BaseActivity() {
+class StatusActivity : AtmFlowActivity() {
     companion object {
         private const val ARGS_CODE = "ARGS_CODE"
         fun newCashStatusIntent(context: Context, cashCode:String): Intent {

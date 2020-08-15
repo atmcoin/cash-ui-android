@@ -5,6 +5,10 @@ import android.content.Context
 import android.content.Intent
 import androidx.fragment.app.FragmentManager
 import cash.just.atm.*
+import cash.just.atm.base.AtmFlowActivity
+import cash.just.atm.base.AtmResult
+import cash.just.atm.base.DetailsDataResult
+import cash.just.atm.base.SendDataResult
 import cash.just.sdk.Cash
 import cash.just.sdk.CashSDK
 import cash.just.support.CashSupport
@@ -27,26 +31,25 @@ class CashUserInterfaceImpl : CashUIProtocol {
     activity.startActivityForResult(intent, requestCode)
   }
 
-  override fun showStatusList(context: Context) {
-    context.startActivity(Intent(context, StatusActivity::class.java))
+  override fun showStatusList(activity: Activity, requestCode:Int) {
+    activity.startActivityForResult(Intent(activity, StatusActivity::class.java), requestCode)
   }
 
-  override fun showStatus(context: Context, code: String) {
-    val intent = StatusActivity.newCashStatusIntent(context, code)
-    context.startActivity(intent)
+  override fun showStatus(activity: Activity, code: String, requestCode:Int) {
+    val intent = StatusActivity.newCashStatusIntent(activity.baseContext, code)
+    activity.startActivityForResult(intent, requestCode)
   }
 
   override fun getResult(intent:Intent): AtmResult? {
-    return AtmActivity.getResult(intent)
+    return AtmFlowActivity.getResult(intent)
   }
 
   override fun getSendData(intent:Intent): SendDataResult? {
-    return AtmActivity.getSendData(intent)
+    return AtmFlowActivity.getSendData(intent)
   }
 
-
   override fun getDetailsData(intent:Intent): DetailsDataResult? {
-    return AtmActivity.getDetailsData(intent)
+    return AtmFlowActivity.getDetailsData(intent)
   }
 
   override fun showSupportPage(builder: CashSupport.Builder, fragmentManager: FragmentManager) {

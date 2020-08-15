@@ -6,8 +6,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
-import cash.just.atm.*
+import cash.just.atm.base.AtmResult
 import cash.just.atm.model.BitcoinServer
 import cash.just.sdk.Cash
 import cash.just.support.BaseSupportPage
@@ -47,14 +46,13 @@ class MainActivity : AppCompatActivity() {
         }
 
         openActivity.setOnClickListener {
-            CashUI.showStatusList(this@MainActivity)
+            CashUI.showStatusList(this@MainActivity, REQUEST_CODE)
         }
 
         openStatus.setOnClickListener {
             CashUI.showStatus(
                 this@MainActivity,
-                cashCode.text.toString()
-            )
+                cashCode.text.toString(), REQUEST_CODE)
         }
     }
 
