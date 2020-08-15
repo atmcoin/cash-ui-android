@@ -17,7 +17,9 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
     companion object {
-        private const val REQUEST_CODE = 0x01
+        private const val REQUEST_CODE_MAP = 0x01
+        private const val REQUEST_CODE_LIST = 0x02
+        private const val REQUEST_CODE_STATUS = 0x03
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,17 +44,15 @@ class MainActivity : AppCompatActivity() {
         createButtons(BaseSupportPage.allPages())
 
         openMaps.setOnClickListener {
-            CashUI.startCashOutActivityForResult(this@MainActivity, REQUEST_CODE)
+            CashUI.startCashOutActivityForResult(this@MainActivity, REQUEST_CODE_MAP)
         }
 
         openActivity.setOnClickListener {
-            CashUI.showStatusList(this@MainActivity, REQUEST_CODE)
+            CashUI.showStatusList(this@MainActivity, REQUEST_CODE_LIST)
         }
 
         openStatus.setOnClickListener {
-            CashUI.showStatus(
-                this@MainActivity,
-                cashCode.text.toString(), REQUEST_CODE)
+            CashUI.showStatus(this@MainActivity, cashCode.text.toString(), REQUEST_CODE_STATUS)
         }
     }
 
@@ -76,7 +76,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_CODE) {
+        if (requestCode == REQUEST_CODE_MAP || requestCode == REQUEST_CODE_LIST || requestCode == REQUEST_CODE_STATUS) {
             when (resultCode) {
                 Activity.RESULT_CANCELED -> {
                     Toast.makeText(context, "Result Cancelled", Toast.LENGTH_SHORT).show()

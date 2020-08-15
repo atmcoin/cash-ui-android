@@ -3,9 +3,9 @@
 
     <application>
         <activity android:name="cash.just.atm.AtmActivity"
-            android:theme="@style/Theme.MaterialComponents.DayNight"/>
+            android:theme="@style/CashUI"/>
         <activity android:name="cash.just.atm.StatusActivity"
-            android:theme="@style/Theme.MaterialComponents.DayNight"/>
+            android:theme="@style/CashUI.Dialog"/>
 
         <meta-data android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_map_key"/>

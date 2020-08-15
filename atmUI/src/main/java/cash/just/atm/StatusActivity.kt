@@ -7,6 +7,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import cash.just.atm.base.AtmFlowActivity
 import kotlinx.android.synthetic.main.activity_atm.*
+import timber.log.Timber
 
 class StatusActivity : AtmFlowActivity() {
     companion object {
@@ -38,16 +39,24 @@ class StatusActivity : AtmFlowActivity() {
 
     override fun onBackPressed() {
         val navController = nav_host_fragment.findNavController()
-        when(navController.currentDestination?.id) {
-            R.id.statusFragment -> {
-                if (getCodeFromIntent() != null) {
-                    finish()
-                } else {
-                    navController.popBackStack()
+        navController.currentDestination?.let {
+            when (it.id) {
+                R.id.statusFragment -> {
+                    if (getCodeFromIntent() != null) {
+                        finish()
+                    } else {
+                        navController.popBackStack()
+                    }
+                    return
                 }
-            } else -> {
-                super.onBackPressed()
+                R.id.statusListFragment -> {
+                    finish()
+                    return
+                } else -> {
+                    return
+                }
             }
         }
+        finish()
     }
 }

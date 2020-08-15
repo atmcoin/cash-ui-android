@@ -28,7 +28,8 @@
         <include android:id="@+id/awaitingCard" layout="@layout/request_status_awaiting"/>
 
         <LinearLayout
-            android:paddingBottom="100dp"
+            android:paddingTop="50dp"
+            android:paddingBottom="50dp"
             android:layout_marginTop="15dp"
             android:orientation="vertical"
             android:id="@+id/requestNotFound"

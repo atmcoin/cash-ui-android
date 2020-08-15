@@ -27,7 +27,7 @@ class CashUserInterfaceImpl : CashUIProtocol {
   }
 
   override fun startCashOutActivityForResult(activity: Activity, requestCode:Int) {
-    val intent = Intent(activity.baseContext, AtmActivity::class.java)
+    val intent = Intent(activity, AtmActivity::class.java)
     activity.startActivityForResult(intent, requestCode)
   }
 
@@ -36,7 +36,7 @@ class CashUserInterfaceImpl : CashUIProtocol {
   }
 
   override fun showStatus(activity: Activity, code: String, requestCode:Int) {
-    val intent = StatusActivity.newCashStatusIntent(activity.baseContext, code)
+    val intent = StatusActivity.newCashStatusIntent(activity, code)
     activity.startActivityForResult(intent, requestCode)
   }
 
