@@ -17,6 +17,8 @@
         <action android:id="@+id/list_to_status" app:destination="@+id/statusFragment">
             <argument android:name="cash_code" app:nullable="false" app:argType="string"/>
         </action>
+
+        <action android:id="@+id/to_global_atm_activity" app:destination="@+id/AtmActivity"/>
     </fragment>
 
     <fragment
@@ -26,4 +28,10 @@
         tools:layout="@layout/fragment_status">
         <argument android:name="cash_code" app:nullable="false" app:argType="string"/>
     </fragment>
+
+    <activity
+        android:id="@+id/AtmActivity"
+        android:name="cash.just.atm.AtmActivity"
+        android:label="Atm Activity"
+        tools:layout="@layout/activity_atm"/>
 </navigation>

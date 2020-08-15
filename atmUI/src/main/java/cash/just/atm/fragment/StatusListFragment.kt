@@ -55,7 +55,10 @@ class StatusListFragment : Fragment() {
         setState(ViewState.LOADING)
         proceed()
 
-        Timber.d("david StatusListFragment")
+        requestAction.setOnClickListener {
+            findNavController().navigate(StatusListFragmentDirections.toGlobalAtmActivity())
+            activity?.finish()
+        }
     }
 
     private fun setState(viewState:ViewState){
@@ -75,6 +78,7 @@ class StatusListFragment : Fragment() {
         }
         state = viewState
     }
+
     private fun proceed() {
         refreshListAction.visibility = View.VISIBLE
 
