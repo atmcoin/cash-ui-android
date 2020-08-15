@@ -171,11 +171,11 @@ class StatusFragment : Fragment() {
         val uri: String = java.lang.String.format(
             Locale.ENGLISH,
             "geo:%f,%f?z=%d&q=%f,%f (%s)",
-            cashStatus.latitude,
-            cashStatus.longitude,
+            cashStatus.latitude.toFloat(),
+            cashStatus.longitude.toFloat(),
             15,
-            cashStatus.latitude,
-            cashStatus.longitude,
+            cashStatus.latitude.toFloat(),
+            cashStatus.longitude.toFloat(),
             cashStatus.description
         )
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(uri))
