@@ -15,6 +15,7 @@ import cash.just.atm.AtmMapHelper
 import cash.just.atm.R
 import cash.just.atm.base.RequestState
 import cash.just.atm.base.showError
+import cash.just.atm.base.showSnackBar
 import cash.just.atm.model.AtmClusterRenderer
 import cash.just.atm.model.AtmMarker
 import cash.just.atm.model.AtmMarkerInfo
@@ -33,6 +34,7 @@ import com.square.project.base.singleStateObserve
 import kotlinx.android.synthetic.main.fragment_map.*
 import okhttp3.internal.filterList
 import timber.log.Timber
+import java.lang.IllegalStateException
 
 class AtmMapFragment : Fragment() {
     companion object {
@@ -237,7 +239,22 @@ class AtmMapFragment : Fragment() {
                 }
 
                 is RequestState.Error -> {
-                    showError(this, state.throwable)
+                    when(state.throwable) {
+                        is java.net.UnknownHostException -> {
+                            showSnackBar(this, "Failed to load the atms", R.string.retry) {
+                                viewModel.getAtms()
+                            }
+                        }
+                        is IllegalStateException -> {
+                            // no session goes here
+                            showSnackBar(this, "Failed to load the atms", R.string.retry) {
+                                viewModel.getAtms()
+                            }
+                        }
+                        else -> {
+                            showError(this, state.throwable)
+                        }
+                    }
                 }
             }
         }
@@ -249,7 +266,7 @@ class AtmMapFragment : Fragment() {
                 googleMap?.let {
                     Timber.d("Map prepared")
                     map = it
-                    it.moveCamera(CameraUpdateFactory.newCameraPosition(CameraPosition.fromLatLngZoom(texas, initialZoom)))git a
+                    it.moveCamera(CameraUpdateFactory.newCameraPosition(CameraPosition.fromLatLngZoom(texas, initialZoom)))
                     it.uiSettings.isMapToolbarEnabled = false
                     it.uiSettings.isMyLocationButtonEnabled = true
                     it.uiSettings.isZoomControlsEnabled = true
