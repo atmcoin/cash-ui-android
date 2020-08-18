@@ -7,7 +7,6 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import cash.just.atm.base.AtmFlowActivity
 import kotlinx.android.synthetic.main.activity_atm.*
-import timber.log.Timber
 
 class StatusActivity : AtmFlowActivity() {
     companion object {

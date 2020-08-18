@@ -21,8 +21,10 @@ import cash.just.atm.model.AtmMarkerInfo
 import cash.just.atm.model.ClusteredAtm
 import cash.just.atm.viewmodel.AtmViewModel
 import cash.just.sdk.model.AtmMachine
+import com.google.android.gms.maps.CameraUpdate
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.maps.android.clustering.ClusterManager
@@ -247,7 +249,7 @@ class AtmMapFragment : Fragment() {
                 googleMap?.let {
                     Timber.d("Map prepared")
                     map = it
-
+                    it.moveCamera(CameraUpdateFactory.newCameraPosition(CameraPosition.fromLatLngZoom(texas, initialZoom)))git a
                     it.uiSettings.isMapToolbarEnabled = false
                     it.uiSettings.isMyLocationButtonEnabled = true
                     it.uiSettings.isZoomControlsEnabled = true
