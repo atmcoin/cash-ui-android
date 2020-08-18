@@ -20,11 +20,11 @@
 
     <style name="Button.Primary" parent="Widget.MaterialComponents.Button.TextButton">
         <item name="android:minHeight">@dimen/row_height_normal</item>
-<!--        <item name="android:textAppearance">@style/Text.Button.Primary</item>-->
-<!--        <item name="android:textColor">?attr/primaryActionTextColour</item>-->
-<!--        <item name="backgroundTint">?attr/primaryActionBackground</item>-->
-<!--        <item name="strokeColor">?attr/primaryActionBorder</item>-->
-<!--        <item name="rippleColor">?attr/rippleColour</item>-->
+        <item name="android:textAppearance">@style/Text.Button.Primary</item>
+        <item name="android:textColor">?attr/primaryActionTextColour</item>
+        <item name="backgroundTint">?attr/primaryActionBackground</item>
+        <item name="strokeColor">?attr/primaryActionBorder</item>
+        <item name="rippleColor">?attr/rippleColour</item>
     </style>
 
     <style name="Button.Primary.Highlighted" parent="Widget.MaterialComponents.Button.TextButton">

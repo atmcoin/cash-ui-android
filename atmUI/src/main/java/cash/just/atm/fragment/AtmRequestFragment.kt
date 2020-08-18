@@ -54,8 +54,6 @@ class AtmRequestFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         appContext = view.context.applicationContext
 
-
-
         verificationGroup.visibility = View.VISIBLE
         confirmGroup.visibility = View.GONE
         val atm = getAtmArgs()
@@ -94,6 +92,7 @@ class AtmRequestFragment : Fragment() {
                 return@setOnClickListener
             }
 
+            getAtmCode.showProgress()
             viewModel.sendVerificationCode(getName()!!, getSurname()!!, getPhone(), getEmail())
         }
 
@@ -264,6 +263,10 @@ class AtmRequestFragment : Fragment() {
         return email.editText?.text.toString()
     }
 
+    private fun clearLoadingButtons() {
+        getAtmCode.hideProgress()
+        confirmAction.hideProgress()
+    }
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
@@ -284,7 +287,7 @@ class AtmRequestFragment : Fragment() {
                 }
 
                 is RequestState.Error -> {
-                    confirmAction.hideProgress()
+                    clearLoadingButtons()
                     when(state.throwable) {
                         is java.lang.IllegalStateException -> {
                             //it will be probably verification code not found
