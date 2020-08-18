@@ -48,9 +48,7 @@ class AtmRequestFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         appContext = view.context.applicationContext
 
-        val atm = AtmRequestFragmentArgs.fromBundle(
-            requireArguments()
-        ).atmMachine
+        val atm = AtmRequestFragmentArgs.fromBundle(requireArguments()).atmMachine
 
         verificationGroup.visibility = View.VISIBLE
         confirmGroup.visibility = View.GONE
