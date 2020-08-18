@@ -93,6 +93,10 @@ class AtmMapFragment : Fragment() {
             }
         })
 
+        searchView.setOnClickListener {
+            searchView.isIconified = false
+        }
+
         atmRecyclerList.layoutManager = LinearLayoutManager(
             activity,
             LinearLayoutManager.VERTICAL,
