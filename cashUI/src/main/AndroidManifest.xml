@@ -1,2 +1,1 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="cash.just.ui" />
+<manifest package="cash.just.ui" />

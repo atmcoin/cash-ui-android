@@ -40,7 +40,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:padding="15dp">
+            android:padding="20dp">
 
             <TextView
                 android:id="@+id/atmTitle"
@@ -60,10 +60,10 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/amount"
+                    style="@style/CashUI.Widget.TextInputLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Amount to withdraw"
-
                     app:helperText="Min 100$ max 800$">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -80,6 +80,7 @@
                     android:orientation="horizontal">
 
                     <com.google.android.material.textfield.TextInputLayout
+                        style="@style/CashUI.Widget.TextInputLayout"
                         android:id="@+id/phoneNumber"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -99,6 +100,7 @@
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/email"
+                        style="@style/CashUI.Widget.TextInputLayout"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
@@ -133,6 +135,7 @@
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/firstName"
+                        style="@style/CashUI.Widget.TextInputLayout"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="5dp"
@@ -149,6 +152,7 @@
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/lastName"
+                        style="@style/CashUI.Widget.TextInputLayout"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
@@ -193,6 +197,7 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/code"
+                    style="@style/CashUI.Widget.TextInputLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"

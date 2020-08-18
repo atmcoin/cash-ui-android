@@ -1,6 +1,8 @@
 <resources>
-    <style name="CashUI" parent="Theme.MaterialComponents.DayNight"/>
-    <style name="CashUI.Dialog" parent="Theme.MaterialComponents.DayNight">
+    <style name="CashUI"/>
+
+    <style name="CashUI.Theme" parent="Theme.MaterialComponents.DayNight"/>
+    <style name="CashUI.Theme.Dialog" parent="Theme.MaterialComponents.DayNight">
         <item name="android:windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
         <item name="android:windowContentOverlay">@null</item>
@@ -20,26 +22,13 @@
         <item name="android:background">@drawable/dialog_background</item>
     </style>
 
-    <declare-styleable name="DropAnimationView">
-        <!-- Animation rate, use px/s as a unit -->
-        <attr name="rate" format="integer" />
+    <style name="CashUI.Widget"/>
+    <style name="CashUI.Widget.TextInputLayout" parent="Widget.Design.TextInputLayout">
+        <item name="helperTextTextAppearance">@style/CashUI.Widget.TextInputLayoutHelperText</item>
+        <item name="boxBackgroundColor">@null</item>
+    </style>
 
-        <!-- Minimum size of the falling view -->
-        <attr name="minSize" format="dimension" />
-
-        <!-- Maximum size of the falling view -->
-        <attr name="maxSize" format="dimension" />
-
-        <!-- The bigger view should be falling fast -->
-        <attr name="largePercent" format="fraction" />
-
-        <!-- Whether enable horizontal translation, default false -->
-        <attr name="xAnimate" format="boolean" />
-
-        <!-- Whether enable vertical translation, default true  -->
-        <attr name="yAnimate" format="boolean" />
-
-        <!-- Whether enable rotation, default false -->
-        <attr name="rotationAnimate" format="boolean" />
-    </declare-styleable>
+    <style name="CashUI.Widget.TextInputLayoutHelperText">
+        <item name="android:textSize">16sp</item>
+    </style>
 </resources>

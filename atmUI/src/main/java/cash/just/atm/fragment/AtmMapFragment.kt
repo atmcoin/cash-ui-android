@@ -22,7 +22,6 @@ import cash.just.atm.model.AtmMarkerInfo
 import cash.just.atm.model.ClusteredAtm
 import cash.just.atm.viewmodel.AtmViewModel
 import cash.just.sdk.model.AtmMachine
-import com.google.android.gms.maps.CameraUpdate
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.CameraPosition
@@ -56,11 +55,7 @@ class AtmMapFragment : Fragment() {
     private var isAllMachines = true
     private val fastAdapter = FastItemAdapter<AtmItem>()
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_map, container, false)
     }
 
@@ -110,7 +105,7 @@ class AtmMapFragment : Fragment() {
             if (item.atmMachine.redemption == 1) {
                 moveToVerification(item.atmMachine)
             } else {
-                Toast.makeText(activity, "This ATM is purchase only.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(activity, getString(R.string.purchase_only_message), Toast.LENGTH_SHORT).show()
             }
             false
         }
@@ -134,11 +129,11 @@ class AtmMapFragment : Fragment() {
 
                 buttonRedeemOnly.isEnabled = false
                 if (isAllMachines) {
-                    buttonRedeemOnly.text = "Show All"
+                    buttonRedeemOnly.text = getString(R.string.show_all)
                     isAllMachines = false
                     atmMode = MachineMode.REDEMPTION
                 } else {
-                    buttonRedeemOnly.text = "Show Redeem Only"
+                    buttonRedeemOnly.text = getString(R.string.show_redemption_only)
                     isAllMachines = true
                     atmMode = MachineMode.ALL
                 }
@@ -153,12 +148,8 @@ class AtmMapFragment : Fragment() {
         fastAdapter.clear()
         list.forEach {
             if (mode == MachineMode.REDEMPTION) {
-                if (it.redemption == 1) {
-                    fastAdapter.add(AtmItem(it))
-                }
-            } else {
-                fastAdapter.add(AtmItem(it))
-            }
+                if (it.redemption == 1)  fastAdapter.add(AtmItem(it))
+            } else  fastAdapter.add(AtmItem(it))
         }
     }
 
@@ -226,10 +217,6 @@ class AtmMapFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         viewModel.state.singleStateObserve(this) { state ->
-            if (state is RequestState.LOADING) {
-
-            }
-
             when (state) {
                 is RequestState.Success -> {
                     @Suppress("UNCHECKED_CAST")
@@ -245,15 +232,11 @@ class AtmMapFragment : Fragment() {
                 is RequestState.Error -> {
                     when(state.throwable) {
                         is java.net.UnknownHostException -> {
-                            showSnackBar(this, "Failed to load the atms", R.string.retry) {
-                                viewModel.getAtms()
-                            }
+                            showErrorMessage()
                         }
                         is IllegalStateException -> {
                             // no session goes here
-                            showSnackBar(this, "Failed to load the atms", R.string.retry) {
-                                viewModel.getAtms()
-                            }
+                            showErrorMessage()
                         }
                         else -> {
                             showError(this, state.throwable)
@@ -264,11 +247,15 @@ class AtmMapFragment : Fragment() {
         }
     }
 
+    private fun showErrorMessage() {
+        showSnackBar(this, getString(R.string.failed_to_load_atms), R.string.retry) {
+            viewModel.getAtms()
+        }
+    }
     private fun prepareMap(context : Context) {
         AtmMapHelper.addMapFragment(childFragmentManager, R.id.mapFragment, MAP_FRAGMENT_TAG)
             .getMapAsync { googleMap ->
                 googleMap?.let {
-                    Timber.d("Map prepared")
                     map = it
                     it.moveCamera(CameraUpdateFactory.newCameraPosition(CameraPosition.fromLatLngZoom(texas, initialZoom)))
                     it.uiSettings.isMapToolbarEnabled = false
@@ -276,14 +263,9 @@ class AtmMapFragment : Fragment() {
                     it.uiSettings.isZoomControlsEnabled = true
                     it.uiSettings.isZoomGesturesEnabled = true
 
-                    it.setOnMarkerClickListener {
-                        false
-                    }
+                    it.setOnMarkerClickListener { false }
 
-                    it.setOnInfoWindowClickListener { info ->
-                        processInfoWindowClicked(context, info)
-                    }
-                    Timber.d("atm list size {$atmList.size}")
+                    it.setOnInfoWindowClickListener { info -> processInfoWindowClicked(context, info) }
                     proceedToAddMarkers(context, it, atmList, atmMode)
                 }
             }
@@ -294,8 +276,7 @@ class AtmMapFragment : Fragment() {
         if (atm.redemption == 1) {
             moveToVerification(atm)
         } else {
-            Toast.makeText(context, "This ATM does support only to buy," +
-                    " redemption is still not supported", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, getString(R.string.purchase_only_info), Toast.LENGTH_SHORT).show()
         }
     }
 

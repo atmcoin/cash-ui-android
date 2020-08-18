@@ -1,8 +1,10 @@
 package cash.just.atm
 
+import android.annotation.SuppressLint
 import android.graphics.Color
 import android.view.View
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import cash.just.sdk.model.AtmMachine
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.items.AbstractItem
@@ -35,11 +37,13 @@ open class AtmItem(var atmMachine: AtmMachine) : AbstractItem<AtmItem.ViewHolder
 
         override fun bindView(item: AtmItem, payloads: MutableList<Any>) {
             name.text = item.atmMachine.addressDesc
+            @SuppressLint("SetTextI18n")
             description.text = "${item.atmMachine.city} ${item.atmMachine.zip}"
 
             if (item.atmMachine.redemption == 0) {
                 cash.visibility = View.GONE
-                root.setBackgroundColor(Color.parseColor("#f0eeee"))
+                val color = ContextCompat.getColor(name.context, R.color.disabled_atm_background)
+                root.setBackgroundColor(color)
             } else {
                 root.setBackgroundColor(Color.WHITE)
                 cash.visibility = View.VISIBLE

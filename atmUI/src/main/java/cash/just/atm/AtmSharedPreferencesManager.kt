@@ -2,7 +2,6 @@ package cash.just.atm
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.util.Log
 
 class AtmSharedPreferencesManager {
     companion object {
@@ -14,9 +13,7 @@ class AtmSharedPreferencesManager {
         }
 
         fun getWithdrawalRequests(context : Context) : MutableSet<String>? {
-            val list =  getSharedPreferences(context).getStringSet(WITHDRAWAL_REQUESTS, HashSet<String>())
-            Log.d("WithdrawalRequests", list.toString())
-            return list
+            return getSharedPreferences(context).getStringSet(WITHDRAWAL_REQUESTS, HashSet<String>())
         }
 
         fun setWithdrawalRequest(context: Context, value: String) {
@@ -25,18 +22,13 @@ class AtmSharedPreferencesManager {
             updateStringSet(context, list)
         }
 
-        fun deleteWithdrawalRequest(
-            context: Context,
-            value: String
-        ) {
+        fun deleteWithdrawalRequest(context: Context, value: String) {
             val list = getWithdrawalRequests(context)
             list?.remove(value)
             updateStringSet(context, list)
         }
 
-        fun clear(
-            context: Context
-        ) {
+        fun clear(context: Context) {
             getSharedPreferences(context).edit().clear().apply()
         }
 
