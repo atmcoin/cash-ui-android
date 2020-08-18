@@ -15,6 +15,7 @@ import cash.just.atm.R
 import cash.just.atm.base.AtmFlow
 import cash.just.atm.base.RequestState
 import cash.just.atm.base.showError
+import cash.just.atm.base.showSnackBar
 import cash.just.atm.viewmodel.CashCodeNotFoundException
 import cash.just.atm.viewmodel.StatusViewModel
 import cash.just.sdk.model.CashStatus
@@ -25,6 +26,7 @@ import com.square.project.base.singleStateObserve
 import kotlinx.android.synthetic.main.fragment_status.*
 import kotlinx.android.synthetic.main.request_status_awaiting.*
 import kotlinx.android.synthetic.main.request_status_funded.*
+import java.net.UnknownHostException
 import java.util.*
 
 class StatusFragment : Fragment() {
@@ -35,7 +37,8 @@ class StatusFragment : Fragment() {
         LOADING,
         AWAITING,
         FUNDED,
-        NOT_FOUND
+        NOT_FOUND,
+        FAILED_TO_LOAD
     }
 
     private lateinit var clipboard: android.content.ClipboardManager
@@ -93,6 +96,15 @@ class StatusFragment : Fragment() {
                 fundedCard.visibility = View.GONE
                 awaitingCard.visibility = View.GONE
                 requestNotFound.visibility = View.VISIBLE
+                errorMessage.text = "Request not found"
+            }
+            ViewState.FAILED_TO_LOAD -> {
+                loadingView.visibility = View.GONE
+                fundedCard.visibility = View.GONE
+                awaitingCard.visibility = View.GONE
+                requestNotFound.visibility = View.VISIBLE
+                errorMessage.text = "Failed to load"
+
             }
         }
     }
@@ -205,11 +217,28 @@ class StatusFragment : Fragment() {
                 }
 
                 is RequestState.Error -> {
-                    if (state.throwable is CashCodeNotFoundException) {
-                        changeUiState(ViewState.NOT_FOUND)
-                    } else showError(this, state.throwable)
+                    when(state.throwable) {
+                        is CashCodeNotFoundException -> {
+                            changeUiState(ViewState.NOT_FOUND)
+                        }
+                        is UnknownHostException -> {
+                            showError()
+                        }
+                        is java.lang.IllegalStateException -> {
+                            showError()
+                        } else -> {
+                            showError(this, state.throwable)
+                        }
+                    }
                 }
             }
+        }
+    }
+
+    private fun showError() {
+        changeUiState(ViewState.FAILED_TO_LOAD)
+        showSnackBar(this, "The request could not be loaded", R.string.retry) {
+            viewModel.checkCashCodeStatus(cashCodeArg)
         }
     }
 }

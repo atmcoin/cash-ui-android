@@ -13,15 +13,18 @@ import androidx.navigation.fragment.findNavController
 import cash.just.atm.R
 import cash.just.atm.base.RequestState
 import cash.just.atm.base.showError
+import cash.just.atm.base.showSnackBar
 import cash.just.atm.extension.formatTo
 import cash.just.atm.extension.toDate
 import cash.just.atm.model.RetryableCashStatus
+import cash.just.atm.viewmodel.CashCodeNotFoundException
 import cash.just.atm.viewmodel.CashStatusResult
 import cash.just.atm.viewmodel.StatusViewModel
 import cash.just.sdk.model.CashStatus
 import cash.just.sdk.model.CodeStatus
 import com.square.project.base.singleStateObserve
 import kotlinx.android.synthetic.main.fragment_request_list.*
+import java.net.UnknownHostException
 
 class StatusListFragment : Fragment() {
     private val viewModel = StatusViewModel()
@@ -111,7 +114,21 @@ class StatusListFragment : Fragment() {
                 }
 
                 is RequestState.Error -> {
-                    showError(this, state.throwable)
+                    when(state.throwable) {
+                        is UnknownHostException -> {
+                            showSnackBar(this, "Failed to load the request list", R.string.retry) {
+                                viewModel.getCashCodes(requireContext())
+                            }
+                        }
+                        is java.lang.IllegalStateException -> {
+                            showSnackBar(this, "Failed to load the request list", R.string.retry) {
+                                viewModel.getCashCodes(requireContext())
+                            }
+
+                        } else -> {
+                        showError(this, state.throwable)
+                    }
+                    }
                 }
             }
         }

@@ -1,8 +1,8 @@
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layoutBackground">
 
     <androidx.cardview.widget.CardView
@@ -29,7 +29,7 @@
 
         <LinearLayout
             android:paddingTop="50dp"
-            android:paddingBottom="50dp"
+            android:paddingBottom="70dp"
             android:layout_marginTop="15dp"
             android:orientation="vertical"
             android:id="@+id/requestNotFound"
@@ -43,10 +43,11 @@
                 android:layout_height="150dp"/>
 
             <TextView
+                android:id="@+id/errorMessage"
                 android:layout_marginTop="20dp"
                 android:textSize="20dp"
                 android:layout_gravity="center|center_vertical"
-                android:text="Request not found"
+                tools:text="Request not found"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
