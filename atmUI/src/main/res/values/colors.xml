@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="colorPrimaryLight">#66d1ff</color>
+    <color name="colorPrimary">#19a0db</color>
+    <color name="colorPrimaryDark">#00719d</color>
+    <color name="colorSecondaryLight">#484848</color>
+    <color name="colorSecondary">#212121</color>
+    <color name="colorSecondaryDark">#000000</color>
+    <color name="colorAccent">#000000</color>
+
     <item name="white" type="color">#ffffff</item>
     <item name="light_gray" type="color">#ff9d9d9d</item>
     <item name="gray" type="color">#ff787878</item>
@@ -9,4 +17,7 @@
     <color name="total_assets_usd_color">#546875</color>
     <color name="settings_chevron_right">#b3c0c8</color>
     <color name="disabled_atm_background">#f0eeee</color>
+
+    <color name="rippleColourLight">#E2E2E2</color>
+    <color name="rippleColourDark">#FBFBFB</color>
 </resources>

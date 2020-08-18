@@ -13,6 +13,7 @@ import cash.just.atm.R
 import cash.just.atm.base.AtmFlow
 import cash.just.atm.base.RequestState
 import cash.just.atm.base.showError
+import cash.just.atm.base.showSnackBar
 import cash.just.atm.extension.hideKeyboard
 import cash.just.atm.model.AtmMarker
 import cash.just.atm.model.VerificationType
@@ -27,6 +28,7 @@ import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.CameraPosition
 import com.square.project.base.singleStateObserve
 import kotlinx.android.synthetic.main.fragment_request_cash_code.*
+import java.net.UnknownHostException
 
 class AtmRequestFragment : Fragment() {
     private val viewModel = AtmViewModel()
@@ -44,14 +46,19 @@ class AtmRequestFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_request_cash_code, container, false)
     }
 
+    private fun getAtmArgs():AtmMachine {
+        return AtmRequestFragmentArgs.fromBundle(requireArguments()).atmMachine
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         appContext = view.context.applicationContext
 
-        val atm = AtmRequestFragmentArgs.fromBundle(requireArguments()).atmMachine
+
 
         verificationGroup.visibility = View.VISIBLE
         confirmGroup.visibility = View.GONE
+        val atm = getAtmArgs()
 
         prepareMap(view.context, atm)
 
@@ -91,22 +98,24 @@ class AtmRequestFragment : Fragment() {
         }
 
         confirmAction.setOnClickListener {
-            val context = view.context
-            if (!CashSDK.isSessionCreated()) {
-                Toast.makeText(context, "invalid session", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-
-            if (getCode().isNullOrEmpty()) {
-                Toast.makeText(context, "Token is empty", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-
-            context.hideKeyboard(code.editText)
-            viewModel.createCashCode(atm, getAmount()!!, getCode()!!)
+            confirmCode()
         }
 
         dropView.setDrawables(R.drawable.bitcoin, R.drawable.bitcoin)
+    }
+
+    private fun confirmCode() {
+        val atm = getAtmArgs()
+
+        if (getCode().isNullOrEmpty()) {
+            Toast.makeText(requireContext(), "Token is empty", Toast.LENGTH_SHORT).show()
+            confirmAction.hideProgress()
+            return
+        }
+
+        requireContext().hideKeyboard(code.editText)
+        confirmAction.showProgress()
+        viewModel.createCashCode(atm, getAmount()!!, getCode()!!)
     }
 
     private fun getAtmFlow(): AtmFlow? {
@@ -275,7 +284,22 @@ class AtmRequestFragment : Fragment() {
                 }
 
                 is RequestState.Error -> {
-                    showError(this, state.throwable)
+                    confirmAction.hideProgress()
+                    when(state.throwable) {
+                        is java.lang.IllegalStateException -> {
+                            //it will be probably verification code not found
+                            showSnackBar(this, "Verification code not found")
+                        }
+                        is UnknownHostException -> {
+                            //it will be probably verification code not found
+                            showSnackBar(this, "Unable to confirm the code", R.string.retry) {
+                                confirmCode()
+                            }
+                        }
+                        else -> {
+                            showError(this, state.throwable)
+                        }
+                    }
                 }
             }
         }

@@ -169,16 +169,15 @@
 
                 </LinearLayout>
 
-                <androidx.appcompat.widget.AppCompatButton
+                <cash.just.atm.view.LoadingButton
                     android:padding="10dp"
                     android:id="@+id/getAtmCode"
-                    android:background="@drawable/rounded_background"
-                    android:textColor="@color/white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
                     android:layout_marginTop="30dp"
-                    android:text="Get ATM code" />
+                    app:loadingButtonStyle="secondary"
+                    app:loadingButtonText="@string/request_action" />
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/confirmGroup"
@@ -213,16 +212,15 @@
                         android:layout_height="wrap_content" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <androidx.appcompat.widget.AppCompatButton
-                    android:background="@drawable/rounded_background"
-                    android:textColor="@color/white"
+                <cash.just.atm.view.LoadingButton
                     android:id="@+id/confirmAction"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
                     android:padding="10dp"
                     android:layout_marginTop="30dp"
-                    android:text="Confirm" />
+                    app:loadingButtonStyle="secondary"
+                    app:loadingButtonText="@string/request_confirm" />
             </LinearLayout>
         </LinearLayout>
 

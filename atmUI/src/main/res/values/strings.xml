@@ -7,4 +7,7 @@
     <string name="purchase_only_message">This ATM is purchase only</string>
     <string name="purchase_only_info">This ATM does support only to buy, redemption is still not supported</string>
     <string name="failed_to_load_atms">Failed to load the atms</string>
+
+    <string name="request_action">Get code</string>
+    <string name="request_confirm">Confirm</string>
 </resources>

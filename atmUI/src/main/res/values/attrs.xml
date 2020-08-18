@@ -1,5 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <declare-styleable name="CashUI">
+
+        <attr name="rippleColour" format="reference" />
+        <!--Buttons/Actions-->
+        <attr name="primaryActionBorder" format="reference"/>
+        <attr name="primaryActionTextColour" format="reference"/>
+        <attr name="primaryActionBackground" format="reference"/>
+
+        <attr name="primaryActionHighlightedBorder" format="reference"/>
+        <attr name="primaryActionHighlightedTextColour" format="reference"/>
+        <attr name="primaryActionHighlightedBackground" format="reference"/>
+
+        <attr name="secondaryActionBorder" format="reference"/>
+        <attr name="secondaryActionTextColour" format="reference"/>
+        <attr name="secondaryActionBackground" format="reference"/>
+    </declare-styleable>
     <declare-styleable name="DropAnimationView">
         <!-- Animation rate, use px/s as a unit -->
         <attr name="rate" format="integer" />

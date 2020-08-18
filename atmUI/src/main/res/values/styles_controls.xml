@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--==========================================-->
+    <!--                  Buttons                 -->
+    <!--==========================================-->
+    <style name="Text.Button" parent="TextAppearance.MaterialComponents.Button">
+        <item name="android:horizontalSpacing">2.5sp</item>
+    </style>
+    <style name="Text.Button.Radio" parent="TextAppearance.MaterialComponents.Button">
+    </style>
+    <style name="Text.Button.Primary">
+        <item name="android:textColor">?attr/primaryActionTextColour</item>
+    </style>
+    <style name="Text.Button.Primary.Highlighted">
+        <item name="android:textColor">?attr/primaryActionHighlightedTextColour</item>
+    </style>
+    <style name="Text.Button.Secondary">
+        <item name="android:textColor">?attr/secondaryActionTextColour</item>
+    </style>
+
+    <style name="Button.Primary" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:minHeight">@dimen/row_height_normal</item>
+<!--        <item name="android:textAppearance">@style/Text.Button.Primary</item>-->
+<!--        <item name="android:textColor">?attr/primaryActionTextColour</item>-->
+<!--        <item name="backgroundTint">?attr/primaryActionBackground</item>-->
+<!--        <item name="strokeColor">?attr/primaryActionBorder</item>-->
+<!--        <item name="rippleColor">?attr/rippleColour</item>-->
+    </style>
+
+    <style name="Button.Primary.Highlighted" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:minHeight">@dimen/row_height_normal</item>
+        <item name="android:textAppearance">@style/Text.Button.Primary.Highlighted</item>
+        <item name="android:textColor">?attr/primaryActionHighlightedTextColour</item>
+        <item name="backgroundTint">?attr/primaryActionHighlightedBackground</item>
+        <item name="strokeColor">?attr/primaryActionHighlightedBorder</item>
+        <item name="rippleColor">?attr/rippleColour</item>
+    </style>
+
+    <style name="Button.Secondary" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:minHeight">@dimen/row_height_normal</item>
+        <item name="android:textAppearance">@style/Text.Button.Secondary</item>
+        <item name="android:textColor">?attr/secondaryActionTextColour</item>
+        <item name="backgroundTint">?attr/secondaryActionBackground</item>
+        <item name="strokeColor">?attr/secondaryActionBorder</item>
+        <item name="rippleColor">?attr/rippleColour</item>
+    </style>
+
+    <style name="Button.Secondary.Dialog">
+        <!--<item name="android:textColor">?attr/secondaryDialogActionTextColour</item>-->
+        <item name="android:textColor">@color/black</item>
+    </style>
+</resources>

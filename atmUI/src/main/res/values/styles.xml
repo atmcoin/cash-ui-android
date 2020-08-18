@@ -1,7 +1,16 @@
 <resources>
     <style name="CashUI"/>
 
-    <style name="CashUI.Theme" parent="Theme.MaterialComponents.DayNight"/>
+    <style name="CashUI.Theme" parent="Theme.MaterialComponents.DayNight">
+        <item name="primaryActionTextColour">@android:color/white</item>
+        <item name="primaryActionBackground">@color/colorPrimary</item>
+        <item name="primaryActionBorder">@color/colorPrimaryDark</item>
+        <item name="secondaryActionTextColour">@android:color/white</item>
+        <item name="secondaryActionBackground">@color/colorSecondary</item>
+        <item name="secondaryActionBorder">@color/colorSecondaryDark</item>
+        <item name="rippleColour">@color/rippleColourLight</item>
+    </style>
+
     <style name="CashUI.Theme.Dialog" parent="Theme.MaterialComponents.DayNight">
         <item name="android:windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
@@ -31,40 +40,4 @@
     <style name="CashUI.Widget.TextInputLayoutHelperText">
         <item name="android:textSize">16sp</item>
     </style>
-
-    <!--==========================================-->
-    <!--                  Buttons                 -->
-    <!--==========================================-->
-    <style name="Button.Primary" parent="Widget.MaterialComponents.Button.TextButton">
-        <item name="android:minHeight">@dimen/row_height_normal</item>
-        <item name="android:textAppearance">@style/Text.Button.Primary</item>
-        <item name="android:textColor">?attr/primaryActionTextColour</item>
-        <item name="backgroundTint">?attr/primaryActionBackground</item>
-        <item name="strokeColor">?attr/primaryActionBorder</item>
-        <item name="rippleColor">?attr/rippleColour</item>
-    </style>
-
-    <style name="Button.Primary.Highlighted" parent="Widget.MaterialComponents.Button.TextButton">
-        <item name="android:minHeight">@dimen/row_height_normal</item>
-        <item name="android:textAppearance">@style/Text.Button.Primary.Highlighted</item>
-        <item name="android:textColor">?attr/primaryActionHighlightedTextColour</item>
-        <item name="backgroundTint">?attr/primaryActionHighlightedBackground</item>
-        <item name="strokeColor">?attr/primaryActionHighlightedBorder</item>
-        <item name="rippleColor">?attr/rippleColour</item>
-    </style>
-
-    <style name="Button.Secondary" parent="Widget.MaterialComponents.Button.TextButton">
-        <item name="android:minHeight">@dimen/row_height_normal</item>
-        <item name="android:textAppearance">@style/Text.Button.Secondary</item>
-        <item name="android:textColor">?attr/secondaryActionTextColour</item>
-        <item name="backgroundTint">?attr/secondaryActionBackground</item>
-        <item name="strokeColor">?attr/secondaryActionBorder</item>
-        <item name="rippleColor">?attr/rippleColour</item>
-    </style>
-
-    <style name="Button.Secondary.Dialog">
-        <!--<item name="android:textColor">?attr/secondaryDialogActionTextColour</item>-->
-        <item name="android:textColor">@color/blackRussian</item>
-    </style>
-
 </resources>
