@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import cash.just.atm.AtmSharedPreferencesManager
 import cash.just.atm.R
 import cash.just.atm.base.AtmFlow
 import cash.just.atm.base.RequestState
@@ -60,6 +61,7 @@ class AtmRequestFragment : Fragment() {
 
         prepareMap(view.context, atm)
 
+        preFillSavedData()
         atmTitle.text = atm.addressDesc
         amount.helperText =
             "Min $${atm.min} max $${atm.max}, multiple of $${atm.bills.toFloat().toInt()} bills"
@@ -93,7 +95,7 @@ class AtmRequestFragment : Fragment() {
             }
 
             getAtmCode.showProgress()
-            viewModel.sendVerificationCode(getName()!!, getSurname()!!, getPhone(), getEmail())
+            viewModel.sendVerificationCode(requireContext(), getName()!!, getSurname()!!, getPhone(), getEmail())
         }
 
         confirmAction.setOnClickListener {
@@ -101,6 +103,22 @@ class AtmRequestFragment : Fragment() {
         }
 
         dropView.setDrawables(R.drawable.bitcoin, R.drawable.bitcoin)
+    }
+
+    private fun preFillSavedData() {
+        val context = requireContext()
+        AtmSharedPreferencesManager.getFirstName(context)?.let {
+           firstName.editText?.setText(it)
+        }
+        AtmSharedPreferencesManager.getLastName(context)?.let {
+            lastName.editText?.setText(it)
+        }
+        AtmSharedPreferencesManager.getPhone(context)?.let {
+            phoneNumber.editText?.setText(it)
+        }
+        AtmSharedPreferencesManager.getEmail(context)?.let {
+            email.editText?.setText(it)
+        }
     }
 
     private fun confirmCode() {

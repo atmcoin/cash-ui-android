@@ -91,6 +91,7 @@
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:imeOptions="actionNext"
+                            android:autofillHints="string"
                             android:maxLines="1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -145,6 +146,7 @@
                         <com.google.android.material.textfield.TextInputEditText
                             android:imeOptions="actionNext"
                             android:maxLines="1"
+                            android:autofillHints="AUTOFILL_HINT_PERSON_NAME_GIVEN"
                             android:inputType="textCapSentences"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content" />
@@ -161,6 +163,7 @@
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:imeOptions="actionDone"
+                            android:autofillHints="string"
                             android:inputType="textCapSentences"
                             android:maxLines="1"
                             android:layout_width="match_parent"

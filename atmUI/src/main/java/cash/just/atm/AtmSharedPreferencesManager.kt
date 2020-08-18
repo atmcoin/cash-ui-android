@@ -7,9 +7,45 @@ class AtmSharedPreferencesManager {
     companion object {
         private const val APP_SETTINGS = "APP_ATM_PREFERENCES"
         private const val WITHDRAWAL_REQUESTS = "WITHDRAWAL_REQUESTS"
+        private const val PHONE = "PHONE"
+        private const val FIRST_NAME = "FIRST_NAME"
+        private const val LAST_NAME = "LAST_NAME"
+        private const val EMAIL = "EMAIL"
 
         private fun getSharedPreferences(context: Context): SharedPreferences {
             return context.getSharedPreferences(APP_SETTINGS, Context.MODE_PRIVATE)
+        }
+
+        fun getPhone(context: Context):String? {
+            return getSharedPreferences(context).getString(PHONE, null)
+        }
+
+        fun setPhone(context: Context, phone: String) {
+            getSharedPreferences(context).edit().putString(PHONE, phone).apply()
+        }
+
+        fun getEmail(context: Context):String? {
+            return getSharedPreferences(context).getString(EMAIL, null)
+        }
+
+        fun setEmail(context: Context, email: String) {
+            getSharedPreferences(context).edit().putString(EMAIL, email).apply()
+        }
+
+        fun getFirstName(context: Context):String? {
+            return getSharedPreferences(context).getString(FIRST_NAME, null)
+        }
+
+        fun setFirstName(context: Context, firstName: String) {
+            getSharedPreferences(context).edit().putString(FIRST_NAME, firstName).apply()
+        }
+
+        fun getLastName(context: Context):String? {
+            return getSharedPreferences(context).getString(LAST_NAME, null)
+        }
+
+        fun setLastName(context: Context, lastName: String) {
+            getSharedPreferences(context).edit().putString(LAST_NAME, lastName).apply()
         }
 
         fun getWithdrawalRequests(context : Context) : MutableSet<String>? {

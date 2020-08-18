@@ -45,13 +45,24 @@ class AtmViewModel : ViewModel() {
         }
     }
 
-    fun sendVerificationCode(name:String, surname:String, phone:String?, email:String?) {
+    fun sendVerificationCode(context: Context, name:String, surname:String, phone:String?, email:String?) {
         execute(_state) {
             SessionUtil.checkSession()
-
+            saveDetails(context, name, surname, phone, email)
             val type = if (phone == null) VerificationType.PHONE else VerificationType.EMAIL
             val cashCode = CashSDK.sendVerificationCode(name, surname, phone, email).execute().body()!!.data.items[0].result
             return@execute VerificationSent(type, cashCode)
+        }
+    }
+
+    private fun saveDetails(context:Context, name:String, surname:String, phone:String?, email:String?){
+        AtmSharedPreferencesManager.setFirstName(context, name)
+        AtmSharedPreferencesManager.setLastName(context, surname)
+        phone?.let {
+            AtmSharedPreferencesManager.setPhone(context, phone)
+        }
+        email?.let {
+            AtmSharedPreferencesManager.setEmail(context, email)
         }
     }
 
