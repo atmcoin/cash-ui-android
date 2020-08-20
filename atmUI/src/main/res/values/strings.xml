@@ -10,4 +10,20 @@
 
     <string name="request_action">Get code</string>
     <string name="request_confirm">Confirm</string>
+    <string name="request_cash_out_amount_validation">Min %1$s max %2$s, multiple of %3$d bills</string>
+    <string name="request_cash_out_empty_code">Token is empty</string>
+    <string name="request_cash_out_complete_fields">Complete the fields</string>
+    <string name="request_cash_out_amount_not_valid">Amount not valid</string>
+    <string name="request_cash_out_amount_not_valid_min_max">Amount not valid, it has to be between %1$d and %2$d.</string>
+    <string name="request_cash_out_amount_multiple">Amount must be multiple of %1$d$</string>
+    <string name="request_cash_out_email_confirmation">We\'ve sent a confirmation code to your email.</string>
+    <string name="request_cash_out_email_confirmation_message">Check your email for the confirmation code we sent you. It may take a couple of minutes.</string>
+    <string name="request_cash_out_phone_confirmation">Check your email for the confirmation code we sent you. It may take a couple of minutes.</string>
+    <string name="request_cash_out_phone_confirmation_message">Check your SMS inbox for the confirmation code we sent you. It may take a couple of minutes.</string>
+    <string name="request_cash_out_invalid_code">Invalid code</string>
+    <string name="request_cash_out_unable_to_confirm">Unable to confirm the code</string>
+    <string name="request_cash_out_dialog_title">Withdrawal requested</string>
+    <string name="request_cash_out_dialog_message">"Please send the amount of %1$s BTC to the ATM"</string>
+    <string name="request_cash_out_dialog_send_action">Send</string>
+    <string name="request_cash_out_dialog_details_action">Details</string>
 </resources>

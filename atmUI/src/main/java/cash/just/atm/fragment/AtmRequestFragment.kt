@@ -63,12 +63,11 @@ class AtmRequestFragment : Fragment() {
 
         preFillSavedData()
         atmTitle.text = atm.addressDesc
-        amount.helperText =
-            "Min $${atm.min} max $${atm.max}, multiple of $${atm.bills.toFloat().toInt()} bills"
+        amount.helperText = getString(R.string.request_cash_out_amount_validation, atm.min, atm.max, atm.bills.toFloat().toInt())
 
         getAtmCode.setOnClickListener {
             if (checkFields()) {
-                Toast.makeText(view.context, "Complete the fields", Toast.LENGTH_SHORT).show()
+                Toast.makeText(view.context, getString(R.string.request_cash_out_complete_fields), Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
@@ -77,12 +76,10 @@ class AtmRequestFragment : Fragment() {
                 val max = atm.max.toFloatOrNull()?.toInt()
                 if (min == null || max == null) {
                     Toast.makeText(
-                        view.context, "Amount not valid, " +
-                                "it has to be between ${atm.min.toFloatOrNull()?.toInt()} " +
-                                "and ${atm.max.toFloatOrNull()?.toInt()}.", Toast.LENGTH_LONG
+                        view.context, getString(R.string.request_cash_out_amount_not_valid_min_max, min, max), Toast.LENGTH_LONG
                     ).show()
                 } else {
-                    Toast.makeText(view.context, "Amount not valid", Toast.LENGTH_LONG).show()
+                    Toast.makeText(view.context, getString(R.string.request_cash_out_amount_not_valid), Toast.LENGTH_LONG).show()
                 }
                 return@setOnClickListener
             }
@@ -90,7 +87,7 @@ class AtmRequestFragment : Fragment() {
             val amount = getAmount()!!.toFloat().toInt()
             val bills = atm.bills.toFloat().toInt()
             if (amount.rem(bills) != 0) {
-                Toast.makeText(view.context, "Amount must be multiple of ${atm.bills}$", Toast.LENGTH_SHORT).show()
+                Toast.makeText(view.context, getString(R.string.request_cash_out_amount_multiple, bills), Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
@@ -125,7 +122,7 @@ class AtmRequestFragment : Fragment() {
         val atm = getAtmArgs()
 
         if (getCode().isNullOrEmpty()) {
-            Toast.makeText(requireContext(), "Token is empty", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), getString(R.string.request_cash_out_empty_code), Toast.LENGTH_SHORT).show()
             confirmAction.hideProgress()
             return
         }
@@ -147,11 +144,11 @@ class AtmRequestFragment : Fragment() {
     }
 
     private fun showDialog(context: Context, secureCode: String, cashStatus: CashStatus) {
-        AlertDialog.Builder(context).setTitle("Withdrawal requested")
-            .setMessage("Please send the amount of ${cashStatus.btc_amount} BTC to the ATM")
-            .setPositiveButton("Send") { _, _ ->
+        AlertDialog.Builder(context).setTitle(R.string.request_cash_out_dialog_title)
+            .setMessage(getString(R.string.request_cash_out_dialog_message, cashStatus.btc_amount))
+            .setPositiveButton(R.string.request_cash_out_dialog_send_action) { _, _ ->
                 getAtmFlow()?.onSend(cashStatus.btc_amount, cashStatus.address)
-            }.setNeutralButton("Details") { _, _ ->
+            }.setNeutralButton(R.string.request_cash_out_dialog_details_action) { _, _ ->
                 getAtmFlow()?.onDetails(secureCode, cashStatus)
             }.create().show()
     }
@@ -159,16 +156,12 @@ class AtmRequestFragment : Fragment() {
     private fun populateVerification(verification: VerificationSent) {
         when(verification.type) {
             VerificationType.EMAIL -> {
-                confirmationMessage.text = "We've sent a confirmation code to your email."
-                code.helperText =
-                    "Check your email for the confirmation code we sent you." +
-                            " It may take a couple of minutes."
+                confirmationMessage.text = getString(R.string.request_cash_out_email_confirmation)
+                code.helperText = getString(R.string.request_cash_out_email_confirmation_message)
             }
             VerificationType.PHONE -> {
-                confirmationMessage.text = "We've sent a confirmation code to your phone by SMS."
-                code.helperText =
-                    "Check your SMS inbox for the confirmation code we sent you." +
-                            " It may take a couple of minutes."
+                confirmationMessage.text = getString(R.string.request_cash_out_phone_confirmation)
+                code.helperText = getString(R.string.request_cash_out_phone_confirmation_message)
             }
         }
         verificationGroup.visibility = View.GONE
@@ -308,13 +301,13 @@ class AtmRequestFragment : Fragment() {
                     clearLoadingButtons()
                     when(state.throwable) {
                         is java.lang.IllegalStateException -> {
-                            Timber.e(state.throwable.message)
+                            Timber.e(state.throwable)
                             //it will be probably verification code not found
-                            showSnackBar(this, "Invalid code")
+                            showSnackBar(this, getString(R.string.request_cash_out_invalid_code))
                         }
                         is UnknownHostException -> {
                             //it will be probably verification code not found
-                            showSnackBar(this, "Unable to confirm the code", R.string.retry) {
+                            showSnackBar(this, getString(R.string.request_cash_out_unable_to_confirm), R.string.retry) {
                                 confirmCode()
                             }
                         }
