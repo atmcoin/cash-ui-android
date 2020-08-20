@@ -20,7 +20,6 @@ import cash.just.atm.model.AtmMarker
 import cash.just.atm.model.VerificationType
 import cash.just.atm.viewmodel.AtmViewModel
 import cash.just.atm.viewmodel.VerificationSent
-import cash.just.sdk.CashSDK
 import cash.just.sdk.model.AtmMachine
 import cash.just.sdk.model.CashCode
 import cash.just.sdk.model.CashStatus
@@ -29,6 +28,7 @@ import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.CameraPosition
 import com.square.project.base.singleStateObserve
 import kotlinx.android.synthetic.main.fragment_request_cash_code.*
+import timber.log.Timber
 import java.net.UnknownHostException
 
 class AtmRequestFragment : Fragment() {
@@ -151,7 +151,7 @@ class AtmRequestFragment : Fragment() {
             .setMessage("Please send the amount of ${cashStatus.btc_amount} BTC to the ATM")
             .setPositiveButton("Send") { _, _ ->
                 getAtmFlow()?.onSend(cashStatus.btc_amount, cashStatus.address)
-            }.setNegativeButton("Details") { _, _ ->
+            }.setNeutralButton("Details") { _, _ ->
                 getAtmFlow()?.onDetails(secureCode, cashStatus)
             }.create().show()
     }
@@ -308,8 +308,9 @@ class AtmRequestFragment : Fragment() {
                     clearLoadingButtons()
                     when(state.throwable) {
                         is java.lang.IllegalStateException -> {
+                            Timber.e(state.throwable.message)
                             //it will be probably verification code not found
-                            showSnackBar(this, "Verification code not found")
+                            showSnackBar(this, "Invalid code")
                         }
                         is UnknownHostException -> {
                             //it will be probably verification code not found
