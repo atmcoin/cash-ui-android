@@ -36,14 +36,14 @@ android {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.core:core-ktx:1.3.1'
     implementation "androidx.browser:browser:1.2.0"
     implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
 
     testImplementation 'junit:junit:4.13'
-    implementation 'com.google.android.material:material:1.1.0'
+    implementation 'com.google.android.material:material:1.2.0'
     implementation 'com.google.code.gson:gson:2.8.6'
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
     implementation 'com.google.maps.android:android-maps-utils:1.3.3'
@@ -54,9 +54,13 @@ dependencies {
     // Fastadapter
     //TODO: as today August 10th, 2020 brd wallet fork is still using 4.1.2
     // update first the wallet or the upstream and propagate the change
+    //noinspection GradleDependency
     implementation "com.mikepenz:fastadapter:4.1.2"
+    //noinspection GradleDependency
     implementation "com.mikepenz:fastadapter-extensions-diff:4.1.2"
+    //noinspection GradleDependency
     implementation "com.mikepenz:fastadapter-extensions-drag:4.1.2"
+    //noinspection GradleDependency
     implementation "com.mikepenz:fastadapter-extensions-utils:4.1.2"
 
     implementation 'androidx.navigation:navigation-fragment:2.3.0'
