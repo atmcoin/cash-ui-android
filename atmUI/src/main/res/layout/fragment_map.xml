@@ -31,7 +31,7 @@
                 android:foreground="?android:attr/selectableItemBackground"
                 android:background="@android:color/transparent"
                 android:text="Show Redeem Only"
-                android:textColor="@color/white"
+                android:textColor="@color/light_gray"
                 android:textSize="12sp" />
 
             <ImageView
