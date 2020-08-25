@@ -33,6 +33,7 @@ class StatusViewModel : ViewModel() {
             requests?.let {
 
                 it.forEach { code ->
+                    //TODO parse errors
                     CashSDK.checkCashCodeStatus(code).execute().body()?.let { body ->
                         body.data?.let { data ->
                             data.items.let { list ->
@@ -46,7 +47,6 @@ class StatusViewModel : ViewModel() {
                     }
                 }
             }
-
             return@execute statusList
         }
     }
