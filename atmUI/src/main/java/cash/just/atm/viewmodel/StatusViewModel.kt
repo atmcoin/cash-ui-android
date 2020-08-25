@@ -33,10 +33,17 @@ class StatusViewModel : ViewModel() {
             requests?.let {
 
                 it.forEach { code ->
-                    val cashCode = CashSDK.checkCashCodeStatus(code).execute().body()!!.data!!.items[0]
-                    statusList.add(
-                        CashStatusResult(code, cashCode)
-                    )
+                    CashSDK.checkCashCodeStatus(code).execute().body()?.let { body ->
+                        body.data?.let { data ->
+                            data.items.let { list ->
+                                if (list.isNotEmpty()) {
+                                    statusList.add(
+                                        CashStatusResult(code, list[0])
+                                    )
+                                }
+                            }
+                        }
+                    }
                 }
             }
 
