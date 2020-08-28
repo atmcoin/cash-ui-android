@@ -70,5 +70,5 @@ dependencies {
     implementation 'androidx.navigation:navigation-ui-ktx:2.3.0'
 
     implementation "com.journeyapps:zxing-android-embedded:4.1.0"
-    api 'com.github.atmcoin:cash-sdk-android:1.5.2'
+    api 'com.github.atmcoin:cash-sdk-android:1.5.3'
 }
