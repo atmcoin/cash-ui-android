@@ -52,7 +52,7 @@ dependencies {
     implementation 'com.jakewharton.timber:timber:4.7.1'
 
     // Fastadapter
-    //TODO: as today August 10th, 2020 brd wallet fork is still using 4.1.2
+    //TODO: update the fork from upstream first
     // update first the wallet or the upstream and propagate the change
     //noinspection GradleDependency
     implementation "com.mikepenz:fastadapter:4.1.2"

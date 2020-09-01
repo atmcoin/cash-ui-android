@@ -2,9 +2,9 @@
     package="cash.just.atm">
 
     <application>
-        <activity android:name="cash.just.atm.AtmActivity"
+        <activity android:name="cash.just.atm.AtmActivity" android:screenOrientation="portrait"
             android:theme="@style/CashUI.Theme"/>
-        <activity android:name="cash.just.atm.StatusActivity"
+        <activity android:name="cash.just.atm.StatusActivity" android:screenOrientation="portrait"
             android:theme="@style/CashUI.Theme.Dialog"/>
 
         <meta-data android:name="com.google.android.geo.API_KEY"
