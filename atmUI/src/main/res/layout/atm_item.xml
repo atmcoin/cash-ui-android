@@ -7,16 +7,20 @@
     android:background="@color/white"
     android:foreground="?android:attr/selectableItemBackground">
 
-
     <TextView
+        android:layout_marginEnd="7dp"
+        android:layout_alignParentStart="true"
+        android:layout_toStartOf="@+id/cashIcon"
+        android:ellipsize="end"
+        android:maxLines="1"
         android:id="@+id/item_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="12dp"
+        android:layout_marginStart="12dp"
         android:layout_marginTop="12dp"
         android:textColor="@color/total_assets_usd_color"
         android:textSize="16sp"
-        tools:text="Dec 2" />
+        tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit " />
 
     <TextView
         android:id="@+id/item_description"
