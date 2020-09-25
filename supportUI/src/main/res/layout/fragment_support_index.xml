@@ -36,9 +36,6 @@
     <FrameLayout
         android:layout_alignParentBottom="true"
         android:id="@+id/footer"
-        app:layout_constraintBottom_toBottomOf="@+id/indexScrollGroup"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <include layout="@layout/fragment_support_footer" />
