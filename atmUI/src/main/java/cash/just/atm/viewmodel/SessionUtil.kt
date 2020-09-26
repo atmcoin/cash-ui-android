@@ -18,7 +18,7 @@ class SessionUtil{
         private fun createSession(): Boolean {
             val countDownLatch = CountDownLatch(1)
 
-            CashSDK.createSession(BitcoinServer.getServer(), object : Cash.SessionCallback {
+            CashSDK.createGuestSession(BitcoinServer.getServer(), object : Cash.SessionCallback {
                 override fun onSessionCreated(sessionKey: String) {
                     countDownLatch.countDown()
                 }

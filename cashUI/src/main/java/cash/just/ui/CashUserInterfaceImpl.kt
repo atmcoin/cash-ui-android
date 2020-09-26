@@ -16,7 +16,7 @@ import timber.log.Timber
 
 class CashUserInterfaceImpl : CashUIProtocol {
   override fun init(network: Cash.BtcNetwork) {
-    CashSDK.createSession(network, object:Cash.SessionCallback {
+    CashSDK.createGuestSession(network, object:Cash.SessionCallback {
       override fun onSessionCreated(sessionKey: String) {
         Timber.d("Session created")
       }
