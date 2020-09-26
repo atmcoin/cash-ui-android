@@ -24,7 +24,7 @@ allprojects {
     }
 
     project.ext {
-        versionName = "1.5.4"
+        versionName = "2.0.8"
         versionCode = 4
         compileSdkVersion = 29
         buildToolsVersion = "29.0.3"
