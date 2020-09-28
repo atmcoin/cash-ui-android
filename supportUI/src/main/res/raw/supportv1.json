@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "language": "es",
+  "categories": [
+    {
+      "id": "GENERAL",
+      "title": "General Support"
+    },
+    {
+      "id": "ATM",
+      "title": "Atm Support"
+    }
+  ],
+  "pages": [
+    {
+      "id": "GET_STARTED",
+      "title": "How do I get started?",
+      "content": "Welcome to the Coinsquare Wallet! The Coinsquare Wallet app connects directly to the bitcoin network.. \n asdfsdfs \n asdfsd",
+      "category_id": "GENERAL"
+    },
+    {
+      "id": "SEND",
+      "title": "How do I send bitcoin?",
+      "content": "To send money to someone you need to enter their bitcoin address....",
+      "category_id": "ATM"
+    }
+  ]
+}

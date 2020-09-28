@@ -6,7 +6,7 @@ import cash.just.support.BaseSupportPage
 enum class GeneralSupportPage(private val title: String, private val description: String) :
     BaseSupportPage {
     GET_STARTED("How do I get started?",
-            "Welcome to the Coinsquare Wallet!\n\nThe Coinsquare Wallet app connects directly to the bitcoin network. There are no accounts or usernames with the Coinsquare Wallet app. Instead, you will have a \"wallet\" where you will store your money. It's just like the physical wallet you put your cash in, except that it exists only on the internet and holds digital money.\n" +
+            "Welcome to the Coinsquare Wallet!\n\nThe Coinsquare Wallet app connects directly to the bitcoin network. There are no accounts or usernames with the Coinsquare Wallet app. Instead, you will have a \\\"wallet\\\" where you will store your money. It's just like the physical wallet you put your cash in, except that it exists only on the internet and holds digital money.\n" +
             "\n" +
             "If this is your first time using the Coinsquare Wallet App, simply choose \"Get Started\" to start.\n" +
             "\n" +

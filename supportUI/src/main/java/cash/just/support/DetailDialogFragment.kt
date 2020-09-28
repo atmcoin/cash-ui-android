@@ -6,8 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import cash.just.support.R
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import cash.just.support.R
+import com.google.gson.Gson
 
 class DetailDialogFragment : BottomSheetDialogFragment() {
     companion object {
@@ -34,12 +35,19 @@ class DetailDialogFragment : BottomSheetDialogFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val view = inflater.inflate(R.layout.fragment_support_page, container, false)
         val supportTitle = textView(view, R.id.supportPageTitle)
+
+
         arguments?.let {
             val title = it.getString(ARG_TITLE)
             val description = it.getString(ARG_DESCRIPTION)
+
+            val json = resources.openRawResource(R.raw.supportv1).bufferedReader().use { buffer -> buffer.readText() }
+
+            val support = Gson().fromJson(json, SupportResponse::class.java)
+
             if (title != null && description != null) {
                 supportTitle.text = title
-                textView(view, R.id.supportPageDescription).text = description
+                textView(view, R.id.supportPageDescription).text = support.pages[0].content
             } else {
                 missingArguments()
             }

@@ -3,8 +3,6 @@ package cash.just.support
 import android.view.View
 import android.widget.TextView
 import androidx.lifecycle.LifecycleOwner
-import cash.just.support.BuildConfig
-import cash.just.support.R
 import timber.log.Timber
 
 object SupportFooterHelper {
