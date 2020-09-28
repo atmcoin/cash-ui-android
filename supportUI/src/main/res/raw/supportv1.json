@@ -65,6 +65,66 @@
       "title": "Why is my wallet disabled?",
       "content": "If you enter an incorrect wallet PIN too many times, your wallet will become disabled for a certain amount of time. This is to prevent someone else from trying to guess your PIN by quickly making many guesses. If your wallet is disabled, wait until the time shown and you will be able to enter your PIN again.\\n\\nIf you continue to enter the incorrect PIN, the amount of time you will have to wait in between attempts will increase. Eventually, the app will reset and you can start a new wallet.\\n\\nIf you have the recovery key for your wallet, you can use it to reset your PIN by choosing the appropriate option on the lock screen.",
       "category_id": "GENERAL"
+    },
+    {
+      "id": "HOW_TO_BUY",
+      "title": "How do I buy Bitcoin from your ATMs?",
+      "content": "Purchasing Bitcoin is just as easy and familiar as using an ATM!\\n\\nAt the ATM, insert your debit card and enter your PIN. Then, select 'Purchase Bitcoin' from the menu.\\n\\nEnter the amount of Bitcoin you wish to purchase in US Dollars. You will then receive a quoted Bitcoin price.\\nOnce you press 'Continue,' your purchase will complete and you will receive a receipt for your transaction, as well as a printout of your paper wallet with your purchased Bitcoin.\\n\\n*Please ensure that you keep your paper wallet secure, as this is where your Bitcoin is stored. Lost paper wallets cannot be replaced.*\n",
+      "category_id": "ATM"
+    },
+    {
+      "id": "DAILY_LIMIT",
+      "title": "What is the daily maximum purchase limit?",
+      "content": "The daily maximum purchase amount is \\$1,000 USD.",
+      "category_id": "ATM"
+    },
+    {
+      "id": "FEE_CHARGED",
+      "title": "Are fees charged for Bitcoin purchases?",
+      "content": "A small price mark-up is charged, which can vary with location. Our prices are always quoted in real time and are better than other bitcoin ATMs.",
+      "category_id": "ATM"
+    },
+    {
+      "id": "CARDS_ACCEPTED",
+      "title": "Do you accept credit cards?",
+      "content": "No. At this time, we only accept EMV (chip enabled) debit cards.",
+      "category_id": "ATM"
+    },
+    {
+      "id": "RECEIPT",
+      "title": "Do you provide a transaction receipt?",
+      "content": "Yes, you will be provided with a transaction receipt once your purchase is complete, along with a paper wallet which includes the public and private keys that store the value of your Bitcoin purchase.\\n\\n*Please ensure that you keep your paper wallet secure, as this is where your Bitcoin is stored. Lost paper wallets cannot be replaced.*",
+      "category_id": "ATM"
+    },
+    {
+      "id": "ID_VERIFICATION",
+      "title": "Is ID verification required at the ATM?",
+      "content": "There are no additional verification requirements at the ATM beyond requiring the user's debit card and PIN number.",
+      "category_id": "ATM"
+    },
+    {
+      "id": "DO_YOU_NEED_WALLET",
+      "title": "Do I need to have a crypto wallet to use your ATMs?",
+      "content": "You are NOT required to have a crypto wallet in order to purchase Bitcoin through an ATM.\\nWhen you complete your Bitcoin purchase, you will receive a 'paper wallet' receipt which includes your public and private keys. Your Bitcoin is stored on the paper wallet until you decide to transfer the funds to an online Bitcoin wallet",
+      "category_id": "ATM"
+    },
+    {
+      "id": "TRANSACTION_FAILED",
+      "title": "My transaction failed. What do I do?",
+      "content": "If you receive an error message stating your transaction has failed, retrieve your debit card from the ATM and locate another one of our ATMs using the map.",
+      "category_id": "ATM"
+    },
+    {
+      "id": "LOST_PAPER",
+      "title": "I lost my paper wallet! How can I retrieve my funds?",
+      "content": "If you lost your paper wallet, please reach out to our Support Team as soon as possible.\\n\\nUnfortunately, we are not able to guarantee that any lost funds can be retrieved, because the Bitcoin is stored on your paper wallet via the public and private keys.",
+      "category_id": "ATM"
+    },
+    {
+      "id": "PAPER_WALLET",
+      "title": "What is a paper wallet?",
+      "content": "A paper wallet is an offline mechanism for storing cryptocurrency. It contains a public and private key, printed onto paper.\\n\\nThe public key is essentially a wallet address. This can be shared publicly. A private key should only be known to the owner and should never be publicly shared. You may choose to import your paper wallet to a cold storage device, or to an online crypto wallet.",
+      "category_id": "ATM"
     }
   ]
 }
