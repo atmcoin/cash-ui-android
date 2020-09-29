@@ -9,11 +9,12 @@ import androidx.appcompat.app.AppCompatActivity
 import cash.just.atm.base.AtmResult
 import cash.just.atm.model.BitcoinServer
 import cash.just.sdk.Cash
-import cash.just.support.BaseSupportPage
-import cash.just.support.CashSupport
-import cash.just.support.context
+import cash.just.support.*
+import cash.just.support.pages.Topic
 import cash.just.ui.CashUI
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlin.concurrent.fixedRateTimer
 
 class MainActivity : AppCompatActivity() {
     companion object {
@@ -42,7 +43,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
         createButtons(BaseSupportPage.allPages())
-
+        createButtons2()
         openMaps.setOnClickListener {
             CashUI.startCashOutActivityForResult(this@MainActivity, REQUEST_CODE_MAP)
         }
@@ -63,6 +64,18 @@ class MainActivity : AppCompatActivity() {
                     CashSupport.Builder().detail(page),
                     supportFragmentManager
                 )
+            }
+        }
+    }
+
+    private fun createButtons2() {
+        val json = resources.openRawResource(cash.just.support.R.raw.supportv1).bufferedReader().use { buffer -> buffer.readText() }
+
+        val support = Gson().fromJson(json, SupportResponse::class.java)
+
+        support.pages.forEach { page ->
+            addButtonWithText(page.title).setOnClickListener {
+                DetailDialogFragment2.newInstance(Topic.valueOf(page.id), true).show(supportFragmentManager, "tag")
             }
         }
     }

@@ -6,20 +6,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import cash.just.support.pages.Topic
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.gson.Gson
 
-class DetailDialogFragment : BottomSheetDialogFragment() {
+class DetailDialogFragment2 : BottomSheetDialogFragment() {
     companion object {
-        private const val ARG_TITLE : String = "ARG_TITLE"
-        private const val ARG_DESCRIPTION : String = "ARG_DESCRIPTION"
+        private const val ARG_TOPIC : String = "ARG_TOPIC"
         private const val ARG_FROM_INDEX : String = "ARG_FROM_INDEX"
 
-        fun newInstance(page: BaseSupportPage, fromIndex:Boolean = false) : BottomSheetDialogFragment {
-            val fragment = DetailDialogFragment()
+        fun newInstance(topic: Topic, fromIndex:Boolean = false) : BottomSheetDialogFragment {
+            val fragment = DetailDialogFragment2()
             val bundle = Bundle()
-            bundle.putString(ARG_TITLE, page.title())
-            bundle.putString(ARG_DESCRIPTION, page.description())
+            bundle.putSerializable(ARG_TOPIC, topic)
             bundle.putBoolean(ARG_FROM_INDEX, fromIndex)
             fragment.arguments = bundle
             return fragment
@@ -37,18 +36,16 @@ class DetailDialogFragment : BottomSheetDialogFragment() {
 
 
         arguments?.let {
-            val title = it.getString(ARG_TITLE)
-            val description = it.getString(ARG_DESCRIPTION)
+            val topic = it.getSerializable(ARG_TOPIC)
 
             val json = resources.openRawResource(R.raw.supportv1).bufferedReader().use { buffer -> buffer.readText() }
 
             val support = Gson().fromJson(json, SupportResponse::class.java)
 
-            if (title != null && description != null) {
-                supportTitle.text = title
-                textView(view, R.id.supportPageDescription).text = support.pages[0].content
-            } else {
-                missingArguments()
+            val page = support.pages.find { page -> page.id == topic.toString() }
+            page?.let {
+                supportTitle.text = page.title
+                textView(view, R.id.supportPageDescription).text = page.content
             }
         } ?:run {
             missingArguments()
@@ -69,7 +66,7 @@ class DetailDialogFragment : BottomSheetDialogFragment() {
     }
 
     private fun missingArguments() {
-        throw IllegalStateException("One or more arguments $ARG_TITLE, $ARG_DESCRIPTION not found, did you call #newInstance()")
+        throw IllegalStateException("One or more arguments $ARG_TOPIC, $ARG_FROM_INDEX not found, did you call #newInstance()")
     }
 
     private fun openIndexSupport() {
