@@ -1,4 +1,4 @@
-package cash.just.atm
+package cash.just.support
 
 import org.junit.Test
 

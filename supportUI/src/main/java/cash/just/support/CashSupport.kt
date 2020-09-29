@@ -1,12 +1,13 @@
 package cash.just.support
 
+import cash.just.support.pages.Topic
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import timber.log.Timber
 import timber.log.Timber.DebugTree
 
 class CashSupport private constructor(
     private val pageType: PageType,
-    private val supportPage: BaseSupportPage?,
+    private val topic: Topic?,
     private val fromIndex:Boolean = false) {
 
     init {
@@ -16,16 +17,16 @@ class CashSupport private constructor(
     }
 
     data class Builder(private var pageType: PageType = PageType.INDEX) {
-        private var supportPage: BaseSupportPage? = null
+        private var topic: Topic? = null
         private var fromIndex:Boolean = false
 
-        fun detail(supportPage: BaseSupportPage, fromIndex:Boolean = false) = apply {
+        fun detail(topic: Topic, fromIndex:Boolean = false) = apply {
+            this.topic = topic
             this.pageType = PageType.DETAIL
-            this.supportPage = supportPage
             this.fromIndex = fromIndex
         }
 
-        fun build() = CashSupport(pageType, supportPage, fromIndex)
+        fun build() = CashSupport(pageType, topic, fromIndex)
     }
 
     fun createDialogFragment(): BottomSheetDialogFragment = run {
@@ -34,7 +35,7 @@ class CashSupport private constructor(
                 IndexDialogFragment()
             }
             PageType.DETAIL -> {
-                DetailDialogFragment.newInstance(supportPage!!, fromIndex)
+                DetailDialogFragment.newInstance(topic!!, fromIndex)
             }
         }
     }

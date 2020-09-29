@@ -9,10 +9,11 @@ import androidx.appcompat.app.AppCompatActivity
 import cash.just.atm.base.AtmResult
 import cash.just.atm.model.BitcoinServer
 import cash.just.sdk.Cash
-import cash.just.support.BaseSupportPage
-import cash.just.support.CashSupport
-import cash.just.support.context
+import cash.just.support.*
+import cash.just.support.pages.SupportPagesLoader
+import cash.just.support.pages.Topic
 import cash.just.ui.CashUI
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -41,8 +42,7 @@ class MainActivity : AppCompatActivity() {
                 BitcoinServer.setServer(Cash.BtcNetwork.MAIN_NET)
             }
         }
-        createButtons(BaseSupportPage.allPages())
-
+        createButtons()
         openMaps.setOnClickListener {
             CashUI.startCashOutActivityForResult(this@MainActivity, REQUEST_CODE_MAP)
         }
@@ -56,13 +56,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun createButtons(pages: Array<BaseSupportPage>) {
-        pages.forEach { page ->
-            addButtonWithText(page.title()).setOnClickListener {
-                CashUI.showSupportPage(
-                    CashSupport.Builder().detail(page),
-                    supportFragmentManager
-                )
+    private fun createButtons() {
+        SupportPagesLoader(applicationContext).pages().forEach { page ->
+            addButtonWithText(page.title).setOnClickListener {
+                DetailDialogFragment.newInstance(Topic.valueOf(page.id), true).show(supportFragmentManager, "tag")
             }
         }
     }

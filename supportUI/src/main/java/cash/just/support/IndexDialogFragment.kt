@@ -8,8 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
-import cash.just.support.R
+import cash.just.support.pages.SupportPagesLoader
+import cash.just.support.pages.Topic
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.gson.Gson
 
 class IndexDialogFragment : BottomSheetDialogFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,26 +23,28 @@ class IndexDialogFragment : BottomSheetDialogFragment() {
         val view = inflater.inflate(R.layout.fragment_support_index, container, false)
         val group = view.findViewById<LinearLayout>(R.id.indexGroup)
 
-        createViews(BaseSupportPage.allPages(), group)
+        createViews(group)
 
         SupportFooterHelper.populate(view, this)
 
         return view
     }
 
-    private fun createViews(pages:Array<BaseSupportPage>, rootView:LinearLayout){
-        pages.forEach { page ->
-            val view = createTextView(requireContext(), page.title())
+    private fun createViews(rootView:LinearLayout) {
+        val support = SupportPagesLoader(requireContext())
+
+        support.pages().forEach { page ->
+            val view = createTextView(requireContext(), page.title)
             rootView.addView(view, getParams())
             view.setOnClickListener {
-                showDetailDialog(page)
+                showDetailDialog(Topic.valueOf(page.id))
             }
         }
     }
 
-    private fun showDetailDialog(page: BaseSupportPage) {
+    private fun showDetailDialog(topic: Topic) {
         activity?.let {
-            val fragment = CashSupport.Builder().detail(page, true).build().createDialogFragment()
+            val fragment = CashSupport.Builder().detail(topic, true).build().createDialogFragment()
             fragment.show(it.supportFragmentManager, "tag")
         }
     }
