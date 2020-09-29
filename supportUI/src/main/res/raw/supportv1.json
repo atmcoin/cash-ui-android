@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "language": "en",
   "categories": [
     {
@@ -21,6 +21,10 @@
     {
       "id": "TROUBLESHOOTING",
       "title": "Troubleshooting"
+    },
+    {
+      "id": "MISCELLANEOUS",
+      "title": "Miscellaneous"
     }
   ],
   "pages": [
@@ -185,6 +189,12 @@
       "title": "Error: Could not publish transaction",
       "content": "When the wallet is in P2P mode (the fastsync setting is off), you'll need to wait until the sync is complete before publishing any transaction. Try later when the sync is complete or try to closing and starting the app using the task manager or forcing to stop form the Application Manager in settings",
       "category_id": "TROUBLESHOOTING"
+    },
+    {
+      "id": "BRD_REWARDS",
+      "title": "Bread Token, BRD Rewards",
+      "content": "Rewards are automatically applied to all your transactions.\n\n\t\t - 30% off Accointing: Hold 250 more BRD and receive 30% off Accointing's crypto tax tool!\n\t\t - 25% off trading fees: Hold 1000 more BRD tokens and receive 25% off all in-app trading fees!\n\t\t - Phone Support: Hold 2500 more BRD and receive phone support!\n\t\t - Get a security box (U.S. only): Hold 5000 more BRD and receive your complimentary gift!\n\t\t - Call from the CEO: Hold 100000 more BRD to request a call from BRD's CEO!",
+      "category_id": "MISCELLANEOUS"
     }
   ]
 }
