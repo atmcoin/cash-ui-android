@@ -1,13 +1,14 @@
 package cash.just.ui.sample
 
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
-import cash.just.support.BaseSupportPage
+import cash.just.support.pages.SupportPagesLoader
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
@@ -20,7 +21,7 @@ import org.junit.runner.RunWith
  * See [testing documentation](http://d.android.com/tools/testing).
  */
 @RunWith(AndroidJUnit4::class)
-class ExampleInstrumentedTest {
+class SupportPagesTest {
     //TODO: move to androidx.ActivityScenario
     @Rule @JvmField
     val mActivityRule: ActivityTestRule<MainActivity> = ActivityTestRule(MainActivity::class.java)
@@ -33,12 +34,14 @@ class ExampleInstrumentedTest {
     }
 
     @Test
-    fun test1() {
-        BaseSupportPage.allPages().take(4).forEach {
+    fun testSupportPages() {
+        val appContext = InstrumentationRegistry.getInstrumentation().targetContext
 
-            onView(withText(it.title())).perform(click())
+        SupportPagesLoader(appContext).pages().forEach {
 
-            onView(withId(R.id.supportPageTitle)).check(matches(withText(it.title())))
+            onView(withText(it.title)).perform(ViewActions.scrollTo()).perform(click())
+
+            onView(withId(R.id.supportPageTitle)).check(matches(withText(it.title)))
 
             onView(withId(R.id.faqImage))
                 .perform(click())

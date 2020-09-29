@@ -28,11 +28,5 @@ enum class Topic {
     HOW_BALANCE_WORKS,
     HOW_SELECT_NODE,
     ERROR_PUBLISH_TRANSACTION_P2P,
-    BRD_REWARDS;
-
-    companion object {
-        fun fromString(topic:String) {
-
-        }
-    }
+    BRD_REWARDS
 }

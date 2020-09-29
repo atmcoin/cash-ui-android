@@ -10,11 +10,11 @@ import cash.just.atm.base.AtmResult
 import cash.just.atm.model.BitcoinServer
 import cash.just.sdk.Cash
 import cash.just.support.*
+import cash.just.support.pages.SupportPagesLoader
 import cash.just.support.pages.Topic
 import cash.just.ui.CashUI
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlin.concurrent.fixedRateTimer
 
 class MainActivity : AppCompatActivity() {
     companion object {
@@ -42,8 +42,7 @@ class MainActivity : AppCompatActivity() {
                 BitcoinServer.setServer(Cash.BtcNetwork.MAIN_NET)
             }
         }
-        createButtons(BaseSupportPage.allPages())
-        createButtons2()
+        createButtons()
         openMaps.setOnClickListener {
             CashUI.startCashOutActivityForResult(this@MainActivity, REQUEST_CODE_MAP)
         }
@@ -57,25 +56,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun createButtons(pages: Array<BaseSupportPage>) {
-        pages.forEach { page ->
-            addButtonWithText(page.title()).setOnClickListener {
-                CashUI.showSupportPage(
-                    CashSupport.Builder().detail(page),
-                    supportFragmentManager
-                )
-            }
-        }
-    }
-
-    private fun createButtons2() {
-        val json = resources.openRawResource(cash.just.support.R.raw.supportv1).bufferedReader().use { buffer -> buffer.readText() }
-
-        val support = Gson().fromJson(json, SupportResponse::class.java)
-
-        support.pages.forEach { page ->
+    private fun createButtons() {
+        SupportPagesLoader(applicationContext).pages().forEach { page ->
             addButtonWithText(page.title).setOnClickListener {
-                DetailDialogFragment2.newInstance(Topic.valueOf(page.id), true).show(supportFragmentManager, "tag")
+                DetailDialogFragment.newInstance(Topic.valueOf(page.id), true).show(supportFragmentManager, "tag")
             }
         }
     }
