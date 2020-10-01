@@ -12,7 +12,7 @@ object SupportPagesLoader {
     lateinit var support:SupportResponse
 
     operator fun invoke(context: Context): SupportPagesLoader {
-        val json = context.resources.openRawResource(R.raw.supportv1).bufferedReader().use { buffer -> buffer.readText() }
+        val json = context.resources.openRawResource(R.raw.support_topics).bufferedReader().use { buffer -> buffer.readText() }
         support = Gson().fromJson(json, SupportResponse::class.java)
         return this
     }
