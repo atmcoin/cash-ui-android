@@ -1,5 +1,5 @@
 {
-  "version": 2,
+  "version": 3,
   "language": "en",
   "categories": [
     {
@@ -194,6 +194,12 @@
       "id": "BRD_REWARDS",
       "title": "Bread Token, BRD Rewards",
       "content": "Rewards are automatically applied to all your transactions.\n\n\t\t - 30% off Accointing: Hold 250 more BRD and receive 30% off Accointing's crypto tax tool!\n\t\t - 25% off trading fees: Hold 1000 more BRD tokens and receive 25% off all in-app trading fees!\n\t\t - Phone Support: Hold 2500 more BRD and receive phone support!\n\t\t - Get a security box (U.S. only): Hold 5000 more BRD and receive your complimentary gift!\n\t\t - Call from the CEO: Hold 100000 more BRD to request a call from BRD's CEO!",
+      "category_id": "MISCELLANEOUS"
+    },
+    {
+      "id": "FAQ_UNSUPPORTED_TOKEN",
+      "title": "Why is this ERC20 token no longer supported?",
+      "content": "Recently, the developers of some ERC20 tokens have decided to move their token to their own blockchain or create a completely new ERC20 token, which would mean the old token needs to be swapped for their new one. Please reach out to the developer of this token to see which situation applies to them.\\n\\n\\nEach token developer will announce the details of the token swap in their own support channels.  If the deadline for the token swap has passed and you were unable to swap your current token for the new token, please reach out to the token developer's support team for assistance. \\n\\n\\nAs long as it is still supported by the Ethereum network, you will be able to send these ERC20 tokens out from the BRD app to another platform that supports the token swap.",
       "category_id": "MISCELLANEOUS"
     }
   ]

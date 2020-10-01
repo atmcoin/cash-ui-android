@@ -71,5 +71,4 @@ dependencies {
 
     implementation "com.journeyapps:zxing-android-embedded:4.1.0"
     api 'com.github.atmcoin:cash-sdk-android:1.6.1'
-
 }
