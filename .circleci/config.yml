@@ -60,16 +60,18 @@ jobs:
           name: gradle test
           command: |
             ./gradlew  --console=plain  test
+
+
       - run:
           name: list emulator
           command: sdkmanager --list
 
       - run:
           name: Setup emulator
-          command: sdkmanager "system-images;android-25;google_apis;arm64-v8a" && echo "no" | avdmanager create avd -n test -k "system-images;android-25;google_apis;arm64-v8a"
+          command: sdkmanager "system-images;android-29;default;x86_64" && echo "no" | avdmanager create avd -n test -k "system-images;android-29;default;x86_64"
       - run:
           name: Launch emulator
-          command: export LD_LIBRARY_PATH=${ANDROID_HOME}/emulator/lib64:${ANDROID_HOME}/emulator/lib64/qt/lib && emulator -avd test -noaudio -no-boot-anim -no-window -accel on
+          command: export LD_LIBRARY_PATH=${ANDROID_HOME}/emulator/lib64:${ANDROID_HOME}/emulator/lib64/qt/lib && emulator -avd test -noaudio -no-boot-anim -no-window  -accel on -memory 2048 -verbose
           background: true
       - run:
           name: Wait emulator
