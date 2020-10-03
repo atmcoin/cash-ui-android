@@ -24,7 +24,7 @@ class ExampleInstrumentedTest {
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
         assertEquals("cash.just.ui.test", appContext.packageName)
     }
-
+/**
     @Test
     fun test_intent_builder() {
         CashUI.init(Cash.BtcNetwork.TEST_NET)
@@ -42,5 +42,6 @@ class ExampleInstrumentedTest {
 
     private fun mockCashStatus() : CashStatus {
         return CashStatus("code", "status", "address", "3$", "0.5", "3.4", "","23","description", "latitude", "longitude")
-    }
+    }/wo    /
+    */
 }
