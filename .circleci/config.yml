@@ -76,7 +76,7 @@ jobs:
       - persist_to_workspace:
           # Must be an absolute path, or relative path from working_directory. This is a directory on the container which is
           # taken to be the root directory of the workspace.
-          root: ~/repo/app/build/outputs/apk
+          root: ~/repo/app/build/outputs
           # Must be relative path from root
           paths:
             - apk
@@ -106,7 +106,7 @@ jobs:
 
       - attach_workspace:
           # Must be absolute path or relative path from working_directory
-          at: /tmp/apk
+          at: /tmp/workspace
 
       - run:
           name: Store Google Service Account
@@ -119,7 +119,7 @@ jobs:
       - run:
           name: Test with Firebase Test Lab
           command: >
-            sudo gcloud firebase test android run     --app /tmp/apk/debug/app-debug.apk   --test /tmp/apk/androidTest/debug/app-debug-androidTest.apk     --device model=Pixel2,version=29
+            sudo gcloud firebase test android run     --app /tmp/workspace/apk/debug/app-debug.apk   --test /tmp/workspace/apk/androidTest/debug/app-debug-androidTest.apk     --device model=Pixel2,version=29
 
 
 
