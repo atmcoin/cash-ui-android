@@ -29,11 +29,11 @@ class SupportTest {
     @Test
     fun testSupportEnterList() {
         BaseSupportPage.allPages().forEach {
-            Thread.sleep(300)
+            Thread.sleep(500)
             val textViewTitle =  onView(withText(it.title()))
             textViewTitle.perform(click())
 
-            Thread.sleep(300)
+            Thread.sleep(500)
             onView(withId(R.id.supportPageTitle)).check(matches(withText(it.title())))
             onView(withId(R.id.supportPageDescription)).check(matches(withText(it.description())))
             onView(withId(R.id.faqImage))
