@@ -104,6 +104,7 @@ class StatusListFragment : Fragment() {
         viewModel.state.singleStateObserve(this) { state ->
             when (state) {
                 is RequestState.Success -> {
+                   @Suppress("UNCHECKED_CAST")
                    val list = state.result as ArrayList<CashStatusResult>
                    if (list.isEmpty()) {
                        setState(ViewState.EMPTY)
