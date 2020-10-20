@@ -49,7 +49,7 @@ class AtmViewModel : ViewModel() {
         execute(_state) {
             SessionUtil.checkSession()
             saveDetails(context, name, surname, phone, email)
-            val type = if (phone == null) VerificationType.PHONE else VerificationType.EMAIL
+            val type = if (phone == null) VerificationType.EMAIL else VerificationType.PHONE
             val cashCode = CashSDK.sendVerificationCode(name, surname, phone, email).execute().body()!!.data.items[0].result
             return@execute VerificationSent(type, cashCode)
         }

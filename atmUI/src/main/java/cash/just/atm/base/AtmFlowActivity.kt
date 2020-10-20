@@ -67,14 +67,12 @@ abstract class AtmFlowActivity : AppCompatActivity(), AtmFlow {
 
     override fun onSend(btcAmount: String, address: String) {
         val intent = buildIntent(SendDataResult(btcAmount, address))
-        Timber.d("david onSend $intent")
         setResult(RESULT_OK, intent)
         finish()
     }
 
     override fun onDetails(secureCode: String, cashCodeStatus: CashStatus) {
         val intent = buildIntent(DetailsDataResult(secureCode, cashCodeStatus))
-        Timber.d("david onSend $intent")
         setResult(RESULT_OK, intent)
         finish()
     }
