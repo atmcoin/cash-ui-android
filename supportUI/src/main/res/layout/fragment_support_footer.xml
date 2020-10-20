@@ -39,9 +39,10 @@
             android:autoLink="phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:text="If you are reaching out from the US\n you can call +1 800-797-1404"
+            android:text="If you are reaching out from the US\n you can call +1 800-797-1404"
             android:layout_marginTop="10dp"
             android:gravity="center"
+            android:textColorLink="#FFFFFF"
             android:textColor="#FFFFFF" />
 
         <TextView
