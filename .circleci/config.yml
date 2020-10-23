@@ -98,7 +98,7 @@ jobs:
   firebase_test:
     docker :
       - image: circleci/android:api-29-ndk
-
+    resource_class: small
     working_directory: ~/repo
 
     steps:
