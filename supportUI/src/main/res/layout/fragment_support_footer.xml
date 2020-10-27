@@ -8,21 +8,32 @@
         android:background="#303030"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="30dp"
+        android:paddingTop="15dp"
         android:paddingBottom="15dp">
+        <TextView
+            android:id="@+id/privacyLink"
+            android:text="Privacy Policy"
+            android:gravity="center_horizontal"
+            android:textColor="#FFFFFF"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
         <LinearLayout
-            android:gravity="center"
+            android:layout_marginTop="10dp"
+            android:gravity="center_horizontal"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/privacyLink"
-                android:text="Privacy Policy     |"
-                android:textColor="#FFFFFF"
+                android:autoLink="phone"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:text="+1 800-797-1404     |"
+                android:gravity="center"
+                android:textColorLink="#FFFFFF"
+                android:textColor="#FFFFFF" />
+
 
             <TextView
                 android:id="@+id/email"
@@ -35,15 +46,7 @@
                 android:layout_height="wrap_content"/>
         </LinearLayout>
 
-         <TextView android:padding="7dp"
-            android:autoLink="phone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="If you are reaching out from the US\n you can call +1 800-797-1404"
-            android:layout_marginTop="10dp"
-            android:gravity="center"
-            android:textColorLink="#FFFFFF"
-            android:textColor="#FFFFFF" />
+
 
         <TextView
             android:layout_width="match_parent"
