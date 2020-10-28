@@ -1,6 +1,5 @@
 package cash.just.ui.sample
 
-
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.PerformException
 import androidx.test.espresso.action.ViewActions.click
@@ -10,7 +9,8 @@ import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
-import cash.just.support.BaseSupportPage
+import androidx.test.platform.app.InstrumentationRegistry
+import cash.just.support.pages.SupportPagesLoader
 import junit.framework.AssertionFailedError
 import org.junit.Rule
 import org.junit.Test
@@ -28,14 +28,16 @@ class SupportTest {
 
     @Test
     fun testSupportEnterList() {
-        BaseSupportPage.allPages().forEach {
+        val context = InstrumentationRegistry.getInstrumentation().targetContext
+        SupportPagesLoader(context).pages().forEach {
+
             Thread.sleep(500)
-            val textViewTitle =  onView(withText(it.title()))
+            val textViewTitle =  onView(withText(it.title))
             textViewTitle.perform(click())
 
             Thread.sleep(500)
-            onView(withId(R.id.supportPageTitle)).check(matches(withText(it.title())))
-            onView(withId(R.id.supportPageDescription)).check(matches(withText(it.description())))
+            onView(withId(R.id.supportPageTitle)).check(matches(withText(it.title)))
+            onView(withId(R.id.supportPageDescription)).check(matches(withText(it.content)))
             onView(withId(R.id.faqImage))
                 .perform(click())
             try {
@@ -48,13 +50,6 @@ class SupportTest {
             } catch (e: PerformException) {
                 // View not displayed
             }
-
         }
     }
-
-
-
-
-
-
 }
