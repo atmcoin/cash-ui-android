@@ -163,12 +163,23 @@ class StatusFragment : Fragment() {
         }
     }
 
+    private fun consumableCode(code:String):String {
+        val separated = code.split("-")
+
+        return if(separated.size == 2) {
+            "Code: ${separated[0]}\nPin: ${separated[1]}"
+        } else {
+            //unknown format
+            code
+        }
+    }
+
     private fun populateFundedView(context: Context, cashStatus: CashStatus) {
         changeUiState(ViewState.FUNDED)
-
-        cashCode.text = cashStatus.code!!
+        val code = consumableCode(cashStatus.code!!)
+        cashCode.text = code
         cashCode.setOnClickListener {
-            copyToClipboard(context, cashStatus.code!!)
+            copyToClipboard(context, code)
         }
         amountFunded.text = "Amount (USD):  \$${cashStatus.usdAmount}"
         locationFunded.text = "Location: ${cashStatus.description}"
