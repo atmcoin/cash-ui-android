@@ -48,13 +48,23 @@ class AtmSharedPreferencesManager {
             getSharedPreferences(context).edit().putString(LAST_NAME, lastName).apply()
         }
 
-        fun getWithdrawalRequests(context : Context) : MutableSet<String>? {
-            return getSharedPreferences(context).getStringSet(WITHDRAWAL_REQUESTS, HashSet<String>())
+        fun getWithdrawalRequests(context: Context) : MutableSet<String>? {
+            return getSharedPreferences(context).getStringSet(
+                WITHDRAWAL_REQUESTS,
+                HashSet<String>()
+            )
         }
 
         fun setWithdrawalRequest(context: Context, value: String) {
-            val list = getWithdrawalRequests(context)
-            list?.add(value)
+            val list= getWithdrawalRequests(context)?.let {
+                val clonedList = HashSet(it)
+                clonedList.add(value)
+                clonedList
+            } ?:run {
+                val newList = HashSet<String>()
+                newList.add(value)
+                newList
+            }
             updateStringSet(context, list)
         }
 
@@ -68,7 +78,7 @@ class AtmSharedPreferencesManager {
             getSharedPreferences(context).edit().clear().apply()
         }
 
-        private fun updateStringSet(context:Context, list: MutableSet<String>?){
+        private fun updateStringSet(context: Context, list: Set<String>?){
             val editor =
                 getSharedPreferences(context).edit()
             editor.putStringSet(WITHDRAWAL_REQUESTS, list)

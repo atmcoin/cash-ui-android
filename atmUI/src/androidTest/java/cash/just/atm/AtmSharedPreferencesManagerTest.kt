@@ -8,6 +8,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 import org.junit.Assert.*
+import org.junit.Before
 
 /**
  * Instrumented test, which will execute on an Android device.
@@ -17,6 +18,11 @@ import org.junit.Assert.*
 @RunWith(AndroidJUnit4::class)
 class AtmSharedPreferencesManagerTest {
     private val appContext: Context = InstrumentationRegistry.getInstrumentation().targetContext
+
+    @Before
+    fun before() {
+        AtmSharedPreferencesManager.clear(appContext)
+    }
 
     @Test
     fun test_profile_fields() {
@@ -53,7 +59,7 @@ class AtmSharedPreferencesManagerTest {
         val list2 = AtmSharedPreferencesManager.getWithdrawalRequests(appContext)
         assertNotEquals(list2, null)
         assertEquals(list2!!.size, 2)
-        assertEquals(list1.take(2)[0], request1)
-        assertEquals(list1.take(2)[1], request2)
+        assertEquals(list2.take(2)[0], request1)
+        assertEquals(list2.take(2)[1], request2)
     }
 }
