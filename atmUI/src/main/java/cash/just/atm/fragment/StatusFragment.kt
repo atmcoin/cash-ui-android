@@ -1,7 +1,9 @@
 package cash.just.atm.fragment
 
 import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Context
+import android.content.Context.CLIPBOARD_SERVICE
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -10,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import cash.just.atm.R
 import cash.just.atm.base.AtmFlow
@@ -41,7 +44,7 @@ class StatusFragment : Fragment() {
         FAILED_TO_LOAD
     }
 
-    private lateinit var clipboard: android.content.ClipboardManager
+    private lateinit var clipboard: ClipboardManager
     private lateinit var cashCodeArg: String
 
     override fun onCreateView(
@@ -55,7 +58,7 @@ class StatusFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         appContext = view.context.applicationContext
-
+        clipboard = appContext.getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
         cashCodeArg = StatusFragmentArgs.fromBundle(requireArguments()).cashCode
         changeUiState(ViewState.LOADING)
         viewModel.checkCashCodeStatus(cashCodeArg)
