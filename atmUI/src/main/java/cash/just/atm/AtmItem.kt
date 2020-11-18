@@ -35,7 +35,7 @@ open class AtmItem(var atmMachine: AtmMachine) : AbstractItem<AtmItem.ViewHolder
             description.text = null
         }
 
-        override fun bindView(item: AtmItem, payloads: MutableList<Any>) {
+        override fun bindView(item: AtmItem, payloads: List<Any>) {
             name.text = item.atmMachine.addressDesc
             @SuppressLint("SetTextI18n")
             description.text = "${item.atmMachine.city} ${item.atmMachine.zip}"
