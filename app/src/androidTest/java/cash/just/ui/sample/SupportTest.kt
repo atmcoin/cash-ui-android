@@ -23,7 +23,7 @@ class SupportTest {
 
     @Rule
     @JvmField
-    var mActivityScenarioRule= ActivityScenarioRule(MainActivity::class.java)
+    var mActivityScenarioRule= ActivityScenarioRule(SupportActivity::class.java)
 
 
     @Test
