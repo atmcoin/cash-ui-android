@@ -75,11 +75,12 @@
             android:id="@+id/consoleLog"
             android:layout_width="match_parent"
             android:layout_height="100dp"/>
-        <TextView
+
+        <Button
+            android:id="@+id/openSupport"
             android:layout_marginTop="10dp"
-            android:textSize="25dp"
-            android:text="supportUI"
-            android:layout_width="match_parent"
+            android:text="Open Support"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
     </LinearLayout>
 </ScrollView>
