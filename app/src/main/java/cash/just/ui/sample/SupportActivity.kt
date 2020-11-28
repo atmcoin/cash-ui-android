@@ -13,7 +13,7 @@ class SupportActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_support)
-        addButtonWithText("INDEX").setOnClickListener {
+        addButtonWithText("INDEX", -1).setOnClickListener {
             val fragment = CashSupport.Builder().build().createDialogFragment()
             fragment.show(supportFragmentManager, "tag")
         }
@@ -21,16 +21,19 @@ class SupportActivity : AppCompatActivity() {
     }
 
     private fun createButtons() {
+        var value = 0
         SupportPagesLoader(applicationContext).pages().forEach { page ->
-            addButtonWithText(page.title).setOnClickListener {
+            addButtonWithText(page.title, value).setOnClickListener {
                 DetailDialogFragment.newInstance(Topic.valueOf(page.id), true).show(supportFragmentManager, "tag")
             }
+            value++
         }
     }
 
-    private fun addButtonWithText(title: String): Button {
+    private fun addButtonWithText(title: String, description:Int): Button {
         val button = Button(this)
         button.text = title
+        button.contentDescription = description.toString()
         rootView.addView(button)
         return button
     }

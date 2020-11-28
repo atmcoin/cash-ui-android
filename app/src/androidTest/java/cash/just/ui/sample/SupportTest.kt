@@ -26,11 +26,14 @@ class SupportTest {
     @Test
     fun testSupportEnterList() {
         val context = InstrumentationRegistry.getInstrumentation().targetContext
+        var int = 0
         SupportPagesLoader(context).pages().forEach {
+            onView(withContentDescription(int.toString())).perform(scrollTo())
             onView(withText(it.title)).perform(scrollTo()).perform(click())
             onView(withId(R.id.supportPageTitle)).check(matches(withText(it.title)))
             onView(withId(R.id.supportPageDescription)).check(matches(withText(it.content)))
             onView(withId(R.id.faqImage)).perform(click())
+            int++
         }
     }
 }
