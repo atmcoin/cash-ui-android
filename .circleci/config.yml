@@ -119,7 +119,7 @@ jobs:
       - run:
           name: Test with Firebase Test Lab
           command: >
-            sudo gcloud firebase test android run     --app /tmp/workspace/apk/debug/app-debug.apk   --test /tmp/workspace/apk/androidTest/debug/app-debug-androidTest.apk     --device model=Pixel2,version=25
+            sudo gcloud firebase test android run     --app /tmp/workspace/apk/debug/app-debug.apk   --test /tmp/workspace/apk/androidTest/debug/app-debug-androidTest.apk     --device model=Pixel2,version=26
 
 
 
