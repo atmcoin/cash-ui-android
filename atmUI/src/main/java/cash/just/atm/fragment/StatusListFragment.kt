@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import cash.just.atm.R
 import cash.just.atm.base.RequestState
@@ -17,7 +16,6 @@ import cash.just.atm.base.showSnackBar
 import cash.just.atm.extension.formatTo
 import cash.just.atm.extension.toDate
 import cash.just.atm.model.RetryableCashStatus
-import cash.just.atm.viewmodel.CashCodeNotFoundException
 import cash.just.atm.viewmodel.CashStatusResult
 import cash.just.atm.viewmodel.StatusViewModel
 import cash.just.sdk.model.CashStatus

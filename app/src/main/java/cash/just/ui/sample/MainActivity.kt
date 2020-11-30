@@ -26,10 +26,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        addButtonWithText("INDEX").setOnClickListener {
-            val fragment = CashSupport.Builder().build().createDialogFragment()
-            fragment.show(supportFragmentManager, "tag")
-        }
 
         BitcoinServer.setServer(Cash.BtcNetwork.TEST_NET)
         CashUI.init(Cash.BtcNetwork.TEST_NET)
@@ -42,7 +38,7 @@ class MainActivity : AppCompatActivity() {
                 BitcoinServer.setServer(Cash.BtcNetwork.MAIN_NET)
             }
         }
-        createButtons()
+
         openMaps.setOnClickListener {
             CashUI.startCashOutActivityForResult(this@MainActivity, REQUEST_CODE_MAP)
         }
@@ -54,21 +50,10 @@ class MainActivity : AppCompatActivity() {
         openStatus.setOnClickListener {
             CashUI.showStatus(this@MainActivity, cashCode.text.toString(), REQUEST_CODE_STATUS)
         }
-    }
 
-    private fun createButtons() {
-        SupportPagesLoader(applicationContext).pages().forEach { page ->
-            addButtonWithText(page.title).setOnClickListener {
-                DetailDialogFragment.newInstance(Topic.valueOf(page.id), true).show(supportFragmentManager, "tag")
-            }
+        openSupport.setOnClickListener {
+            startActivity(Intent(this, SupportActivity::class.java))
         }
-    }
-
-    private fun addButtonWithText(title: String): Button {
-        val button = Button(this)
-        button.text = title
-        rootView.addView(button)
-        return button
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
