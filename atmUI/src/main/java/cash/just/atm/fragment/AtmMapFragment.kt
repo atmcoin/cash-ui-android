@@ -1,12 +1,18 @@
 package cash.just.atm.fragment
 
+import android.Manifest
+import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
+import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -142,6 +148,11 @@ class AtmMapFragment : Fragment() {
                 populateList(atmList, atmMode)
             }
         }
+
+        requestPermissions(
+            arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION),
+            0x01
+        )
     }
 
     private fun populateList(list:List<AtmMachine>, mode: MachineMode){
@@ -213,6 +224,16 @@ class AtmMapFragment : Fragment() {
         }
     }
 
+    @SuppressLint("MissingPermission")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 0x01 && resultCode == Activity.RESULT_OK) {
+            map?.let {
+                it.isMyLocationEnabled = true
+            }
+        }
+    }
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
@@ -252,11 +273,17 @@ class AtmMapFragment : Fragment() {
             viewModel.getAtms()
         }
     }
+
     private fun prepareMap(context : Context) {
         AtmMapHelper.addMapFragment(childFragmentManager, R.id.mapFragment, MAP_FRAGMENT_TAG)
             .getMapAsync { googleMap ->
                 googleMap?.let {
                     map = it
+                    if (isLocationPermissionGranted()) {
+                        @SuppressLint("MissingPermission")
+                        it.isMyLocationEnabled = true
+                    }
+
                     it.moveCamera(CameraUpdateFactory.newCameraPosition(CameraPosition.fromLatLngZoom(texas, initialZoom)))
                     it.uiSettings.isMapToolbarEnabled = false
                     it.uiSettings.isMyLocationButtonEnabled = true
@@ -282,5 +309,30 @@ class AtmMapFragment : Fragment() {
 
     private fun moveToVerification(atm:AtmMachine) {
         findNavController().navigate(AtmMapFragmentDirections.mapToRequest(atm))
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        Timber.d(requestCode.toString() + permissions.toString() + grantResults.toString())
+        if (isLocationPermissionGranted()) {
+            map?.let {
+                @SuppressLint("MissingPermission")
+                it.isMyLocationEnabled = true
+            }
+        }
+    }
+
+    private fun isLocationPermissionGranted() : Boolean {
+        return ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
     }
 }
