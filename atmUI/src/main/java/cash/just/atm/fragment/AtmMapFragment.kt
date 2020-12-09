@@ -22,6 +22,7 @@ import cash.just.atm.R
 import cash.just.atm.base.RequestState
 import cash.just.atm.base.showError
 import cash.just.atm.base.showSnackBar
+import cash.just.atm.extension.getFullAddress
 import cash.just.atm.model.AtmClusterRenderer
 import cash.just.atm.model.AtmMarker
 import cash.just.atm.model.AtmMarkerInfo
@@ -77,6 +78,9 @@ class AtmMapFragment : Fragment() {
 
         fastAdapter.itemFilter.filterPredicate = { item: AtmItem, constraint: CharSequence? ->
             item.atmMachine.addressDesc.contains(constraint.toString(), ignoreCase = true)
+                    || item.atmMachine.city.contains(constraint.toString(), ignoreCase = true)
+                    || (item.atmMachine.desc != null && item.atmMachine.desc!!.contains(constraint.toString(), ignoreCase = true))
+                    || (item.atmMachine.detail != null && item.atmMachine.detail!!.contains(constraint.toString(), ignoreCase = true))
         }
 
         searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
