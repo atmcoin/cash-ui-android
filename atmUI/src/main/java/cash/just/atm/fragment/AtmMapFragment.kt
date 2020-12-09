@@ -123,11 +123,11 @@ class AtmMapFragment : Fragment() {
         listMapButton.setOnClickListener {
             viewMode = when (viewMode) {
                 ViewMode.MAP -> {
-                    switchToMode(ViewMode.MAP)
+                    switchToMode(ViewMode.LIST)
                     ViewMode.LIST
                 }
                 ViewMode.LIST -> {
-                    switchToMode(ViewMode.LIST)
+                    switchToMode(ViewMode.MAP)
                     ViewMode.MAP
                 }
             }
