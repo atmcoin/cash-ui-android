@@ -22,8 +22,8 @@ allprojects {
     }
 
     project.ext {
-        versionName = "3.3.0"
-        versionCode = 15
+        versionName = "3.3.1"
+        versionCode = 16
         compileSdkVersion = 29
         buildToolsVersion = "29.0.3"
         //TODO review minsdk, before was 21 but qrcode library has min 24

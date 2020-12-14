@@ -155,7 +155,7 @@ class StatusListFragment : Fragment() {
         view.findViewById<TextView>(R.id.addressLocation).text = cashStatus.description
         val status = CodeStatus.resolve(cashStatus.status)
         val stateView = view.findViewById<TextView>(R.id.stateMessage)
-        val rootView = view.findViewById<TextView>(R.id.rootView)
+        val rootView = view.findViewById<View>(R.id.rootView)
         when (status) {
             CodeStatus.NEW_CODE -> {
                 stateView.text = "Awaiting funds"
@@ -177,7 +177,7 @@ class StatusListFragment : Fragment() {
         }
     }
 
-    private fun setClickListener(view: TextView, secureCode: String, cashStatus : CashStatus){
+    private fun setClickListener(view: View, secureCode: String, cashStatus : CashStatus){
         view.setOnClickListener {
             val retryableCashStatus =
                 RetryableCashStatus(
