@@ -155,16 +155,17 @@ class StatusListFragment : Fragment() {
         view.findViewById<TextView>(R.id.addressLocation).text = cashStatus.description
         val status = CodeStatus.resolve(cashStatus.status)
         val stateView = view.findViewById<TextView>(R.id.stateMessage)
+        val rootView = view.findViewById<TextView>(R.id.rootView)
         when (status) {
             CodeStatus.NEW_CODE -> {
                 stateView.text = "Awaiting funds"
-                setClickListener(stateView, secureCode, cashStatus)
+                setClickListener(rootView, secureCode, cashStatus)
                 val drawable = ContextCompat.getDrawable(view.context, R.drawable.ic_eye)
                 stateView.setCompoundDrawablesWithIntrinsicBounds(null, null, drawable, null)
             }
             CodeStatus.FUNDED -> {
                 stateView.text = "Funded"
-                setClickListener(stateView, secureCode, cashStatus)
+                setClickListener(rootView, secureCode, cashStatus)
                 val drawable = ContextCompat.getDrawable(view.context, R.drawable.ic_cash)
                 stateView.setCompoundDrawablesWithIntrinsicBounds(null, null, drawable, null)
             }
@@ -176,8 +177,8 @@ class StatusListFragment : Fragment() {
         }
     }
 
-    private fun setClickListener(textView: TextView, secureCode: String, cashStatus : CashStatus){
-        textView.setOnClickListener {
+    private fun setClickListener(view: TextView, secureCode: String, cashStatus : CashStatus){
+        view.setOnClickListener {
             val retryableCashStatus =
                 RetryableCashStatus(
                     secureCode,
