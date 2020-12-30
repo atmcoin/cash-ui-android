@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.content.Context
 import android.media.MediaPlayer
 import android.os.Bundle
+import android.telephony.PhoneNumberUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -66,7 +67,11 @@ class AtmRequestFragment : Fragment() {
         amount.helperText = getString(R.string.request_cash_out_amount_validation, atm.min, atm.max, atm.bills.toFloat().toInt())
 
         getAtmCode.setOnClickListener {
-            if (checkFields()) {
+            if (!isValidPhoneNumber(getPhone())) {
+                Toast.makeText(view.context, getString(R.string.request_cash_invalid_phone_number), Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            if (areFieldsInvalid()) {
                 Toast.makeText(view.context, getString(R.string.request_cash_out_complete_fields), Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
@@ -244,7 +249,7 @@ class AtmRequestFragment : Fragment() {
         googleMap.moveCamera(cameraUpdate)
     }
 
-    private fun checkFields(): Boolean {
+    private fun areFieldsInvalid(): Boolean {
         return getAmount().isNullOrEmpty() ||
                 getName().isNullOrEmpty() || getSurname().isNullOrEmpty() ||
                 (getEmail().isNullOrEmpty() && getPhone().isNullOrEmpty())
@@ -264,6 +269,14 @@ class AtmRequestFragment : Fragment() {
 
     private fun getSurname(): String? {
         return lastName.editText?.text.toString()
+    }
+
+    private fun isValidPhoneNumber(number:String?) : Boolean {
+        return if (number == null || number.length < 6 || number.length > 13) {
+            false
+        } else {
+            android.util.Patterns.PHONE.matcher(number).matches()
+        }
     }
 
     private fun getPhone(): String? {
