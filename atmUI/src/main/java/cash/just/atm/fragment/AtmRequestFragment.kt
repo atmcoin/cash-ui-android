@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import cash.just.atm.AtmSharedPreferencesManager
+import cash.just.atm.PhoneValidator
 import cash.just.atm.R
 import cash.just.atm.base.AtmFlow
 import cash.just.atm.base.RequestState
@@ -67,7 +68,7 @@ class AtmRequestFragment : Fragment() {
         amount.helperText = getString(R.string.request_cash_out_amount_validation, atm.min, atm.max, atm.bills.toFloat().toInt())
 
         getAtmCode.setOnClickListener {
-            if (!isValidPhoneNumber(getPhone())) {
+            if (!PhoneValidator(getPhone()).isValid()) {
                 Toast.makeText(view.context, getString(R.string.request_cash_invalid_phone_number), Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
@@ -269,14 +270,6 @@ class AtmRequestFragment : Fragment() {
 
     private fun getSurname(): String? {
         return lastName.editText?.text.toString()
-    }
-
-    private fun isValidPhoneNumber(number:String?) : Boolean {
-        return if (number == null || number.length < 6 || number.length > 13) {
-            false
-        } else {
-            android.util.Patterns.PHONE.matcher(number).matches()
-        }
     }
 
     private fun getPhone(): String? {
