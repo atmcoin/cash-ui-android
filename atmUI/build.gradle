@@ -3,6 +3,8 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'androidx.navigation.safeargs.kotlin'
 
+apply from: rootProject.file('gradle-mvn-push.gradle')
+
 android {
     compileSdkVersion project.ext.compileSdkVersion
     buildToolsVersion "${project.ext.buildToolsVersion}"
@@ -55,12 +57,15 @@ dependencies {
     implementation 'com.mikepenz:fastadapter-extensions-drag:5.2.2'
     implementation 'com.mikepenz:fastadapter-extensions-utils:5.2.2'
 
-    implementation 'androidx.navigation:navigation-fragment:2.3.2'
-    implementation 'androidx.navigation:navigation-ui:2.3.2'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.2'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.3.2'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
     implementation 'androidx.navigation:navigation-fragment-ktx:2.3.2'
     implementation 'androidx.navigation:navigation-ui-ktx:2.3.2'
 
     implementation 'com.journeyapps:zxing-android-embedded:4.1.0'
-    api 'com.github.atmcoin:cash-sdk-android:1.7'
+
+    api('cash.just.sdk:CashSDK:1.8:release@aar') {
+        transitive = true
+    }
 }
