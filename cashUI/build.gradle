@@ -32,6 +32,9 @@ android {
 }
 
 dependencies {
+//    api project(':supportUI')
+//    api project(':atmUI')
+
     api('cash.just.sdk:atmUI:3.4:release@aar') {
         transitive = true
     }
