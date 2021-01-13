@@ -2,6 +2,8 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
+apply from: rootProject.file('gradle-mvn-push.gradle')
+
 android {
     compileSdkVersion project.ext.compileSdkVersion
     buildToolsVersion "${project.ext.buildToolsVersion}"
@@ -30,8 +32,17 @@ android {
 }
 
 dependencies {
-    api project(':supportUI')
-    api project(':atmUI')
+    api('cash.just.sdk:atmUI:3.4:release@aar') {
+        transitive = true
+    }
+
+    api('cash.just.sdk:supportUI:3.4:release@aar') {
+        transitive = true
+    }
+
+    api('cash.just.sdk:CashSDK:1.8:release@aar') {
+        transitive = true
+    }
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.2.0'
