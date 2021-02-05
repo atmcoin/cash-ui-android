@@ -120,7 +120,7 @@ class MainActivity : AppCompatActivity() {
                             Timber.tag(TAG).d("${code}:  $details")
                         }
                     } else {
-                        Timber.tag(TAG).d("Task successfull")
+                        Timber.tag(TAG).d("Task successful")
                     }
                 })
 

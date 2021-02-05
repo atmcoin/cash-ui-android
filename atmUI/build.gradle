@@ -68,4 +68,11 @@ dependencies {
     api('cash.just.sdk:CashSDK:1.8:release@aar') {
         transitive = true
     }
+
+    // firebase services
+    implementation platform('com.google.firebase:firebase-bom:26.3.0')
+    implementation 'com.google.firebase:firebase-messaging:21.0.1'
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation 'com.google.firebase:firebase-functions'
+    implementation 'com.google.firebase:firebase-functions-ktx'
 }
