@@ -1,3 +1,5 @@
+gradle-mvn-push.gradle
+
 *.iml
 .gradle
 /local.properties

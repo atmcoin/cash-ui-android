@@ -6,6 +6,9 @@ buildscript {
     repositories {
         google()
         jcenter()
+        maven {
+            url "https://just-cash-artifactory.s3.amazonaws.com"
+        }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:4.1.2'
@@ -18,11 +21,13 @@ allprojects {
     repositories {
         google()
         jcenter()
-        maven { url 'https://jitpack.io' }
+        maven {
+            url "https://just-cash-artifactory.s3.amazonaws.com"
+        }
     }
 
     project.ext {
-        versionName = "3.3.3"
+        versionName = "3.4"
         versionCode = 18
         compileSdkVersion = 29
         buildToolsVersion = "29.0.3"
