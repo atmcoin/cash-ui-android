@@ -198,8 +198,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"
                             android:layout_marginTop="10dp"
-                            android:hint="Enter Code"
-                            app:helperText="Check your email for the confirmation code we sent you. It may take a couple of minutes.">
+                            android:hint="Enter Word"
+                            app:helperText="Check your email for the confirmation word we sent you. It may take a couple of minutes.">
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:imeOptions="actionDone"
