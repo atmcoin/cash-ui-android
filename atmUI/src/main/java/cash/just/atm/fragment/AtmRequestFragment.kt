@@ -76,7 +76,7 @@ class AtmRequestFragment : Fragment() {
 
         prepareMap(view.context, atm)
 
-        ccp.registerCarrierNumberEditText(phoneNumber.editText)
+        ccp.registerCarrierNumberEditText(phoneNumber)
 
         preFillSavedData()
         atmTitle.text = atm.addressDesc
@@ -132,7 +132,7 @@ class AtmRequestFragment : Fragment() {
             lastName.editText?.setText(it)
         }
         AtmSharedPreferencesManager.getPhone(context)?.let {
-            phoneNumber.editText?.setText(it)
+            phoneNumber?.setText(it)
         }
         AtmSharedPreferencesManager.getEmail(context)?.let {
             email.editText?.setText(it)
@@ -351,7 +351,7 @@ class AtmRequestFragment : Fragment() {
     }
 
     private fun getPhone(): String? {
-        return phoneNumber.editText?.text.toString()
+        return phoneNumber?.text.toString()
     }
 
     private fun getEmail(): String? {
