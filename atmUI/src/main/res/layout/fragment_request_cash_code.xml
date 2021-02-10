@@ -80,6 +80,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 app:ccp_defaultNameCode="US"
+                                app:ccpDialog_allowSearch="false"
                                 app:ccp_customMasterCountries="US,CA,MX"/>
 
                             <com.google.android.material.textfield.TextInputLayout
