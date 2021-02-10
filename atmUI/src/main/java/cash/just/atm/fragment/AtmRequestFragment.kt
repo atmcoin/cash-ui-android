@@ -76,12 +76,14 @@ class AtmRequestFragment : Fragment() {
 
         prepareMap(view.context, atm)
 
+        ccp.registerCarrierNumberEditText(phoneNumber.editText)
+
         preFillSavedData()
         atmTitle.text = atm.addressDesc
         amount.helperText = getString(R.string.request_cash_out_amount_validation, atm.min, atm.max, atm.bills.toFloat().toInt())
 
         getAtmCode.setOnClickListener {
-            if (!PhoneValidator(getPhone()).isValid()) {
+            if (!ccp.isValidFullNumber) {
                 Toast.makeText(view.context, getString(R.string.request_cash_invalid_phone_number), Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
@@ -124,7 +126,7 @@ class AtmRequestFragment : Fragment() {
     private fun preFillSavedData() {
         val context = requireContext()
         AtmSharedPreferencesManager.getFirstName(context)?.let {
-           firstName.editText?.setText(it)
+            firstName.editText?.setText(it)
         }
         AtmSharedPreferencesManager.getLastName(context)?.let {
             lastName.editText?.setText(it)
@@ -185,7 +187,7 @@ class AtmRequestFragment : Fragment() {
         val updatedAt = Calendar.getInstance().timeInMillis
         val data = hashMapOf(
             "fcmToken" to token,
-            "phone" to getPhone(),
+            "phone" to ccp.fullNumberWithPlus,
             "deviceModel" to Build.MODEL,
             "updatedAt" to updatedAt
         )
