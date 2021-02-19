@@ -1,7 +1,7 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-    ext.kotlin_version = '1.4.21'
+    ext.kotlin_version = '1.4.30'
 
     repositories {
         google()
@@ -24,11 +24,12 @@ allprojects {
         maven {
             url "https://just-cash-artifactory.s3.amazonaws.com"
         }
+        maven { url 'https://jitpack.io' }
     }
 
     project.ext {
-        versionName = "3.4"
-        versionCode = 18
+        versionName = "3.5"
+        versionCode = 19
         compileSdkVersion = 29
         buildToolsVersion = "29.0.3"
         //TODO review minsdk, before was 21 but qrcode library has min 24
