@@ -130,7 +130,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun registerToken(token: String?): Task<String>  {
         val packageVersion = getPackageVersion()
-        val createdAt = Calendar.getInstance().timeInMillis
         val data = hashMapOf(
             "fcmToken" to token,
             "deviceId" to Settings.Secure.getString(
@@ -140,7 +139,6 @@ class MainActivity : AppCompatActivity() {
             "phone" to "",
             "deviceModel" to Build.MODEL,
             "appVersion" to packageVersion,
-            "createdAt" to createdAt
         )
         return functions
             .getHttpsCallable("registerToken")

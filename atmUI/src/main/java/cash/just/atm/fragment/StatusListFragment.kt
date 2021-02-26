@@ -134,7 +134,7 @@ class StatusListFragment : Fragment() {
     }
 
     private fun createStatusRows(list:ArrayList<CashStatusResult>) {
-        list.sortBy {
+        list.sortByDescending {
             it.status.expiration
         }
 
