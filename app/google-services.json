@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "596251627395",
+    "project_id": "just-cash-fcm",
+    "storage_bucket": "just-cash-fcm.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:596251627395:android:9867c394dec45f4dfab0b6",
+        "android_client_info": {
+          "package_name": "cash.just.ui.sample"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "596251627395-r02m0k7e9vrha1s9k0obgk8jubp26lhu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "cash.just.ui.sample",
+            "certificate_hash": "a07f1dd519cbb7226e774eb677721271f89c610c"
+          }
+        },
+        {
+          "client_id": "596251627395-nl3drehe5kb6gacgov4jhu5l080sq5t7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBC9zpD63W7Kyu4dY1przq4Pi7qqTmfmYU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "596251627395-nl3drehe5kb6gacgov4jhu5l080sq5t7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

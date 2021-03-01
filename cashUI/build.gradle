@@ -32,10 +32,10 @@ android {
 }
 
 dependencies {
-//    api project(':supportUI')
-//    api project(':atmUI')
+    api project(':supportUI')
+    api project(':atmUI')
 
-    api('cash.just.sdk:atmUI:3.4:release@aar') {
+    /*api('cash.just.sdk:atmUI:3.4:release@aar') {
         transitive = true
     }
 
@@ -45,7 +45,7 @@ dependencies {
 
     api('cash.just.sdk:CashSDK:1.8:release@aar') {
         transitive = true
-    }
+    }*/
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.2.0'
