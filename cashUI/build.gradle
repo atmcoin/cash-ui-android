@@ -35,22 +35,22 @@ dependencies {
     api project(':supportUI')
     api project(':atmUI')
 
-//    api('cash.just.sdk:atmUI:3.4:release@aar') {
-//        transitive = true
-//    }
-//
-//    api('cash.just.sdk:supportUI:3.4:release@aar') {
-//        transitive = true
-//    }
-//
-//    api('cash.just.sdk:CashSDK:1.8:release@aar') {
-//        transitive = true
-//    }
+    /*api('cash.just.sdk:atmUI:3.4:release@aar') {
+        transitive = true
+    }
+
+    api('cash.just.sdk:supportUI:3.4:release@aar') {
+        transitive = true
+    }
+
+    api('cash.just.sdk:CashSDK:1.8:release@aar') {
+        transitive = true
+    }*/
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.core:core-ktx:1.3.2'
-    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'junit:junit:4.13.1'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     implementation 'com.jakewharton.timber:timber:4.7.1'

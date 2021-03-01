@@ -73,25 +73,27 @@
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
 
-                            <com.google.android.material.textfield.TextInputLayout
+                            <com.hbb20.CountryCodePicker
                                 style="@style/CashUI.Widget.TextInputLayout"
+                                android:id="@+id/ccp"
+                                android:layout_marginTop="25dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:ccp_defaultNameCode="US"
+                                app:ccpDialog_allowSearch="false"
+                                app:ccp_customMasterCountries="US,CA,MX"/>
+
+                            <EditText
+                                android:imeOptions="actionNext"
+                                android:autofillHints="string"
+                                android:maxLines="1"
                                 android:id="@+id/phoneNumber"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="10dp"
+                                android:layout_marginTop="25dp"
                                 android:layout_weight="1"
-                                android:hint="Enter your phone number"
-                                app:helperText="I agree to receive text messages specific to this transaction. Standard messaging rates may apply.">
-
-                                <com.google.android.material.textfield.TextInputEditText
-                                    android:imeOptions="actionNext"
-                                    android:autofillHints="string"
-                                    android:maxLines="1"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:inputType="phone" />
-
-                            </com.google.android.material.textfield.TextInputLayout>
+                                android:hint="Enter phone number"
+                                android:inputType="phone" />
 
                             <com.google.android.material.textfield.TextInputLayout
                                 android:id="@+id/email"
@@ -121,11 +123,15 @@
                             <!--                    android:text="No Phone?" />-->
 
                         </LinearLayout>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="I agree to receive text messages specific to this transaction. Standard messaging rates may apply." />
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="7dp"
+                            android:layout_marginTop="25dp"
                             android:orientation="horizontal">
 
                             <com.google.android.material.textfield.TextInputLayout
@@ -203,7 +209,7 @@
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:imeOptions="actionDone"
-                                android:inputType="text"
+                                android:inputType="number"
                                 android:maxLines="1"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content" />

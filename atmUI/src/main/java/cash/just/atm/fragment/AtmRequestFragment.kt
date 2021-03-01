@@ -1,9 +1,13 @@
 package cash.just.atm.fragment
 
 import android.app.AlertDialog
+import android.content.ContentValues
 import android.content.Context
 import android.media.MediaPlayer
+import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
+import android.telephony.PhoneNumberUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,14 +31,23 @@ import cash.just.sdk.model.CashStatus
 import cash.just.sdk.model.isValidAmount
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.CameraPosition
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.gms.tasks.Task
+import com.google.firebase.functions.FirebaseFunctions
+import com.google.firebase.functions.FirebaseFunctionsException
+import com.google.firebase.functions.ktx.functions
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.messaging.FirebaseMessaging
 import com.square.project.base.singleStateObserve
 import kotlinx.android.synthetic.main.fragment_request_cash_code.*
 import timber.log.Timber
 import java.net.UnknownHostException
+import java.util.*
 
 class AtmRequestFragment : Fragment() {
     private val viewModel = AtmViewModel()
     private lateinit var appContext: Context
+    private lateinit var functions: FirebaseFunctions
 
     companion object {
         private const val INITIAL_ZOOM = 15f
@@ -45,6 +58,7 @@ class AtmRequestFragment : Fragment() {
     private var coinCount = 0
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        functions = Firebase.functions
         return inflater.inflate(R.layout.fragment_request_cash_code, container, false)
     }
 
@@ -62,12 +76,14 @@ class AtmRequestFragment : Fragment() {
 
         prepareMap(view.context, atm)
 
+        ccp.registerCarrierNumberEditText(phoneNumber)
+
         preFillSavedData()
         atmTitle.text = atm.addressDesc
         amount.helperText = getString(R.string.request_cash_out_amount_validation, atm.min, atm.max, atm.bills.toFloat().toInt())
 
         getAtmCode.setOnClickListener {
-            if (!PhoneValidator(getPhone()).isValid()) {
+            if (!ccp.isValidFullNumber) {
                 Toast.makeText(view.context, getString(R.string.request_cash_invalid_phone_number), Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
@@ -110,13 +126,13 @@ class AtmRequestFragment : Fragment() {
     private fun preFillSavedData() {
         val context = requireContext()
         AtmSharedPreferencesManager.getFirstName(context)?.let {
-           firstName.editText?.setText(it)
+            firstName.editText?.setText(it)
         }
         AtmSharedPreferencesManager.getLastName(context)?.let {
             lastName.editText?.setText(it)
         }
         AtmSharedPreferencesManager.getPhone(context)?.let {
-            phoneNumber.editText?.setText(it)
+            phoneNumber?.setText(it)
         }
         AtmSharedPreferencesManager.getEmail(context)?.let {
             email.editText?.setText(it)
@@ -134,7 +150,70 @@ class AtmRequestFragment : Fragment() {
 
         requireContext().hideKeyboard(code.editText)
         confirmAction.showProgress()
+
+        //update phone number in firestore with FCM_TOKEN
+        updatePhoneNumber()
         viewModel.createCashCode(atm, getAmount()!!, getCode()!!)
+    }
+
+    private fun updatePhoneNumber() {
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Timber.tag(ContentValues.TAG).w(task.exception, "Fetching FCM registration token failed")
+                return@OnCompleteListener
+            }
+            // Get new FCM registration token
+            val token = task.result
+
+            registerToken(token)
+                .addOnCompleteListener { task ->
+                    if (!task.isSuccessful) {
+                        val e = task.exception
+                        if (e is FirebaseFunctionsException) {
+                            val code = e.code
+                            val details = e.details
+                            Timber.tag(ContentValues.TAG).d("${code}:  $details")
+                        }
+                    } else {
+                        Timber.tag(ContentValues.TAG).d("Task successful")
+                    }
+                }
+
+            Timber.tag(ContentValues.TAG).d(token)
+        })
+    }
+
+    private fun registerToken(token: String?): Task<String> {
+        val updatedAt = Calendar.getInstance().timeInMillis
+        val data = hashMapOf(
+            "fcmToken" to token,
+            "phone" to ccp.fullNumberWithPlus,
+            "deviceModel" to Build.MODEL,
+            "updatedAt" to updatedAt
+        )
+        Timber.tag(ContentValues.TAG).d(getPhone())
+        return functions
+            .getHttpsCallable("registerToken")
+            .call(data)
+            .continueWith { task ->
+                // This continuation runs on either success or failure, but if the task
+                // has failed then result will throw an Exception which will be
+                // propagated down.
+                val result = task.result?.data
+                result.toString()
+            }.addOnCompleteListener(OnCompleteListener { task ->
+                if (!task.isSuccessful) {
+                    Timber.tag(ContentValues.TAG).d("task unsuccessful: ${task.exception}")
+                    val e = task.exception
+                    if (e is FirebaseFunctionsException) {
+                        val code = e.code
+                        val details = e.details
+                        Timber.tag(ContentValues.TAG).d("${code}: $details")
+                    }
+                } else {
+                    Timber.tag(ContentValues.TAG).d("Task successful")
+                }
+            })
     }
 
     private fun getAtmFlow(): AtmFlow? {
@@ -272,7 +351,7 @@ class AtmRequestFragment : Fragment() {
     }
 
     private fun getPhone(): String? {
-        return phoneNumber.editText?.text.toString()
+        return phoneNumber?.text.toString()
     }
 
     private fun getEmail(): String? {
