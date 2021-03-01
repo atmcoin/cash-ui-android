@@ -9,12 +9,12 @@ buildscript {
         maven {
             url "https://just-cash-artifactory.s3.amazonaws.com"
         }
-        maven { url 'https://jitpack.io' }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:4.1.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:2.3.3"
+        classpath 'com.google.gms:google-services:4.3.5'
     }
 }
 
@@ -29,8 +29,8 @@ allprojects {
     }
 
     project.ext {
-        versionName = "3.8"
-        versionCode = 22
+        versionName = "3.9"
+        versionCode = 23
         compileSdkVersion = 29
         buildToolsVersion = "29.0.3"
         //TODO review minsdk, before was 21 but qrcode library has min 24

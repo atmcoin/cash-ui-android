@@ -1,5 +1,5 @@
 gradle-mvn-push.gradle
-
+/app/google-services.json
 *.iml
 .gradle
 /local.properties
