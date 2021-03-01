@@ -38,7 +38,12 @@ jobs:
             echo $test_keystore > /home/circleci/key/base64
             base64 -d /home/circleci/key/base64 > /home/circleci/key/keystore
             ls -la /home/circleci/key
-
+      #Test
+      - run:
+          name: creating google services json file
+          command: |
+            echo "$BASE64_GOOGLE_SERVICES_JSON_FILE" | base64 --decode > ~/repo/app/google-services.json
+            ls -la ~/repo/app/
       #Refresh gradle
       - run:
           name: Refresh gradle
