@@ -7,7 +7,7 @@ import timber.log.Timber
 
 fun Firebase.saveFunctions() : FirebaseFunctions? {
     try {
-        Firebase.functions
+        return functions
     } catch (exception : IllegalStateException) {
         Timber.e("Firebase not initialized")
     }
