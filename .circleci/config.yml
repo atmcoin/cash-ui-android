@@ -40,10 +40,10 @@ jobs:
             ls -la /home/circleci/key
       #Test
       - run:
-          name: test
+          name: creating google services json file
           command: |
-            pwd
-            echo "hola"
+            echo "$BASE64_GOOGLE_SERVICES_JSON_FILE" | base64 --decode > ~/repo/app/google-services.json
+            ls -la ~/repo/app/
       #Refresh gradle
       - run:
           name: Refresh gradle
