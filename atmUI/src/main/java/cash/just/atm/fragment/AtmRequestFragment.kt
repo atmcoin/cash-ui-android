@@ -6,20 +6,14 @@ import android.content.Context
 import android.media.MediaPlayer
 import android.os.Build
 import android.os.Bundle
-import android.provider.Settings
-import android.telephony.PhoneNumberUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import cash.just.atm.AtmSharedPreferencesManager
-import cash.just.atm.PhoneValidator
 import cash.just.atm.R
-import cash.just.atm.base.AtmFlow
-import cash.just.atm.base.RequestState
-import cash.just.atm.base.showError
-import cash.just.atm.base.showSnackBar
+import cash.just.atm.base.*
 import cash.just.atm.extension.hideKeyboard
 import cash.just.atm.model.AtmMarker
 import cash.just.atm.model.VerificationType
@@ -35,7 +29,6 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.functions.FirebaseFunctions
 import com.google.firebase.functions.FirebaseFunctionsException
-import com.google.firebase.functions.ktx.functions
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
 import com.square.project.base.singleStateObserve
@@ -47,7 +40,6 @@ import java.util.*
 class AtmRequestFragment : Fragment() {
     private val viewModel = AtmViewModel()
     private lateinit var appContext: Context
-    private lateinit var functions: FirebaseFunctions
 
     companion object {
         private const val INITIAL_ZOOM = 15f
@@ -58,7 +50,6 @@ class AtmRequestFragment : Fragment() {
     private var coinCount = 0
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        functions = Firebase.functions
         return inflater.inflate(R.layout.fragment_request_cash_code, container, false)
     }
 
@@ -152,20 +143,23 @@ class AtmRequestFragment : Fragment() {
         confirmAction.showProgress()
 
         //update phone number in firestore with FCM_TOKEN
-        updatePhoneNumber()
+        Firebase.saveFunctions()?.let {
+            updatePhoneNumber(it)
+        }
+
         viewModel.createCashCode(atm, getAmount()!!, getCode()!!)
     }
 
-    private fun updatePhoneNumber() {
-        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
-            if (!task.isSuccessful) {
-                Timber.tag(ContentValues.TAG).w(task.exception, "Fetching FCM registration token failed")
+    private fun updatePhoneNumber(functions: FirebaseFunctions) {
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener {
+            if (!it.isSuccessful) {
+                Timber.tag(ContentValues.TAG).w(it.exception, "Fetching FCM registration token failed")
                 return@OnCompleteListener
             }
             // Get new FCM registration token
-            val token = task.result
+            val token = it.result
 
-            registerToken(token)
+            registerToken(functions, token)
                 .addOnCompleteListener { task ->
                     if (!task.isSuccessful) {
                         val e = task.exception
@@ -183,7 +177,7 @@ class AtmRequestFragment : Fragment() {
         })
     }
 
-    private fun registerToken(token: String?): Task<String> {
+    private fun registerToken(functions:FirebaseFunctions, token: String?): Task<String> {
         val updatedAt = Calendar.getInstance().timeInMillis
         val data = hashMapOf(
             "fcmToken" to token,

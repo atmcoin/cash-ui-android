@@ -10,6 +10,7 @@ import android.provider.Settings
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import cash.just.atm.base.AtmResult
+import cash.just.atm.base.saveFunctions
 import cash.just.atm.model.BitcoinServer
 import cash.just.sdk.Cash
 import cash.just.support.context
@@ -18,13 +19,11 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.functions.FirebaseFunctions
 import com.google.firebase.functions.FirebaseFunctionsException
-import com.google.firebase.functions.ktx.functions
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.android.synthetic.main.activity_main.*
 import timber.log.Timber
 import java.util.*
-
 
 class MainActivity : AppCompatActivity() {
     companion object {
@@ -32,8 +31,6 @@ class MainActivity : AppCompatActivity() {
         private const val REQUEST_CODE_LIST = 0x02
         private const val REQUEST_CODE_STATUS = 0x03
     }
-
-    private lateinit var functions: FirebaseFunctions
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,9 +48,9 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        functions = Firebase.functions
-
-        getToken()
+        Firebase.saveFunctions()?.let {
+            getToken(it)
+        }
 
         openMaps.setOnClickListener {
             CashUI.startCashOutActivityForResult(this@MainActivity, REQUEST_CODE_MAP)
@@ -101,7 +98,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun getToken() {
+    private fun getToken(functions: FirebaseFunctions) {
         FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
             if (!task.isSuccessful) {
                 Timber.tag(TAG).w(task.exception, "Fetching FCM registration token failed")
@@ -110,9 +107,9 @@ class MainActivity : AppCompatActivity() {
             // Get new FCM registration token
             val token = task.result
 
-            registerToken(token)
-                .addOnCompleteListener(OnCompleteListener { task ->
-                    if (!task.isSuccessful) {
+            registerToken(functions, token)
+                .addOnCompleteListener(OnCompleteListener { registerTask ->
+                    if (!registerTask.isSuccessful) {
                         val e = task.exception
                         if (e is FirebaseFunctionsException) {
                             val code = e.code
@@ -128,7 +125,7 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    private fun registerToken(token: String?): Task<String>  {
+    private fun registerToken(functions: FirebaseFunctions, token: String?): Task<String>  {
         val packageVersion = getPackageVersion()
         val data = hashMapOf(
             "fcmToken" to token,
@@ -170,7 +167,7 @@ class MainActivity : AppCompatActivity() {
                 context.packageManager.getPackageInfo(context.packageName, 0)
             pInfo.versionName
         } catch (e: PackageManager.NameNotFoundException) {
-            e.printStackTrace()
+            Timber.e(e)
         }
     }
 }
