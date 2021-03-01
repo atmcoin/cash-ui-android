@@ -65,7 +65,11 @@ dependencies {
 
     implementation 'com.journeyapps:zxing-android-embedded:4.1.0'
 
-    api('cash.just.sdk:CashSDK:1.8:release@aar') {
+//    api('cash.just.sdk:CashSDK:1.8:release@aar') {
+//        transitive = true
+//    }
+
+    api('com.github.atmcoin:cash-sdk-android:1.9.2:debug@aar') {
         transitive = true
     }
 

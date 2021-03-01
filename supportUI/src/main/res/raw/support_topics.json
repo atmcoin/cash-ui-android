@@ -1,5 +1,5 @@
 {
-  "version": 8,
+  "version": 9,
   "language": "en",
   "categories": [
     {
@@ -207,6 +207,12 @@
       "title": "When should I sync my Bitcoin wallet to the blockchain?",
       "content": "Your Coinsquare wallet connects directly to the bitcoin network. This improves security and privacy, but also means sometimes your wallet can get out of sync with the network.\n\nSyncing with the blockchain can take a lot of time, and usually isn't necessary. If someone sent you money and it shows as confirmed in the blockchain yet it is not appearing in your wallet, your wallet may be out of sync. First check to make sure the address the money was sent to is correct.\n\nIf you are trying to send money and constantly get error messages that your transaction was rejected, it could also mean your wallet is out of sync.\n\nIn either of this cases, using this feature will rescan the blockchain to find your money and display it properly in your wallet.\n",
       "category_id": "SECURITY"
+    },
+    {
+      "id": "HIGH_NETWORK_FEES",
+      "title": "Why is the blockchain fee so high?",
+      "content": "Blockchain fees depend on several factors including network congestion, transaction confirmation times (affected by liquidity providers), and transaction size (as measured in kilobytes; affected when converting crypto from multiple inputs such as faucet earnings or other micro-transactions).\n\nIn other words, you may need to pay higher blockchain fees if:\n\n\t\t - the blockchain network is busy or loaded at the moment. Usually, the fee increases during sudden blockchain rate fluctuations and major world events;\n\t\t - your crypto account has a history of microdeposits (like referral bonuses). If your account has large amounts of small deposits, the size of your transaction will be bigger as it will consist of many inputs. The bigger the transaction size, the higher the blockchain fee. \n\nThere might be other causes of higher blockchain fees, but we've listed the most common ones.\n\n\n\nWhat can I do to reduce the blockchain fee in the meantime?\n\nThe general advice to reduce your blockchain fee would be:\n\n\t\t - Consolidate your microdeposits in another third-party wallet, then send a larger amount to Wirex as one single transaction. That will help you reduce the blockchain fee for future exchanges and transfers.\n\t\t - If you are used to exchanging small amounts regularly, it might help to use larger amounts.\n\t\t - Monitor the average blockchain fee in the network. If your transfer is not time-sensitive, you can wait until the average fee amount drops. You can check this on major cryptocurrency exchanges, block explorers or websites such as https://bitcoinfees.earn.com/",
+      "category_id": "MISCELLANEOUS"
     }
   ]
 }
