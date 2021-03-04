@@ -30,7 +30,7 @@ class SharedPreferencePhoneTest {
         val phone = "+14371231234"
         AtmSharedPreferencesManager.setPhone(appContext, phone)
         assertEquals(phone, AtmSharedPreferencesManager.getPhone(appContext))
-        assertEquals(PhoneValidator(AtmSharedPreferencesManager.getPhone(appContext)).phoneNumberWithoutCountryCode(), "4371231234")
+        assertEquals(AtmSharedPreferencesManager.getPhone(appContext)?.let { PhoneValidator(it).phoneNumberWithoutCountryCode() }, "4371231234")
     }
 
     @Test
