@@ -19,4 +19,5 @@ interface CashUIProtocol {
   fun getSendData(intent:Intent): SendDataResult?
   fun getDetailsData(intent:Intent): DetailsDataResult?
   fun showSupportPage(builder: CashSupport.Builder, fragmentManager: FragmentManager)
+  //fun showKyc(activity: Activity)
 }
