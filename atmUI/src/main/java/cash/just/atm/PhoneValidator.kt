@@ -8,4 +8,16 @@ class PhoneValidator(private val phoneNumber:String?) {
             android.util.Patterns.PHONE.matcher(phoneNumber).matches()
         }
     }
+
+    fun phoneNumberWithoutCountryCode() : String {
+        if(phoneNumber?.startsWith("+")!!) {
+            if(phoneNumber[1] == '1') {
+                return phoneNumber.substring(2)
+            }
+            else if(phoneNumber[1] == '5') {
+                return phoneNumber.substring(3)
+            }
+        }
+        return phoneNumber
+    }
 }
