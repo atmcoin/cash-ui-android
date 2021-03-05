@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import cash.just.atm.AtmSharedPreferencesManager
+import cash.just.atm.PhoneValidator
 import cash.just.atm.R
 import cash.just.atm.base.*
 import cash.just.atm.extension.hideKeyboard
@@ -123,7 +124,7 @@ class AtmRequestFragment : Fragment() {
             lastName.editText?.setText(it)
         }
         AtmSharedPreferencesManager.getPhone(context)?.let {
-            phoneNumber?.setText(it)
+            phoneNumber?.setText(PhoneValidator(it).phoneNumberWithoutCountryCode())
         }
         AtmSharedPreferencesManager.getEmail(context)?.let {
             email.editText?.setText(it)
