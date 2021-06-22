@@ -17,7 +17,7 @@
         <ImageView
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:src="@drawable/logo_gradient" />
+            android:src="@drawable/ic_launcher_round" />
 
         <TextView
             android:layout_width="match_parent"

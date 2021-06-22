@@ -40,7 +40,7 @@
                 android:textColorLink="#FFFFFF"
                 android:autoLink="email"
                 android:gravity="center"
-                android:text="     atm@coinsquare.com"
+                android:text="     victor@fabriik.com"
                 android:textColor="#FFFFFF"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
