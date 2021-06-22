@@ -18,7 +18,7 @@ object SupportFooterHelper {
 
         textView(view, R.id.privacyLink).setOnClickListener {
             Timber.d("Click on privacyLink")
-            lifecycleOwner.launchWebsite("https://coinsquareatm.com/privacy-policy.html")
+            lifecycleOwner.launchWebsite("https://www.just.cash/terms-of-use.html")
         }
     }
 
